@@ -25,6 +25,9 @@ function BurgerConstructor() {
         if (windowHeight <= desctopHeight) {
             setDeviceHeihgt(mainHeight);
             setSelectedDeviceHeight(selectedHeight)
+        } else {
+            setDeviceHeihgt(440);
+            setSelectedDeviceHeight(620)
         }
     }, [windowHeight]);
 

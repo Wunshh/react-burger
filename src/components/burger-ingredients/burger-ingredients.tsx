@@ -21,6 +21,8 @@ function BurgerIngredients() {
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
             setDeviceHeihgt(menuMobileHeight);
+        } else {
+            setDeviceHeihgt(765);
         }
     }, [windowHeight]);
 
