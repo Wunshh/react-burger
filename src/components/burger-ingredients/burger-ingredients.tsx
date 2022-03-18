@@ -1,18 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 import { data } from '../../utils/data';
+import {
+    desctopHeight,
+    menuMobileHeight
+} from '../../utils/data';
+import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerIngredients() {
 
+    const windowHeight = useWindowHeight();
+
     const [current, setCurrent] = useState('one');
+    const [deviceHeihgt, setDeviceHeihgt] = useState(765);
+
+    useEffect(() => {
+        if (windowHeight <= desctopHeight) {
+            setDeviceHeihgt(menuMobileHeight);
+        }
+    }, [windowHeight]);
 
     return (
         <section className={burgerIngredientsStyle.section}>
-            <div className={burgerIngredientsStyle.menu}> 
+            <div className={burgerIngredientsStyle.menu} style={{height: deviceHeihgt}}> 
                 <h1 className="text text_type_main-large mb-5">
                     Соберите бургер
                 </h1>

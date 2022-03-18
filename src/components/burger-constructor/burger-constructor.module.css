@@ -1,0 +1,54 @@
+.selected {
+    display: flex;
+    margin: 40px 0 20px;
+    box-sizing: content-box;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+    padding-left: 32px;
+}
+
+.section:nth-child(1n){
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: -32px;
+    overflow-y: scroll;
+}
+
+.main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+    background-color: #8585AD;
+}
+
+.main::-webkit-scrollbar-thumb {
+    background-color: #2F2F37;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    width: 568px;
+    justify-content: space-between;
+}
+
+.order {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.prise {
+    display: flex;
+    align-items: center;
+    width: 119px;
+    justify-content: space-between;
+    margin-right: 40px;
+}
