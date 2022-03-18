@@ -6,7 +6,8 @@ function App() {
   return (
     <div className={appStyles.app}>
       <AppHeader />
-      <main>
+      
+      <main className={appStyles.main}>
         <BurgerIngredients />
       </main>
     </div>
