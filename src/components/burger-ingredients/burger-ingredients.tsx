@@ -4,7 +4,7 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 import { data } from '../../utils/data';
 import {
     desctopHeight,
-    menuMobileHeight
+    menuMobileHeight,
 } from '../../utils/data';
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { 
@@ -92,3 +92,4 @@ function BurgerIngredients() {
 }
 
 export default BurgerIngredients;
+

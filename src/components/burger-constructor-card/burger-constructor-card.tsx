@@ -1,12 +1,11 @@
 import burgerCardStyle from './burger-constructor-card.module.css';
+import { dataPropTypes } from '../../utils/data';
 import { 
     ConstructorElement,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructorCard({ingridient}: {ingridient: any}) {
-
-    console.log(ingridient);
     
     return (
         <div className={burgerCardStyle.ingredient}>
@@ -21,3 +20,7 @@ function BurgerConstructorCard({ingridient}: {ingridient: any}) {
 }
 
 export default BurgerConstructorCard;
+
+BurgerConstructorCard.propTypes = {
+    ingridient: dataPropTypes.isRequired
+}

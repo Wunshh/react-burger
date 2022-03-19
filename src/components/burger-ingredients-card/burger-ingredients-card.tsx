@@ -1,4 +1,5 @@
 import burgerCardStyle from './burger-ingredients-card.module.css';
+import { dataPropTypes } from '../../utils/data';
 import { 
     Counter,
     CurrencyIcon
@@ -28,3 +29,6 @@ function BurgerIngredientsCard({item}: {item:any}) {
 }
 
 export default BurgerIngredientsCard;
+BurgerIngredientsCard.propTypes = {
+    item: dataPropTypes.isRequired
+}
