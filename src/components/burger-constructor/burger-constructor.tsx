@@ -44,9 +44,9 @@ function BurgerConstructor() {
                     thumbnail={bun.image_mobile}
                 />
                 <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
-                    {selectedIngridients.filter((m) => m.type !== 'bun').map((item) => {
+                    {selectedIngridients.filter((m) => m.type !== 'bun').map((item, index) => {
                         return (
-                            <BurgerConstructorCard key={item._id} ingridient={item}/>
+                            <BurgerConstructorCard key={index} ingridient={item}/>
                         )
                     })}
                 </div>

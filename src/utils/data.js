@@ -215,7 +215,7 @@ export const data = [
 
 const selectedIngridients = [
    {
-      "_id":"1",
+      "_id":"60666c42cc7b410027a1a9b9",
       "name":"Соус традиционный галактический",
       "type":"sauce",
       "proteins":42,
@@ -229,7 +229,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"2",
+      "_id":"60666c42cc7b410027a1a9b4",
       "name":"Мясо бессмертных моллюсков Protostomia",
       "type":"main",
       "proteins":433,
@@ -243,7 +243,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"3",
+      "_id":"60666c42cc7b410027a1a9bc",
       "name":"Плоды Фалленианского дерева",
       "type":"main",
       "proteins":20,
@@ -257,7 +257,7 @@ const selectedIngridients = [
       "__v":0
    },
        {
-       "_id":"4",
+       "_id":"60666c42cc7b410027a1a9b1",
        "name":"Краторная булка N-200i",
        "type":"bun",
        "proteins":80,
@@ -271,7 +271,7 @@ const selectedIngridients = [
        "__v":1
     },
     {
-      "_id":"5",
+      "_id":"60666c42cc7b410027a1a9bb",
       "name":"Хрустящие минеральные кольца",
       "type":"main",
       "proteins":808,
@@ -285,7 +285,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"6",
+      "_id":"60666c42cc7b410027a1a9bb",
       "name":"Хрустящие минеральные кольца",
       "type":"main",
       "proteins":808,
@@ -299,7 +299,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"7",
+      "_id":"60666c42cc7b410027a1a9bb",
       "name":"Хрустящие минеральные кольца",
       "type":"main",
       "proteins":808,
@@ -313,7 +313,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"8",
+      "_id":"60666c42cc7b410027a1a9bd",
       "name":"Кристаллы марсианских альфа-сахаридов",
       "type":"main",
       "proteins":234,
@@ -327,7 +327,7 @@ const selectedIngridients = [
       "__v":0
    },
    {
-      "_id":"9",
+      "_id":"60666c42cc7b410027a1a9bd",
       "name":"Кристаллы марсианских альфа-сахаридов",
       "type":"main",
       "proteins":234,
