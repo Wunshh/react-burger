@@ -46,7 +46,7 @@ function BurgerConstructor() {
                 <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
                     {selectedIngridients.filter((m) => m.type !== 'bun').map((item) => {
                         return (
-                            <BurgerConstructorCard key={item.__v} ingridient={item}/>
+                            <BurgerConstructorCard key={item._id} ingridient={item}/>
                         )
                     })}
                 </div>
