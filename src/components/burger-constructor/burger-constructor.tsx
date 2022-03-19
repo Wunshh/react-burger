@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import burgerConstructorStyle from './burger-constructor.module.css';
-import { data } from '../../utils/data';
+import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import {
     desctopHeight,
     mainHeight,
-    selectedHeight
+    selectedHeight,
+    selectedIngridients
 } from '../../utils/data';
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { 
     ConstructorElement,
-    DragIcon,
     CurrencyIcon,
     Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -31,88 +31,31 @@ function BurgerConstructor() {
         }
     }, [windowHeight]);
 
+    const bun : any = selectedIngridients.find((m) => m.type === 'bun'); 
+
     return (
         <section className={burgerConstructorStyle.section}>
-            <div className={burgerConstructorStyle.selected} style={{height: selectedDeviceHeight}}>
+            <div className={burgerConstructorStyle.selected} style={{maxHeight: selectedDeviceHeight}}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={data[0].price}
-                    thumbnail={data[0].image_mobile}
+                    text={`${bun.name} (верх)`}
+                    price={bun.price}
+                    thumbnail={bun.image_mobile}
                 />
-                <div className={burgerConstructorStyle.main} style={{height: deviceHeihgt}}>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[5].name}
-                            price={data[5].price}
-                            thumbnail={data[5].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[4].name}
-                            price={data[4].price}
-                            thumbnail={data[4].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[7].name}
-                            price={data[7].price}
-                            thumbnail={data[7].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image_mobile}
-                        />
-                    </div>
-                    <div className={burgerConstructorStyle.ingredient}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image_mobile}
-                        />
-                    </div>
+                <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
+                    {selectedIngridients.filter((m) => m.type !== 'bun').map((item) => {
+                        return (
+                            <BurgerConstructorCard key={item.__v} ingridient={item}/>
+                        )
+                    })}
                 </div>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={data[0].price}
-                    thumbnail={data[0].image_mobile}
+                    text={`${bun.name} (низ)`}
+                    price={bun.price}
+                    thumbnail={bun.image_mobile}
                 />
             </div>
 

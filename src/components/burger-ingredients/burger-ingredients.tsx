@@ -28,7 +28,7 @@ function BurgerIngredients() {
 
     return (
         <section className={burgerIngredientsStyle.section}>
-            <div className={burgerIngredientsStyle.menu} style={{height: deviceHeihgt}}> 
+            <div className={burgerIngredientsStyle.menu} style={{maxHeight: deviceHeihgt}}> 
                 <h1 className="text text_type_main-large mb-5">
                     Соберите бургер
                 </h1>

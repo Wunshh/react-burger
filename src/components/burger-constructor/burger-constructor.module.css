@@ -32,13 +32,6 @@
     background-color: #2F2F37;
 }
 
-.ingredient {
-    display: flex;
-    align-items: center;
-    width: 568px;
-    justify-content: space-between;
-}
-
 .order {
     display: flex;
     justify-content: flex-end;
