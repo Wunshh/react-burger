@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 import { data } from '../../utils/data';
@@ -14,6 +14,9 @@ import {
 function BurgerIngredients() {
 
     const windowHeight = useWindowHeight();
+    const bonRef = useRef();
+    const souseRef = useRef();
+    const fillingRef = useRef();
 
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
@@ -26,6 +29,17 @@ function BurgerIngredients() {
         }
     }, [windowHeight]);
 
+    useEffect(() => {
+        if (current === "one") {
+            bonRef.current.scrollIntoView({behavior: "smooth"});
+        } else if (current === "two") {
+            souseRef.current.scrollIntoView({behavior: "smooth"});
+        } else if (current === "three") {
+            fillingRef.current.scrollIntoView({behavior: "smooth"});
+        }
+        
+    }, [current]);
+
     return (
         <section className={burgerIngredientsStyle.section}>
             <div className={burgerIngredientsStyle.menu} style={{maxHeight: deviceHeihgt}}> 
@@ -33,24 +47,20 @@ function BurgerIngredients() {
                     Соберите бургер
                 </h1>
                 <div style={{ display: 'flex' }} className="mb-10">
-                    <a href="#bun" className={burgerIngredientsStyle.link}>
-                        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-                            Булки
-                        </Tab>
-                    </a>
-                    <a href="#sauce" className={burgerIngredientsStyle.link}>
-                        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-                            Соусы
-                        </Tab>
-                    </a>
-                    <a href="#main" className={burgerIngredientsStyle.link}>
-                        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-                            Начинки
-                        </Tab>
-                    </a>
+                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                        Булки
+                    </Tab>
+                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                        Соусы
+                    </Tab>
+        
+                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                        Начинки
+                    </Tab>
                 </div>      
+                
                 <div className={burgerIngredientsStyle.ingredients}>    
-                    <p className="text text_type_main-medium mb-6" id="bun">
+                    <p className="text text_type_main-medium mb-6" ref={bonRef}>
                         Булки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
@@ -62,7 +72,7 @@ function BurgerIngredients() {
                         }
                     </div>
 
-                    <p className="text text_type_main-medium mb-6" id="sauce">
+                    <p className="text text_type_main-medium mb-6" ref={souseRef}>
                         Соусы
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
@@ -74,7 +84,7 @@ function BurgerIngredients() {
                         }
                     </div>
 
-                    <p className="text text_type_main-medium mb-6" id="main">
+                    <p className="text text_type_main-medium mb-6" ref={fillingRef}>
                         Начинки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
