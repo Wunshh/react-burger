@@ -3,4 +3,5 @@
     align-items: center;
     width: 568px;
     justify-content: space-between;
+    cursor: pointer;
 }

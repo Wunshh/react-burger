@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
-import { data } from '../../utils/data';
 import {
     desctopHeight,
     menuMobileHeight,
@@ -11,7 +10,7 @@ import {
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerIngredients() {
+function BurgerIngredients({ data }) {
 
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
