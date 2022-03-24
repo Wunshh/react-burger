@@ -14,7 +14,7 @@ import {
     Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor() {
+function BurgerConstructor({onButtonClick}: {onButtonClick: any}) {
 
     const windowHeight = useWindowHeight();
 
@@ -64,7 +64,7 @@ function BurgerConstructor() {
                     <p className="text text_type_digits-medium">610</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={onButtonClick}>
                     Оформить заказ
                 </Button>
             </div>

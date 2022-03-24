@@ -14,7 +14,7 @@
     margin: 0 auto;
     position: fixed;
     left:  calc(50% - 720px / 2);
-    top: 25%;
+    top: 10%;
     z-index: 1;
     box-sizing: content-box;
     padding: 40px 40px 60px;

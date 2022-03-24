@@ -5,12 +5,14 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import * as api from '../../utils/api';
 import IngredientDetail from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
 
 function App() {
 
   const [ingredients, setIngredients] = useState([]);
   const [isIngredientModal, setIsIngredientModal] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
+  const [isOrderModal, setIsOrderModal] = useState(false);
 
   useEffect(() => {
     api.getIngredientsData()
@@ -27,15 +29,20 @@ function App() {
   function handleModalClose() {
     setSelectedIngredient({})
     setIsIngredientModal(false);
+    setIsOrderModal(false);
   }
 
   function handleModalCloseKeyDown(evt) {
     if (evt.key === 'Escape') {
       setSelectedIngredient({})
       setIsIngredientModal(false);
+      setIsOrderModal(false);
     }
   }
 
+  function handleOrderClick() {
+    setIsOrderModal(true);
+  }
 
   return (
     <div className={appStyles.app}>
@@ -43,15 +50,21 @@ function App() {
 
       <main className={appStyles.main}>
         <BurgerIngredients data={ingredients} onCardClick={handleIngredientClick}/>
-        <BurgerConstructor />
+        <BurgerConstructor onButtonClick={handleOrderClick}/>
       </main>
       
-      <IngredientDetail 
+      {isIngredientModal && <IngredientDetail 
         visible={isIngredientModal} 
         item={selectedIngredient} 
         onClose={handleModalClose}
         onKeyDown={handleModalCloseKeyDown}
-      />
+      />}
+
+      {isOrderModal && <OrderDetails 
+        visible={isOrderModal}
+        onKeyDown={handleModalCloseKeyDown}
+        onClose={handleModalClose}
+      />}
     </div>
   );
 }

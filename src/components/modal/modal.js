@@ -16,7 +16,7 @@ const Modal = ({children, header, visible, onClose, onKeyDown}) => {
   }, [onKeyDown]);
   
   return createPortal (
-    <div className={visible ? [modalStyle.visible] : [modalStyle.invisible]}>
+    <div className={[modalStyle.invisible], visible && [modalStyle.visible]}>
       <div className={modalStyle.modal}>
         <ModalHeader header={header} visible={visible} onClose={onClose}/>
         {children}

@@ -160,7 +160,7 @@ export {
    selectedIngridients,
    dataPropTypes,
    modalRoot,
-   BASE_URL
+   BASE_URL,
 }
 
 

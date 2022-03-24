@@ -3,7 +3,6 @@ import Modal from '../modal/modal';
 
 function IngredientDetail({visible, item, onClose, onKeyDown}) {
     return (
-        visible &&
         <Modal header="Детали ингридиента" 
             visible={visible} 
             onClose={onClose}
