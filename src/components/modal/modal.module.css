@@ -1,0 +1,26 @@
+.invisible {
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.8s ease;
+}
+
+.visible {
+    overflow: visible;
+    opacity: 1;
+    transition: 0.8s ease;
+}
+
+.modal {
+    margin: 0 auto;
+    position: fixed;
+    left:  calc(50% - 720px / 2);
+    top: 25%;
+    z-index: 1;
+    box-sizing: content-box;
+    padding: 40px 40px 60px;
+    width: 720px;
+    background-color: #1C1C21;
+    z-index: 1;
+    box-sizing: border-box;
+    border-radius: 40px;
+}

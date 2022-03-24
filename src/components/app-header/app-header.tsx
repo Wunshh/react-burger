@@ -5,7 +5,6 @@ import {
     ListIcon,
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { cursorTo } from 'readline';
 
 function AppHeader() {
     return(

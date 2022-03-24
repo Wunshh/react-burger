@@ -10,7 +10,7 @@ import {
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients({ data, onCardClick }) {
 
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
@@ -65,7 +65,11 @@ function BurgerIngredients({ data }) {
                     <div className={burgerIngredientsStyle.cards}>
                         {data.filter(m => m.type === "bun").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }
@@ -77,7 +81,11 @@ function BurgerIngredients({ data }) {
                     <div className={burgerIngredientsStyle.cards}>
                         {data.filter(m => m.type === "sauce").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }
@@ -89,7 +97,11 @@ function BurgerIngredients({ data }) {
                     <div className={burgerIngredientsStyle.cards}>
                         {data.filter(m => m.type === "main").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }

@@ -5,12 +5,16 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerIngredientsCard({item}: {item:any}) {
+function BurgerIngredientsCard({item, onCardClick}) {
 
     let count = item.__v === 0 ? false : true;
 
+    function handleClick() {
+        onCardClick(item);
+    }
+
     return (
-        <div className={burgerCardStyle.card}>
+        <div className={burgerCardStyle.card} onClick={handleClick}>
             {count && <Counter count={item.__v} size="default" />}
             <img 
                 className={burgerCardStyle.img} 

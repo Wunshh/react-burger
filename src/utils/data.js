@@ -130,10 +130,11 @@ const selectedIngridients = [
 ]
 
 const desctopHeight = 820;
-const menuMobileHeight = 650;
+const menuMobileHeight = 620;
 const mainHeight = 260;
-const selectedHeight = 460; 
-const modalRoot = document.getElementById("react-modals");
+const selectedHeight = 460;
+
+const modalRoot = document.getElementById("react-modals"); 
 const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 const dataPropTypes = PropTypes.shape({
