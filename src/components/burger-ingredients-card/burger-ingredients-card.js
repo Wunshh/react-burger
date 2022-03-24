@@ -1,4 +1,5 @@
 import burgerCardStyle from './burger-ingredients-card.module.css';
+import PropTypes from 'prop-types'
 import { dataPropTypes } from '../../utils/data';
 import { 
     Counter,
@@ -34,5 +35,6 @@ function BurgerIngredientsCard({item, onCardClick}) {
 
 export default BurgerIngredientsCard;
 BurgerIngredientsCard.propTypes = {
-    item: dataPropTypes.isRequired
+    item: dataPropTypes.isRequired,
+    onCardClick: PropTypes.func
 }

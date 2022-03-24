@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import modalStyle from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { modalRoot } from '../../utils/data';
@@ -16,7 +17,7 @@ const Modal = ({children, header, visible, onClose, onKeyDown}) => {
   }, [onKeyDown]);
   
   return createPortal (
-    <div className={[modalStyle.invisible], visible && [modalStyle.visible]}>
+    <div className={modalStyle.invisible, visible && modalStyle.visible}>
       <div className={modalStyle.modal}>
         <ModalHeader header={header} visible={visible} onClose={onClose}/>
         {children}
@@ -27,6 +28,12 @@ const Modal = ({children, header, visible, onClose, onKeyDown}) => {
   );
 }
 
-
-
 export default Modal;
+
+Modal.propTypes = {
+  children: PropTypes.element.isRequired,
+  header: PropTypes.string,
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func,
+  onKeyDown: PropTypes.func
+}

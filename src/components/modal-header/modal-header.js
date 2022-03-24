@@ -3,9 +3,8 @@ import {
     CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function ModalHeader({ header, visible, onClose}) {
+function ModalHeader({ header, onClose}) {
     return (
-        visible &&
         <div className={modalHeaderStyle.head}>
             <h2 className="text text_type_main-large">
                 {header}

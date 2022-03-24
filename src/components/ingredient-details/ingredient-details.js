@@ -1,4 +1,5 @@
 import ingredientDetailsStyle from './ingredient-details.module.css';
+import {dataPropTypes} from '../../utils/data';
 import Modal from '../modal/modal';
 
 function IngredientDetail({visible, item, onClose, onKeyDown}) {
@@ -43,3 +44,7 @@ function IngredientDetail({visible, item, onClose, onKeyDown}) {
 }
 
 export default IngredientDetail;
+
+IngredientDetail.propTypes = {
+    item: dataPropTypes.isRequired
+}
