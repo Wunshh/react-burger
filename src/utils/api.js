@@ -1,4 +1,4 @@
-import { BASE_URL } from './data';
+import { BASE_URL } from './types';
 
 const checkResponse = async (res) => {
     if (res.ok) {

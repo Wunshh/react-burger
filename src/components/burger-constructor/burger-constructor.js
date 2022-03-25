@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
-import burgerConstructorStyle from './burger-constructor.module.css';
-import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
-import {
-    desctopHeight,
-    mainHeight,
-    selectedHeight,
-    selectedIngridients
-} from '../../utils/data';
-import useWindowHeight from '../../utils/hooks/useWindowHeight';
+import PropTypes from 'prop-types';
 import { 
     ConstructorElement,
     CurrencyIcon,
     Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor({onButtonClick}: {onButtonClick: any}) {
+import useWindowHeight from '../../utils/hooks/useWindowHeight';
+import {
+    desctopHeight,
+    mainHeight,
+    selectedHeight,
+    selectedIngridients
+} from '../../utils/data';
+import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
+
+import burgerConstructorStyle from './burger-constructor.module.css';
+
+
+function BurgerConstructor({ onButtonClick }) {
 
     const windowHeight = useWindowHeight();
 
@@ -31,7 +35,7 @@ function BurgerConstructor({onButtonClick}: {onButtonClick: any}) {
         }
     }, [windowHeight]);
 
-    const bun : any = selectedIngridients.find((m) => m.type === 'bun'); 
+    const bun = selectedIngridients.find((m) => m.type === 'bun'); 
 
     return (
         <section className={burgerConstructorStyle.section}>
@@ -70,6 +74,10 @@ function BurgerConstructor({onButtonClick}: {onButtonClick: any}) {
             </div>
         </section>
     );
+}
+
+BurgerConstructor.propTypes = {
+    onButtonClick: PropTypes.func
 }
 
 export default BurgerConstructor;

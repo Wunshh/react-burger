@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import burgerIngredientsStyle from './burger-ingredients.module.css';
-import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
+import { 
+    Tab
+} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import {
     desctopHeight,
     menuMobileHeight,
 } from '../../utils/data';
-import useWindowHeight from '../../utils/hooks/useWindowHeight';
-import { 
-    Tab
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
+
+import burgerIngredientsStyle from './burger-ingredients.module.css';
+
 
 function BurgerIngredients({ data, onCardClick }) {
 
@@ -39,6 +42,8 @@ function BurgerIngredients({ data, onCardClick }) {
         
     }, [current]);
 
+    const ingridnentsFilter = (type) => data.filter(m => m.type === type);
+
     return (
         <section className={burgerIngredientsStyle.section}>
             <div className={burgerIngredientsStyle.menu} style={{maxHeight: deviceHeihgt}}> 
@@ -63,7 +68,7 @@ function BurgerIngredients({ data, onCardClick }) {
                         Булки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "bun").map((item) => {
+                        {ingridnentsFilter("bun").map((item) => {
                             return (
                                 <BurgerIngredientsCard 
                                     key={item._id}  
@@ -79,7 +84,7 @@ function BurgerIngredients({ data, onCardClick }) {
                         Соусы
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "sauce").map((item) => {
+                        {ingridnentsFilter("sauce").map((item) => {
                             return (
                                 <BurgerIngredientsCard 
                                     key={item._id}  
@@ -95,7 +100,7 @@ function BurgerIngredients({ data, onCardClick }) {
                         Начинки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "main").map((item) => {
+                        {ingridnentsFilter("main").map((item) => {
                             return (
                                 <BurgerIngredientsCard 
                                     key={item._id}  

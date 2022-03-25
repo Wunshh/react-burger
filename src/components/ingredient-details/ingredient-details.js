@@ -1,9 +1,11 @@
-import ingredientDetailsStyle from './ingredient-details.module.css';
 import {dataPropTypes} from '../../utils/data';
 import Modal from '../modal/modal';
 
+import ingredientDetailsStyle from './ingredient-details.module.css';
+
 function IngredientDetail({visible, item, onClose, onKeyDown}) {
     return (
+        item && 
         <Modal header="Детали ингридиента" 
             visible={visible} 
             onClose={onClose}
@@ -14,7 +16,7 @@ function IngredientDetail({visible, item, onClose, onKeyDown}) {
                     alt="изображение ингридиента"
                     src={item.image_large}
                 />
-                <p className="text text_type_main-medium mt-1 mb-2" style={{textAlign: 'center'}}>
+                <p className="text text_type_main-medium mt-1 mb-2 textAlign">
                     {item.name}
                 </p>
                 <div className={ingredientDetailsStyle.nutritions}>
@@ -38,13 +40,13 @@ function IngredientDetail({visible, item, onClose, onKeyDown}) {
                         <p className="text text_type_digits-default text_color_inactive">{item.carbohydrates}</p>
                     </div>
                 </div>
-            </div>
+            </div> 
         </Modal>
     );
 }
 
-export default IngredientDetail;
-
 IngredientDetail.propTypes = {
-    item: dataPropTypes.isRequired
+    item: dataPropTypes
 }
+
+export default IngredientDetail;

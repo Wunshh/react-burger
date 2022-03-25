@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
-import appStyles from './app.module.css';
+
+import * as api from '../../utils/api';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import * as api from '../../utils/api';
 import IngredientDetail from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+
+import appStyles from './app.module.css';
+
 
 function App() {
 
   const [ingredients, setIngredients] = useState([]);
-  const [isIngredientModal, setIsIngredientModal] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
-  const [isOrderModal, setIsOrderModal] = useState(false);
+  const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [isOrderModalShown, setIsOrderModalShown] = useState(false);
 
   useEffect(() => {
     api.getIngredientsData()
@@ -23,25 +26,23 @@ function App() {
 
   function handleIngredientClick(ingredient) {
     setSelectedIngredient(ingredient);
-    setIsIngredientModal(true);
+    setIsIngredientModalShown(true);
   }
 
   function handleModalClose() {
-    setSelectedIngredient({})
-    setIsIngredientModal(false);
-    setIsOrderModal(false);
+    setSelectedIngredient(null)
+    setIsIngredientModalShown(false);
+    setIsOrderModalShown(false);
   }
 
   function handleModalCloseKeyDown(evt) {
     if (evt.key === 'Escape') {
-      setSelectedIngredient({})
-      setIsIngredientModal(false);
-      setIsOrderModal(false);
+      handleModalClose();
     }
   }
 
   function handleOrderClick() {
-    setIsOrderModal(true);
+    setIsOrderModalShown(true);
   }
 
   return (
@@ -53,15 +54,15 @@ function App() {
         <BurgerConstructor onButtonClick={handleOrderClick}/>
       </main>
       
-      {isIngredientModal && <IngredientDetail 
-        visible={isIngredientModal} 
+      {isIngredientModalShown && <IngredientDetail 
+        visible={isIngredientModalShown} 
         item={selectedIngredient} 
         onClose={handleModalClose}
         onKeyDown={handleModalCloseKeyDown}
       />}
 
-      {isOrderModal && <OrderDetails 
-        visible={isOrderModal}
+      {isOrderModalShown && <OrderDetails 
+        visible={isOrderModalShown}
         onKeyDown={handleModalCloseKeyDown}
         onClose={handleModalClose}
       />}

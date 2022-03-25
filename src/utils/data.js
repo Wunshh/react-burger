@@ -134,9 +134,6 @@ const menuMobileHeight = 620;
 const mainHeight = 260;
 const selectedHeight = 460;
 
-const modalRoot = document.getElementById("react-modals"); 
-const BASE_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
 const dataPropTypes = PropTypes.shape({
    "_id": PropTypes.string.isRequired,
    "name": PropTypes.string.isRequired,
@@ -158,9 +155,7 @@ export {
    mainHeight,
    selectedHeight,
    selectedIngridients,
-   dataPropTypes,
-   modalRoot,
-   BASE_URL,
+   dataPropTypes
 }
 
 
