@@ -1,7 +1,9 @@
-.ingredient {
+.head {
     display: flex;
-    align-items: center;
-    width: 568px;
     justify-content: space-between;
+}
+
+.button {
+    align-self: center;
     cursor: pointer;
 }

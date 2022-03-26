@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import burgerIngredientsStyle from './burger-ingredients.module.css';
-import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
-import { data } from '../../utils/data';
-import {
-    desctopHeight,
-    menuMobileHeight,
-} from '../../utils/data';
-import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerIngredients() {
+import useWindowHeight from '../../utils/hooks/useWindowHeight';
+import {
+    desctopHeight,
+    menuMobileHeight,
+} from '../../utils/data';
+import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
+
+import burgerIngredientsStyle from './burger-ingredients.module.css';
+
+
+function BurgerIngredients({ data, onCardClick }) {
 
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
@@ -40,6 +42,8 @@ function BurgerIngredients() {
         
     }, [current]);
 
+    const ingridnentsFilter = (type) => data.filter(m => m.type === type);
+
     return (
         <section className={burgerIngredientsStyle.section}>
             <div className={burgerIngredientsStyle.menu} style={{maxHeight: deviceHeihgt}}> 
@@ -64,9 +68,13 @@ function BurgerIngredients() {
                         Булки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "bun").map((item) => {
+                        {ingridnentsFilter("bun").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }
@@ -76,9 +84,13 @@ function BurgerIngredients() {
                         Соусы
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "sauce").map((item) => {
+                        {ingridnentsFilter("sauce").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }
@@ -88,9 +100,13 @@ function BurgerIngredients() {
                         Начинки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {data.filter(m => m.type === "main").map((item) => {
+                        {ingridnentsFilter("main").map((item) => {
                             return (
-                                <BurgerIngredientsCard key={item._id}  item={item}/>
+                                <BurgerIngredientsCard 
+                                    key={item._id}  
+                                    item={item} 
+                                    onCardClick={onCardClick}
+                                />
                             )
                         })
                         }
