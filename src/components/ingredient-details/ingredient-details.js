@@ -1,4 +1,4 @@
-import {dataPropTypes} from '../../utils/data';
+import {dataPropTypes} from '../../utils/types';
 import Modal from '../modal/modal';
 
 import ingredientDetailsStyle from './ingredient-details.module.css';
@@ -16,7 +16,7 @@ function IngredientDetail({visible, item, onClose, onKeyDown}) {
                     alt="изображение ингридиента"
                     src={item.image_large}
                 />
-                <p className="text text_type_main-medium mt-1 mb-2 textAlign">
+                <p className="text text_type_main-medium mt-1 mb-2 text-align">
                     {item.name}
                 </p>
                 <div className={ingredientDetailsStyle.nutritions}>

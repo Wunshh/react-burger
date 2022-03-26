@@ -4,7 +4,7 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { dataPropTypes } from '../../utils/data';
+import { dataPropTypes } from '../../utils/types';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';
 
@@ -12,7 +12,7 @@ function BurgerIngredientsCard({item, onCardClick}) {
 
     const baseCountNumber = 0;
 
-    let count = item.__v === baseCountNumber ? false : true;
+    const count = item.__v === baseCountNumber ? false : true;
 
     function handleClick() {
         onCardClick(item);
@@ -30,7 +30,7 @@ function BurgerIngredientsCard({item, onCardClick}) {
                 <p className="text text_type_digits-default mr-2">{item.price}</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <p className="text text_type_main-small textAlign">
+            <p className="text text_type_main-small text-align">
                 {item.name}
             </p>
         </div>

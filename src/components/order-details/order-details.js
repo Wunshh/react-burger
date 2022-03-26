@@ -12,7 +12,7 @@ function OrderDetails({visible, onKeyDown, onClose}) {
             onClose={onClose}
         >
             <div className={orderDetailsStyle.container}>
-                <h3 className="text text_type_digits-large textShadow"> 
+                <h3 className="text text_type_digits-large text-shadow"> 
                     034536
                 </h3>
                 <p className="text text_type_main-medium mt-8 mb-15">

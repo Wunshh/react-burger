@@ -3,7 +3,7 @@ import {
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { dataPropTypes } from '../../utils/data';
+import { dataPropTypes } from '../../utils/types';
 
 import burgerCardStyle from './burger-constructor-card.module.css';
 
