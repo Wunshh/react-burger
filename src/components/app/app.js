@@ -6,6 +6,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import IngredientDetail from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
 
 import appStyles from './app.module.css';
 
@@ -16,13 +17,27 @@ function App() {
   const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [isOrderModalShown, setIsOrderModalShown] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null)
 
   useEffect(() => {
     api.getIngredientsData()
     .then((res) => {
       setIngredients(res.data);      
     })
+    .catch((err) => {
+      console.log(err);
+    })
   }, []);
+
+  function createOrder(itemsId) {
+    api.sendOrder(itemsId) 
+    .then((res) => {
+      setOrderDetails(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   function handleIngredientClick(ingredient) {
     setSelectedIngredient(ingredient);
@@ -33,6 +48,7 @@ function App() {
     setSelectedIngredient(null)
     setIsIngredientModalShown(false);
     setIsOrderModalShown(false);
+    setOrderDetails(null);
   }
 
   function handleModalCloseKeyDown(evt) {
@@ -50,10 +66,16 @@ function App() {
       <AppHeader />
 
       <main className={appStyles.main}>
-        <BurgerIngredients data={ingredients} onCardClick={handleIngredientClick}/>
-        <BurgerConstructor onButtonClick={handleOrderClick}/>
+        <BurgerIngredients data={ingredients} onCardClick={handleIngredientClick} />
+
+        <BurgerConstructorContext.Provider value={ingredients}>
+          <BurgerConstructor 
+            onButtonClick={handleOrderClick} 
+            createOrder={createOrder}
+          />
+        </BurgerConstructorContext.Provider>
       </main>
-      
+           
       {isIngredientModalShown && <IngredientDetail 
         visible={isIngredientModalShown} 
         item={selectedIngredient} 
@@ -61,10 +83,11 @@ function App() {
         onKeyDown={handleModalCloseKeyDown}
       />}
 
-      {isOrderModalShown && <OrderDetails 
+      {isOrderModalShown && orderDetails && <OrderDetails 
         visible={isOrderModalShown}
         onKeyDown={handleModalCloseKeyDown}
         onClose={handleModalClose}
+        orderDetails={orderDetails}
       />}
     </div>
   );
