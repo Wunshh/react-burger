@@ -39,7 +39,6 @@ function BurgerConstructor({ onButtonClick, createOrder }) {
 
     const bun = ingredients.find((m) => m.type === 'bun'); 
     const mainIngredients = ingredients.filter((m) => m.type !== 'bun');
-    const ingredientsPrice = mainIngredients.map((item) => item.price);
 
     const order = mainIngredients.concat(bun);
 
@@ -49,7 +48,7 @@ function BurgerConstructor({ onButtonClick, createOrder }) {
     }
 
     function calculateCost() {
-        return (ingredientsPrice.reduce((sum, current) => sum + current, 0)) + bun.price * 2;
+        return (mainIngredients.reduce((sum, current) => sum + current.price, 0) + bun.price * 2);
     }
 
     return (
@@ -80,7 +79,7 @@ function BurgerConstructor({ onButtonClick, createOrder }) {
 
             <div className={burgerConstructorStyle.order}>
                 <div className={burgerConstructorStyle.prise}>
-                    <p className="text text_type_digits-medium">{ingredientsPrice && bun && calculateCost()}</p>
+                    <p className="text text_type_digits-medium">{bun && calculateCost()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button type="primary" size="large" onClick={hendelClick}>

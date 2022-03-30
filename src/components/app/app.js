@@ -66,9 +66,11 @@ function App() {
       <AppHeader />
 
       <main className={appStyles.main}>
-        <BurgerIngredients data={ingredients} onCardClick={handleIngredientClick} />
-
         <BurgerConstructorContext.Provider value={ingredients}>
+          <BurgerIngredients 
+            onCardClick={handleIngredientClick} 
+          />
+          
           <BurgerConstructor 
             onButtonClick={handleOrderClick} 
             createOrder={createOrder}
