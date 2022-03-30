@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,17 +8,20 @@ import {
     desctopHeight,
     menuMobileHeight,
 } from '../../utils/data';
+import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
 
-function BurgerIngredients({ data, onCardClick }) {
+function BurgerIngredients({ onCardClick }) {
 
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
     const souseRef = useRef();
     const fillingRef = useRef();
+
+    const ingredients = useContext(BurgerConstructorContext); 
 
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
@@ -42,7 +45,7 @@ function BurgerIngredients({ data, onCardClick }) {
         
     }, [current]);
 
-    const ingridnentsFilter = (type) => data.filter(m => m.type === type);
+    const ingridnentsFilter = (type) => ingredients.filter(m => m.type === type);
 
     return (
         <section className={burgerIngredientsStyle.section}>

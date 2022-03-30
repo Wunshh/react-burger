@@ -1,10 +1,12 @@
 import odrerModalImg from '../../images/graphics.png';
+import { orderPropTypes } from '../../utils/types';
 import Modal from '../modal/modal';
 
 import orderDetailsStyle from './order-details.module.css';
 
 
-function OrderDetails({visible, onKeyDown, onClose}) {
+function OrderDetails({visible, onKeyDown, onClose, orderDetails}) {
+
     return (
         <Modal 
             visible={visible}
@@ -13,7 +15,7 @@ function OrderDetails({visible, onKeyDown, onClose}) {
         >
             <div className={orderDetailsStyle.container}>
                 <h3 className="text text_type_digits-large text-shadow"> 
-                    034536
+                    {orderDetails.order.number}
                 </h3>
                 <p className="text text_type_main-medium mt-8 mb-15">
                     идентификатор заказа
@@ -28,6 +30,10 @@ function OrderDetails({visible, onKeyDown, onClose}) {
             </div>
         </Modal>
     );
+}
+
+OrderDetails.propTypes = {
+    orderDetails: orderPropTypes.isRequired
 }
 
 export default OrderDetails;

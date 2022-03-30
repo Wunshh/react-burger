@@ -15,6 +15,13 @@ const dataPropTypes = PropTypes.shape({
     "__v": PropTypes.number.isRequired
 });
 
+const orderPropTypes = PropTypes.shape({
+    "name": PropTypes.string.isRequired,
+    "order": PropTypes.objectOf(PropTypes.number),
+    "success": PropTypes.bool
+});
+
 export {
-    dataPropTypes
+    dataPropTypes,
+    orderPropTypes
 }
