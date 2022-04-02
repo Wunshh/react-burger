@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { 
     ConstructorElement,
@@ -12,20 +13,23 @@ import {
     mainHeight,
     selectedHeight
 } from '../../utils/data';
-import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
+import { sendOrder } from '../../services/actions/actions';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
+import { ORDER_MODAL_OPEN } from '../../services/actions/actions';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
 
-function BurgerConstructor({ onButtonClick, createOrder }) {
+function BurgerConstructor() {
+
+    const ingredients = useSelector(store => store.burger.constructorIngredients);
+
+    const dispatch = useDispatch();
 
     const windowHeight = useWindowHeight();
 
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-
-    const ingredients = useContext(BurgerConstructorContext);
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -37,14 +41,16 @@ function BurgerConstructor({ onButtonClick, createOrder }) {
         }
     }, [windowHeight]);
 
-    const bun = ingredients.find((m) => m.type === 'bun'); 
-    const mainIngredients = ingredients.filter((m) => m.type !== 'bun');
+    const bun = ingredients !== null ? ingredients.find((m) => m.type === 'bun') : null; 
+    const mainIngredients = ingredients !== null ? ingredients.filter((m) => m.type !== 'bun') : null;
 
-    const order = mainIngredients.concat(bun);
+    const order = ingredients !== null ? mainIngredients.concat(bun) : null;
 
     function hendelClick() {
-        onButtonClick();
-        createOrder(order.map((item) => item._id));
+        dispatch({
+            type: ORDER_MODAL_OPEN
+        });
+        dispatch(sendOrder(order.map((item) => item._id)));
     }
 
     function calculateCost() {
@@ -52,37 +58,40 @@ function BurgerConstructor({ onButtonClick, createOrder }) {
     }
 
     return (
+ 
         <section className={burgerConstructorStyle.section}>
-            <div className={burgerConstructorStyle.selected} style={{maxHeight: selectedDeviceHeight}}>
-                {bun && <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
-                />}
-                <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
-                    {mainIngredients.map((item, index) => {
-                        return (
-                            <BurgerConstructorCard key={index} ingridient={item}/>
-                        );
-                    })}
-                </div>
-                {bun &&  <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
-                />}
-            </div>
+            {ingredients &&
+                <div className={burgerConstructorStyle.selected} style={{maxHeight: selectedDeviceHeight}}>
+                    {bun && <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={`${bun.name} (верх)`}
+                        price={bun.price}
+                        thumbnail={bun.image_mobile}
+                    />}
+                    <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
+                        {mainIngredients.map((item, index) => {
+                            return (
+                                <BurgerConstructorCard key={index} ingridient={item}/>
+                            );
+                        })}
+                    </div>
+                    {bun &&  <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={`${bun.name} (низ)`}
+                        price={bun.price}
+                        thumbnail={bun.image_mobile}
+                    />}
+                </div> 
+            }
 
             <div className={burgerConstructorStyle.order}>
                 <div className={burgerConstructorStyle.prise}>
-                    <p className="text text_type_digits-medium">{bun && calculateCost()}</p>
+                    <p className="text text_type_digits-medium mr-2">{bun && calculateCost()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" onClick={hendelClick}>
+                <Button type="primary" size="large" onClick={ingredients && hendelClick}>
                     Оформить заказ
                 </Button>
             </div>
@@ -95,5 +104,5 @@ BurgerConstructor.propTypes = {
     createOrder: PropTypes.func
 }
 
-export default BurgerConstructor;
+export default memo(BurgerConstructor);
 

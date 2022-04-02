@@ -1,16 +1,16 @@
+import { useSelector } from 'react-redux';
 import {dataPropTypes} from '../../utils/types';
 import Modal from '../modal/modal';
 
 import ingredientDetailsStyle from './ingredient-details.module.css';
 
-function IngredientDetail({visible, item, onClose, onKeyDown}) {
+function IngredientDetail() {
+
+    const item = useSelector(state => state.burger.ingredient);
+
     return (
-        item && 
-        <Modal header="Детали ингридиента" 
-            visible={visible} 
-            onClose={onClose}
-            onKeyDown={onKeyDown}
-        >
+        item !== null && 
+        <Modal header="Детали ингридиента">
             <div className={ingredientDetailsStyle.card}>
                 <img                 
                     alt="изображение ингридиента"

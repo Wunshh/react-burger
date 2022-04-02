@@ -9,6 +9,7 @@
 }
 
 .section:nth-child(1n){
+    position: relative;
     box-sizing: border-box;
 }
 
@@ -36,12 +37,15 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-right: 16px;
+    position: absolute;
+    bottom: 0;
+    right: 16px;
 }
 
 .prise {
     display: flex;
     align-items: center;
-    width: 119px;
     justify-content: space-between;
     margin-right: 40px;
 }

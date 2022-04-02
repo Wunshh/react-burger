@@ -1,11 +1,20 @@
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { 
     CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { MODAL_CLOSE } from '../../services/actions/actions';
+
 import modalHeaderStyle from './modal-header.module.css';
 
-function ModalHeader({ header, onClose}) {
+function ModalHeader({ header }) {
+    const dispatch = useDispatch();
+
+    const onClose = () => {
+        dispatch({type: MODAL_CLOSE})
+    }
+
     return (
         <div className={modalHeaderStyle.head}>
             <h2 className="text text_type_main-large">
@@ -19,8 +28,7 @@ function ModalHeader({ header, onClose}) {
 }
 
 ModalHeader.propTypes = {
-    header: PropTypes.string,
-    onClose: PropTypes.func,
+    header: PropTypes.string
 }
 
 export default ModalHeader;

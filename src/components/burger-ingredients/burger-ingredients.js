@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,23 +9,28 @@ import {
     desctopHeight,
     menuMobileHeight,
 } from '../../utils/data';
-import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
+import { getIngredientsData } from '../../services/actions/actions';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
 
-function BurgerIngredients({ onCardClick }) {
+function BurgerIngredients() {
 
+    const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
     const souseRef = useRef();
     const fillingRef = useRef();
 
-    const ingredients = useContext(BurgerConstructorContext); 
-
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
+
+    const ingredients = useSelector(store => store.burger.allIngredients);
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -76,7 +82,6 @@ function BurgerIngredients({ onCardClick }) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -92,7 +97,6 @@ function BurgerIngredients({ onCardClick }) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -108,7 +112,6 @@ function BurgerIngredients({ onCardClick }) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -120,5 +123,5 @@ function BurgerIngredients({ onCardClick }) {
     );
 }
 
-export default BurgerIngredients;
+export default memo(BurgerIngredients);
 

@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { 
     Counter,
@@ -5,21 +6,26 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { dataPropTypes } from '../../utils/types';
+import { INGREDIENT_MODAL_OPEN } from '../../services/actions/actions';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';
 
-function BurgerIngredientsCard({item, onCardClick}) {
+function BurgerIngredientsCard({item}) {
 
+    const dispatch = useDispatch();
     const baseCountNumber = 0;
 
     const count = item.__v === baseCountNumber ? false : true;
 
-    function handleClick() {
-        onCardClick(item);
+    const hendelClick = () => {
+        dispatch({
+            type: INGREDIENT_MODAL_OPEN,
+            item
+        });
     }
 
     return (
-        <div className={burgerCardStyle.card} onClick={handleClick}>
+        <div className={burgerCardStyle.card} onClick={hendelClick}>
             {count && <Counter count={item.__v} size="default" />}
             <img 
                 className={burgerCardStyle.img} 

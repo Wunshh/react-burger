@@ -1,16 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import ModalHeader from '../modal-header/modal-header';
+import { MODAL_CLOSE } from '../../services/actions/actions';
 
 import modalStyle from './modal.module.css';
 
 
-const Modal = ({children, header, visible, onClose, onKeyDown}) => {
+const Modal = ({children, header}) => {
 
+  const visible = useSelector(store => store.burger.visible);
+  const dispatch = useDispatch();
   const modalRoot = document.getElementById("react-modals"); 
+
+  const onKeyDown = useCallback(
+    (evt) => {
+      if (evt.key === 'Escape') {
+        dispatch({
+          type: MODAL_CLOSE
+        });
+      }
+    }, [dispatch]
+  );
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
@@ -23,10 +37,10 @@ const Modal = ({children, header, visible, onClose, onKeyDown}) => {
   return createPortal (
     <div className={`${modalStyle.invisible} ${visible ? modalStyle.visible : ''}`}>
       <div className={modalStyle.modal}>
-        <ModalHeader header={header} visible={visible} onClose={onClose}/>
+        <ModalHeader header={header} />
         {children}
       </div>
-      <ModalOverlay visible={visible} onClose={onClose}/>
+      <ModalOverlay />
     </div>,
     modalRoot
   );
@@ -35,9 +49,6 @@ const Modal = ({children, header, visible, onClose, onKeyDown}) => {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   header: PropTypes.string,
-  visible: PropTypes.bool.isRequired,
-  onClose: PropTypes.func,
-  onKeyDown: PropTypes.func
 }
 
 export default Modal;

@@ -1,18 +1,18 @@
+import { useSelector } from 'react-redux';
+
 import odrerModalImg from '../../images/graphics.png';
-import { orderPropTypes } from '../../utils/types';
 import Modal from '../modal/modal';
 
 import orderDetailsStyle from './order-details.module.css';
 
 
-function OrderDetails({visible, onKeyDown, onClose, orderDetails}) {
+function OrderDetails() {
 
+    const orderDetails = useSelector(store => store.burger.order);
+    
     return (
-        <Modal 
-            visible={visible}
-            onKeyDown={onKeyDown} 
-            onClose={onClose}
-        >
+        orderDetails !== null &&
+        <Modal>
             <div className={orderDetailsStyle.container}>
                 <h3 className="text text_type_digits-large text-shadow"> 
                     {orderDetails.order.number}
@@ -30,10 +30,6 @@ function OrderDetails({visible, onKeyDown, onClose, orderDetails}) {
             </div>
         </Modal>
     );
-}
-
-OrderDetails.propTypes = {
-    orderDetails: orderPropTypes.isRequired
 }
 
 export default OrderDetails;
