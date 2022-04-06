@@ -6,7 +6,7 @@ import ingredientDetailsStyle from './ingredient-details.module.css';
 
 function IngredientDetail() {
 
-    const item = useSelector(state => state.burger.ingredient);
+    const item = useSelector(state => state.modal.ingredient);
 
     return (
         item !== null && 

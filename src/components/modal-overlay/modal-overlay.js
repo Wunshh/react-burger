@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { MODAL_CLOSE } from '../../services/actions/actions';
+import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import overlayStyle from './modal-overlay.module.css';
 

@@ -13,6 +13,10 @@
     box-sizing: border-box;
 }
 
+.hover {
+    border: 1px solid #4c4cff;
+}
+
 .main {
     display: flex;
     flex-direction: column;

@@ -1,16 +1,25 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
 import { 
     Counter,
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { dataPropTypes } from '../../utils/types';
-import { INGREDIENT_MODAL_OPEN } from '../../services/actions/actions';
+import { INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';
 
 function BurgerIngredientsCard({item}) {
+
+    const [{opacity}, dragRef] = useDrag({
+        type: "items",
+        item: { item },
+        collect: monitor => ({
+          opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    });
 
     const dispatch = useDispatch();
     const baseCountNumber = 0;
@@ -25,7 +34,7 @@ function BurgerIngredientsCard({item}) {
     }
 
     return (
-        <div className={burgerCardStyle.card} onClick={hendelClick}>
+        <div className={burgerCardStyle.card} onClick={hendelClick} style={{opacity}} ref={dragRef}>
             {count && <Counter count={item.__v} size="default" />}
             <img 
                 className={burgerCardStyle.img} 

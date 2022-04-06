@@ -9,7 +9,7 @@ import {
     desctopHeight,
     menuMobileHeight,
 } from '../../utils/data';
-import { getIngredientsData } from '../../services/actions/actions';
+import { getIngredientsData } from '../../services/actions/ingredients';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
@@ -26,7 +26,7 @@ function BurgerIngredients() {
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
 
-    const ingredients = useSelector(store => store.burger.allIngredients);
+    const ingredients = useSelector(store => store.ingredient.allIngredients);
 
     useEffect(() => {
         dispatch(getIngredientsData());

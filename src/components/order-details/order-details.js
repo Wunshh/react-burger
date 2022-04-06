@@ -8,7 +8,7 @@ import orderDetailsStyle from './order-details.module.css';
 
 function OrderDetails() {
 
-    const orderDetails = useSelector(store => store.burger.order);
+    const orderDetails = useSelector(store => store.order.order);
     
     return (
         orderDetails !== null &&

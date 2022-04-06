@@ -4,7 +4,7 @@ import {
     CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { MODAL_CLOSE } from '../../services/actions/actions';
+import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import modalHeaderStyle from './modal-header.module.css';
 

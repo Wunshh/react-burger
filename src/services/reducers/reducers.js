@@ -1,15 +1,26 @@
 import {
-    GET_INGREDIENTS_SUCCESS,
-    SEND_ORDER_SUCCESS,
     ORDER_MODAL_OPEN,
     INGREDIENT_MODAL_OPEN,
     MODAL_CLOSE
-} from '../actions/actions';
+} from '../actions/modal';
+
+import {
+    GET_INGREDIENTS_SUCCESS
+} from '../actions/ingredients';
+
+import {
+    SEND_ORDER_SUCCESS
+} from '../actions/order';
+
+import {
+    ADD_ITEM,
+    DELETE_ITEM
+} from '../actions/constructor';
 
 
 const initialState = {
     allIngredients: [],
-    constructorIngredients: null,
+    constructorIngredients: [],
     ingredient: null,
     order: null,
     ingredientModalOpen: false,
@@ -17,20 +28,71 @@ const initialState = {
     visible: false
 };
 
-const burgerReducer = (state = initialState, action) => {
+const ingredient = (state = initialState, action) => {
     switch (action.type) {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                allIngredients: action.allIngredients
+                allIngredients: action.allIngredients,
             };
         }
+        case ADD_ITEM: {
+            return {
+                ...state,
+                constructorIngredients: 
+                    action.item.type === 'bun' ?
+                        [...state.constructorIngredients].filter(item => item.type !== 'bun').concat(action.item)
+                    : 
+                        [...state.constructorIngredients, action.item]
+                ,
+
+                allIngredients: action.item.type !== 'bun' ?
+                [...state.allIngredients].map(item => 
+                    item._id === action.item._id && action.item.type !== 'bun' ? { ...item, __v: ++item.__v } : item)
+                :
+                [...state.allIngredients].filter(item => 
+                    item.type === 'bun').map(item => item._id === action.item._id && action.item.__v === 0 ? 
+                        { ...item, __v: ++item.__v } 
+                        : 
+                        { ...item, __v: 0 }).
+                        concat(...state.allIngredients.filter(item => item.type !== "bun"))
+            };
+        }
+        case DELETE_ITEM: {
+            return {
+                ...state,
+                constructorIngredients: [
+                    ...state.constructorIngredients.filter(item => item._id !== action.id).concat(
+                        ...state.constructorIngredients.filter(item => item._id === action.id).slice(1)
+                    )
+                ],
+                allIngredients: [...state.allIngredients].map(item => 
+                    item._id === action.id ? { ...item, __v: --item.__v } : item
+                )
+            };
+        }
+        default: {
+            return state
+        }
+    } 
+}
+
+const order = (state = initialState, action) => {
+    switch (action.type) {
         case SEND_ORDER_SUCCESS: {
             return {
                 ...state,
                 order: action.order,
             };
         }
+        default: {
+            return state
+        }
+    } 
+}
+
+const modal = (state = initialState, action) => {
+    switch (action.type) {
         case ORDER_MODAL_OPEN: {
             return {
                 ...state,
@@ -53,13 +115,17 @@ const burgerReducer = (state = initialState, action) => {
                 visible: false,
                 order: null,
                 ingredient: null,
-                ingredientModalOpen: false
+                ingredientModalOpen: false,
             };
         }
         default: {
             return state
         }
     } 
-}
+} 
 
-export default burgerReducer;
+export { 
+    ingredient,
+    order,
+    modal
+}

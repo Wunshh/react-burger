@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import ModalHeader from '../modal-header/modal-header';
-import { MODAL_CLOSE } from '../../services/actions/actions';
+import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import modalStyle from './modal.module.css';
 
 
 const Modal = ({children, header}) => {
 
-  const visible = useSelector(store => store.burger.visible);
+  const visible = useSelector(store => store.modal.visible);
   const dispatch = useDispatch();
   const modalRoot = document.getElementById("react-modals"); 
 

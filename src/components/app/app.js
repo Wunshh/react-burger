@@ -1,4 +1,6 @@
 import { useSelector } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -11,17 +13,19 @@ import appStyles from './app.module.css';
 
 function App() {
   
-  const isOrderModalShown = useSelector(store => store.burger.orderModalOpen);
-  const isIngredientModalShown = useSelector(store => store.burger.ingredientModalOpen);
+  const isOrderModalShown = useSelector(store => store.modal.orderModalOpen);
+  const isIngredientModalShown = useSelector(store => store.modal.ingredientModalOpen);
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
 
       <main className={appStyles.main}>
-        <BurgerIngredients />
-        
-        <BurgerConstructor />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          
+          <BurgerConstructor />
+        </DndProvider>
       </main>
            
       {isIngredientModalShown && <IngredientDetail />}
