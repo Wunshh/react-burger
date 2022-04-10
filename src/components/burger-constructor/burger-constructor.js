@@ -1,7 +1,8 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 import { 
     ConstructorElement,
     CurrencyIcon,
@@ -17,7 +18,7 @@ import {
 import { sendOrder } from '../../services/actions/order';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import { ORDER_MODAL_OPEN } from '../../services/actions/modal';
-import { ADD_ITEM } from '../../services/actions/constructor';
+import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
@@ -41,7 +42,7 @@ function BurgerConstructor() {
         }
     }, [windowHeight]);
 
-    const [{isHover}, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop({
         accept: "items",
         drop(item) {
             dispatch({
@@ -70,6 +71,18 @@ function BurgerConstructor() {
         return (mainIngredients.reduce((sum, current) => sum + current.price, 0) + bunPrice * 2);
     }
 
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = ingredients[dragIndex];
+        const newCards = [...ingredients]
+        newCards.splice(dragIndex, 1);
+        newCards.splice(hoverIndex, 0, dragCard);
+        
+        dispatch({
+            type: MOVE_ITEM,
+            newCards
+        })
+    }, [dispatch, ingredients]);
+
     return (
  
         <section className={burgerConstructorStyle.section} ref={dropTarget}>
@@ -88,7 +101,12 @@ function BurgerConstructor() {
                     <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
                         {mainIngredients.map((item, index) => {
                             return (
-                                <BurgerConstructorCard key={index} ingridient={item}/>
+                                <BurgerConstructorCard 
+                                    key={uuidv4()}
+                                    ingridient={item} 
+                                    index={index} 
+                                    moveCard={moveCard}
+                                />
                             );
                         })}
                     </div>

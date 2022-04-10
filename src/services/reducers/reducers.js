@@ -14,9 +14,9 @@ import {
 
 import {
     ADD_ITEM,
-    DELETE_ITEM
+    DELETE_ITEM,
+    MOVE_ITEM
 } from '../actions/constructor';
-
 
 const initialState = {
     allIngredients: [],
@@ -51,25 +51,30 @@ const ingredient = (state = initialState, action) => {
                     item._id === action.item._id && action.item.type !== 'bun' ? { ...item, __v: ++item.__v } : item)
                 :
                 [...state.allIngredients].filter(item => 
-                    item.type === 'bun').map(item => item._id === action.item._id && action.item.__v === 0 ? 
-                        { ...item, __v: ++item.__v } 
+                    item.type === 'bun').map(item => item._id === action.item._id ? 
+                        {...item, __v: 1 } 
                         : 
-                        { ...item, __v: 0 }).
-                        concat(...state.allIngredients.filter(item => item.type !== "bun"))
+                        {...item, __v: 0 }).concat(...state.allIngredients.filter(item => item.type !== "bun"))
             };
         }
         case DELETE_ITEM: {
             return {
                 ...state,
                 constructorIngredients: [
-                    ...state.constructorIngredients.filter(item => item._id !== action.id).concat(
-                        ...state.constructorIngredients.filter(item => item._id === action.id).slice(1)
+                    ...state.constructorIngredients.filter(item => item._id !== action.id, 0).concat(
+                        ...state.constructorIngredients.filter(item => item._id === action.id, 0).slice(1)
                     )
                 ],
                 allIngredients: [...state.allIngredients].map(item => 
                     item._id === action.id ? { ...item, __v: --item.__v } : item
                 )
             };
+        }
+        case MOVE_ITEM: {
+            return {
+                ...state,
+                constructorIngredients: action.newCards
+            }
         }
         default: {
             return state
