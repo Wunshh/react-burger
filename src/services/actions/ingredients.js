@@ -4,6 +4,12 @@ const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
+function catchFetchError() {
+    return {
+        type: GET_INGREDIENTS_FAILED
+    };
+}
+
 function getIngredientsData() {
     return function(dispatch) {
         dispatch({
@@ -17,16 +23,16 @@ function getIngredientsData() {
                     allIngredients: res.data
                 })
             } else {
-                dispatch({
-                    type: GET_INGREDIENTS_FAILED
-                });
+                dispatch(
+                    catchFetchError()
+                );
             }
         })
         .catch((err) => {
+            dispatch(
+                catchFetchError()
+            );
             console.log(err);
-            dispatch({
-                type: GET_INGREDIENTS_FAILED
-            });
         });
     }
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { 
@@ -23,7 +22,7 @@ import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
 import burgerConstructorStyle from './burger-constructor.module.css';
 
 
-function BurgerConstructor() {
+function BurgerConstructor({ onButtonClick }) {
 
     const ingredients = useSelector(store => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
@@ -47,7 +46,8 @@ function BurgerConstructor() {
         drop(item) {
             dispatch({
                 type: ADD_ITEM,
-                ...item
+                ...item,
+                uuid: uuidv4()
             });
         }
     });
@@ -59,6 +59,7 @@ function BurgerConstructor() {
     const order = mainIngredients.concat(bun);
 
     function hendelClick() {
+        onButtonClick();
         dispatch({
             type: ORDER_MODAL_OPEN
         });
@@ -102,7 +103,7 @@ function BurgerConstructor() {
                         {mainIngredients.map((item, index) => {
                             return (
                                 <BurgerConstructorCard 
-                                    key={uuidv4()}
+                                    key={item.uuid}
                                     ingridient={item} 
                                     index={index} 
                                     moveCard={moveCard}
@@ -125,17 +126,12 @@ function BurgerConstructor() {
                     <p className="text text_type_digits-medium mr-2">{mainIngredients && calculateCost()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" onClick={ingredients && hendelClick}>
+                <Button type="primary" size="large" onClick={ingredients && hendelClick} disabled={bun && order.length > 1 ? false : true}>
                     Оформить заказ
                 </Button>
             </div>
         </section>
     );
-}
-
-BurgerConstructor.propTypes = {
-    onButtonClick: PropTypes.func,
-    createOrder: PropTypes.func
 }
 
 export default memo(BurgerConstructor);

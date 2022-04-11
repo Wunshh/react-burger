@@ -4,6 +4,12 @@ const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
 const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
 
+function catchFetchError() {
+    return {
+        type: SEND_ORDER_FAILED
+    };
+}
+
 const sendOrder = (itemsId) => {
     return function(dispatch) {
         dispatch({
@@ -17,16 +23,16 @@ const sendOrder = (itemsId) => {
                     order: res
                 }); 
             } else {
-                dispatch({
-                    type: SEND_ORDER_FAILED
-                });
+                dispatch(
+                    catchFetchError()
+                );
             }
         })
         .catch((err) => {
+            dispatch(
+                catchFetchError()
+            );
             console.log(err);
-            dispatch({
-                type: SEND_ORDER_FAILED
-            });
         });
     }
 }

@@ -11,7 +11,7 @@ import { INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';
 
-function BurgerIngredientsCard({item}) {
+function BurgerIngredientsCard({item, onCardClick}) {
 
     const [{opacity}, dragRef] = useDrag({
         type: "items",
@@ -27,6 +27,7 @@ function BurgerIngredientsCard({item}) {
     const count = item.__v === baseCountNumber ? false : true;
 
     const hendelClick = () => {
+        onCardClick();
         dispatch({
             type: INGREDIENT_MODAL_OPEN,
             item

@@ -37,13 +37,14 @@ const ingredient = (state = initialState, action) => {
             };
         }
         case ADD_ITEM: {
+            const uuid = action.uuid;
             return {
                 ...state,
                 constructorIngredients: 
                     action.item.type === 'bun' ?
                         [...state.constructorIngredients].filter(item => item.type !== 'bun').concat(action.item)
                     : 
-                        [...state.constructorIngredients, action.item]
+                        [...state.constructorIngredients, {...action.item, uuid}]
                 ,
 
                 allIngredients: action.item.type !== 'bun' ?
@@ -76,28 +77,16 @@ const ingredient = (state = initialState, action) => {
                 constructorIngredients: action.newCards
             }
         }
-        default: {
-            return state
-        }
-    } 
-}
-
-const order = (state = initialState, action) => {
-    switch (action.type) {
         case SEND_ORDER_SUCCESS: {
             return {
                 ...state,
                 order: action.order,
+                constructorIngredients: [],
+                allIngredients: [...state.allIngredients].map(item => 
+                    item && { ...item, __v: 0}
+                )
             };
         }
-        default: {
-            return state
-        }
-    } 
-}
-
-const modal = (state = initialState, action) => {
-    switch (action.type) {
         case ORDER_MODAL_OPEN: {
             return {
                 ...state,
@@ -127,10 +116,8 @@ const modal = (state = initialState, action) => {
             return state
         }
     } 
-} 
+}
 
 export { 
-    ingredient,
-    order,
-    modal
+    ingredient
 }

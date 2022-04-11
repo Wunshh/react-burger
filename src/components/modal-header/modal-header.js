@@ -1,19 +1,11 @@
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { 
     CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { MODAL_CLOSE } from '../../services/actions/modal';
-
 import modalHeaderStyle from './modal-header.module.css';
 
-function ModalHeader({ header }) {
-    const dispatch = useDispatch();
-
-    const onClose = () => {
-        dispatch({type: MODAL_CLOSE})
-    }
+function ModalHeader({ header, onClose }) {
 
     return (
         <div className={modalHeaderStyle.head}>

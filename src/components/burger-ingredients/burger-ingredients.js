@@ -15,7 +15,7 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
 
-function BurgerIngredients() {
+function BurgerIngredients({ onCardClick }) {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -95,6 +95,7 @@ function BurgerIngredients() {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
+                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -110,6 +111,7 @@ function BurgerIngredients() {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
+                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -125,6 +127,7 @@ function BurgerIngredients() {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
+                                    onCardClick={onCardClick}
                                 />
                             )
                         })
