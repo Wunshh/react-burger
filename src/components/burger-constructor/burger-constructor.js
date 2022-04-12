@@ -1,7 +1,9 @@
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+
 import { 
     ConstructorElement,
     CurrencyIcon,
@@ -44,10 +46,13 @@ function BurgerConstructor({ onButtonClick }) {
     const [, dropTarget] = useDrop({
         accept: "items",
         drop(item) {
-            dispatch({
-                type: ADD_ITEM,
+            const newItem = {
                 ...item,
                 uuid: uuidv4()
+            }
+            dispatch({
+                type: ADD_ITEM,
+                ...newItem
             });
         }
     });
@@ -72,17 +77,18 @@ function BurgerConstructor({ onButtonClick }) {
         return (mainIngredients.reduce((sum, current) => sum + current.price, 0) + bunPrice * 2);
     }
 
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
-        const dragCard = ingredients[dragIndex];
-        const newCards = [...ingredients]
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => { 
+        const dragCard = mainIngredients[dragIndex];
+        const newCards = [...mainIngredients];
         newCards.splice(dragIndex, 1);
         newCards.splice(hoverIndex, 0, dragCard);
-        
+      
         dispatch({
             type: MOVE_ITEM,
             newCards
         })
-    }, [dispatch, ingredients]);
+    }, [dispatch, mainIngredients, ingredients]);
 
     return (
  
@@ -132,6 +138,10 @@ function BurgerConstructor({ onButtonClick }) {
             </div>
         </section>
     );
+}
+
+BurgerConstructor.propTypes = {
+    onButtonClick: PropTypes.func
 }
 
 export default memo(BurgerConstructor);

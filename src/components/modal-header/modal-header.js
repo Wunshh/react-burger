@@ -20,7 +20,8 @@ function ModalHeader({ header, onClose }) {
 }
 
 ModalHeader.propTypes = {
-    header: PropTypes.string
+    header: PropTypes.string,
+    onClose: PropTypes.func
 }
 
 export default ModalHeader;

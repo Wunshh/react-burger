@@ -26,12 +26,6 @@ function App() {
     setIsOrderModalShown(false);
   }
 
-  function handleModalCloseKeyDown(evt) {
-    if (evt.key === 'Escape') {
-      handleModalClose();
-    }
-  }
-
   function handleOrderClick() {
     setIsOrderModalShown(true);
   }
@@ -56,7 +50,6 @@ function App() {
         <Modal 
           header="Детали ингридиента"
           onClose={handleModalClose}
-          onKeyDown={handleModalCloseKeyDown}
         >
           <IngredientDetail />
         </Modal>
@@ -65,7 +58,6 @@ function App() {
       {isOrderModalShown && 
         <Modal
           onClose={handleModalClose}
-          onKeyDown={handleModalCloseKeyDown}
         >
           <OrderDetails />
         </Modal>

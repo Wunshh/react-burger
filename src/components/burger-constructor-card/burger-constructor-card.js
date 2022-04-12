@@ -3,6 +3,7 @@ import {
     ConstructorElement,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -24,17 +25,6 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
             id
         })
     }
-
-    const [{ opacity }, drag] = useDrag({
-        type: "card",
-        item: () => ({ 
-            id: ingridient.id, index 
-        }),
-        collect: monitor => ({
-          opacity: monitor.isDragging() ? 0.5 : 1
-        })
-    });
-
     
     const [{ handlerId }, dropRef] = useDrop({
         accept: "card",
@@ -75,7 +65,18 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
         } 
     });
 
-    drag(dropRef(ref));
+
+    const [{ opacity }, drag] = useDrag({
+        type: "card",
+        item: () => ({ 
+            id: ingridient._id, index 
+        }),
+        collect: monitor => ({
+          opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    });
+
+    ingridient.type !== 'bun' && drag(dropRef(ref));
 
     const preventDefault = (e) => e.preventDefault();
     
@@ -84,7 +85,7 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
             className={burgerCardStyle.ingredient} 
             style={{opacity}} 
             ref={ref} 
-            id={handlerId} 
+            data-handler-id={handlerId}
             onDrop={preventDefault}
         >
             <DragIcon type="primary" />
@@ -99,7 +100,9 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
 }
 
 BurgerConstructorCard.propTypes = {
-    ingridient: dataPropTypes.isRequired
+    ingridient: dataPropTypes.isRequired,
+    moveCard: PropTypes.func,
+    index: PropTypes.number
 }
 
 export default BurgerConstructorCard;

@@ -72,9 +72,11 @@ const ingredient = (state = initialState, action) => {
             };
         }
         case MOVE_ITEM: {
+            
             return {
                 ...state,
-                constructorIngredients: action.newCards
+                constructorIngredients: [...state.constructorIngredients].filter(item => 
+                    item.type === 'bun').concat(action.newCards)
             }
         }
         case SEND_ORDER_SUCCESS: {
