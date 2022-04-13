@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import {
     desctopHeight,
     menuMobileHeight,
 } from '../../utils/data';
-import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
+import { getIngredientsData } from '../../services/actions/ingredients';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
@@ -16,15 +18,32 @@ import burgerIngredientsStyle from './burger-ingredients.module.css';
 
 function BurgerIngredients({ onCardClick }) {
 
+    const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
     const bonRef = useRef();
     const souseRef = useRef();
     const fillingRef = useRef();
-
-    const ingredients = useContext(BurgerConstructorContext); 
+    const allIngredients = useRef();
 
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
+
+    const ingredients = useSelector(store => store.ingredient.allIngredients);
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
+
+    const hendelScroll = () => {
+        const top = allIngredients.current.scrollTop + allIngredients.current.offsetTop;
+        if (top < souseRef.current.offsetTop) {
+            setCurrent('one');
+        } else if (fillingRef.current.offsetTop > top && top >= souseRef.current.offsetTop) {
+            setCurrent('two');
+        } else {
+            setCurrent('three');
+        }
+    };
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -34,39 +53,40 @@ function BurgerIngredients({ onCardClick }) {
         }
     }, [windowHeight]);
 
-    useEffect(() => {
-        if (current === "one") {
-            bonRef.current.scrollIntoView({behavior: "smooth"});
-        } else if (current === "two") {
-            souseRef.current.scrollIntoView({behavior: "smooth"});
-        } else if (current === "three") {
-            fillingRef.current.scrollIntoView({behavior: "smooth"});
-        }
-        
-    }, [current]);
+    const tabClick = (currentName) => {
+        setCurrent(currentName);
 
+        if (currentName === "one") {
+            bonRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
+        } else if (currentName === "two") {
+            souseRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
+        } else if (currentName === "three") {
+            fillingRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
+        }
+    }
+    
     const ingridnentsFilter = (type) => ingredients.filter(m => m.type === type);
 
     return (
-        <section className={burgerIngredientsStyle.section}>
+        <section className={`${burgerIngredientsStyle.section} ${'navigation'}`}>
             <div className={burgerIngredientsStyle.menu} style={{maxHeight: deviceHeihgt}}> 
                 <h1 className="text text_type_main-large mb-5">
                     Соберите бургер
                 </h1>
                 <div style={{ display: 'flex' }} className="mb-10">
-                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                    <Tab value="one" active={current === 'one'} onClick={tabClick}>
                         Булки
                     </Tab>
-                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                    <Tab value="two" active={current === 'two'} onClick={tabClick}>
                         Соусы
                     </Tab>
         
-                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                    <Tab value="three" active={current === 'three'} onClick={tabClick}>
                         Начинки
                     </Tab>
                 </div>      
                 
-                <div className={burgerIngredientsStyle.ingredients}>    
+                <div className={burgerIngredientsStyle.ingredients} ref={allIngredients} onScroll={hendelScroll}>    
                     <p className="text text_type_main-medium mb-6" ref={bonRef}>
                         Булки
                     </p>
@@ -120,5 +140,9 @@ function BurgerIngredients({ onCardClick }) {
     );
 }
 
-export default BurgerIngredients;
+BurgerIngredients.propTypes = {
+    onCardClick: PropTypes.func
+}
+
+export default memo(BurgerIngredients);
 

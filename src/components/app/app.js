@@ -1,60 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
-import * as api from '../../utils/api';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import IngredientDetail from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import { BurgerConstructorContext } from '../../contexts/burger-constructor-context';
+import Modal from '../modal/modal';
 
 import appStyles from './app.module.css';
 
 
 function App() {
 
-  const [ingredients, setIngredients] = useState([]);
   const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [isOrderModalShown, setIsOrderModalShown] = useState(false);
-  const [orderDetails, setOrderDetails] = useState(null)
 
-  useEffect(() => {
-    api.getIngredientsData()
-    .then((res) => {
-      setIngredients(res.data);      
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }, []);
-
-  function createOrder(itemsId) {
-    api.sendOrder(itemsId) 
-    .then((res) => {
-      setOrderDetails(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
-  function handleIngredientClick(ingredient) {
-    setSelectedIngredient(ingredient);
+  function handleIngredientClick() {
     setIsIngredientModalShown(true);
   }
 
   function handleModalClose() {
-    setSelectedIngredient(null)
     setIsIngredientModalShown(false);
     setIsOrderModalShown(false);
-    setOrderDetails(null);
-  }
-
-  function handleModalCloseKeyDown(evt) {
-    if (evt.key === 'Escape') {
-      handleModalClose();
-    }
   }
 
   function handleOrderClick() {
@@ -66,31 +35,33 @@ function App() {
       <AppHeader />
 
       <main className={appStyles.main}>
-        <BurgerConstructorContext.Provider value={ingredients}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients 
             onCardClick={handleIngredientClick} 
           />
           
           <BurgerConstructor 
             onButtonClick={handleOrderClick} 
-            createOrder={createOrder}
           />
-        </BurgerConstructorContext.Provider>
+        </DndProvider>
       </main>
            
-      {isIngredientModalShown && <IngredientDetail 
-        visible={isIngredientModalShown} 
-        item={selectedIngredient} 
-        onClose={handleModalClose}
-        onKeyDown={handleModalCloseKeyDown}
-      />}
+      {isIngredientModalShown && 
+        <Modal 
+          header="Детали ингридиента"
+          onClose={handleModalClose}
+        >
+          <IngredientDetail />
+        </Modal>
+      }
 
-      {isOrderModalShown && orderDetails && <OrderDetails 
-        visible={isOrderModalShown}
-        onKeyDown={handleModalCloseKeyDown}
-        onClose={handleModalClose}
-        orderDetails={orderDetails}
-      />}
+      {isOrderModalShown && 
+        <Modal
+          onClose={handleModalClose}
+        >
+          <OrderDetails />
+        </Modal>
+      }
     </div>
   );
 }

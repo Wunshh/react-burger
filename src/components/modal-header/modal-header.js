@@ -5,7 +5,8 @@ import {
 
 import modalHeaderStyle from './modal-header.module.css';
 
-function ModalHeader({ header, onClose}) {
+function ModalHeader({ header, onClose }) {
+
     return (
         <div className={modalHeaderStyle.head}>
             <h2 className="text text_type_main-large">
@@ -20,7 +21,7 @@ function ModalHeader({ header, onClose}) {
 
 ModalHeader.propTypes = {
     header: PropTypes.string,
-    onClose: PropTypes.func,
+    onClose: PropTypes.func
 }
 
 export default ModalHeader;
