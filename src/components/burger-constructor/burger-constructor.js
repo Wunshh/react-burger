@@ -132,7 +132,12 @@ function BurgerConstructor({ onButtonClick }) {
                     <p className="text text_type_digits-medium mr-2">{mainIngredients && calculateCost()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" onClick={ingredients && hendelClick} disabled={bun && order.length > 1 ? false : true}>
+                <Button 
+                    type="primary" 
+                    size="large" 
+                    onClick={ingredients && hendelClick} 
+                    disabled={bun && order.length > 1 ? false : true}
+                >
                     Оформить заказ
                 </Button>
             </div>

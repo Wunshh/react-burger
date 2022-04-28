@@ -13,3 +13,11 @@ body {
 .text-align {
   text-align: center;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.text-color {
+  color: #fff;
+}

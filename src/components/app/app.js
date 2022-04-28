@@ -1,67 +1,54 @@
-import { useState } from 'react';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+
+import { Route, Router, Switch } from 'react-router-dom';
 
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import IngredientDetail from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
-import Modal from '../modal/modal';
+import HomePage from '../../pages/home';
+import LoginPage from '../../pages/login';
+import RegistrationPage from '../../pages/registration';
+import ForgotPasswordPage from '../../pages/forgot';
+import ResetPage from '../../pages/reset';
+import ProfilePage from '../../pages/profile';
+import NotFound404 from '../../pages/not-found';
 
 import appStyles from './app.module.css';
 
 
+
 function App() {
-
-  const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
-  const [isOrderModalShown, setIsOrderModalShown] = useState(false);
-
-  function handleIngredientClick() {
-    setIsIngredientModalShown(true);
-  }
-
-  function handleModalClose() {
-    setIsIngredientModalShown(false);
-    setIsOrderModalShown(false);
-  }
-
-  function handleOrderClick() {
-    setIsOrderModalShown(true);
-  }
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
 
-      <main className={appStyles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients 
-            onCardClick={handleIngredientClick} 
-          />
-          
-          <BurgerConstructor 
-            onButtonClick={handleOrderClick} 
-          />
-        </DndProvider>
-      </main>
-           
-      {isIngredientModalShown && 
-        <Modal 
-          header="Детали ингридиента"
-          onClose={handleModalClose}
-        >
-          <IngredientDetail />
-        </Modal>
-      }
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
 
-      {isOrderModalShown && 
-        <Modal
-          onClose={handleModalClose}
-        >
-          <OrderDetails />
-        </Modal>
-      }
+        <Route exact path="/register">
+          <RegistrationPage /> 
+        </Route>
+
+        <Route exact path="/forgot-password">
+          <ForgotPasswordPage />
+        </Route>
+
+        <Route exact path="/reset-password">
+          <ResetPage />
+        </Route>
+
+        <Route exact path="/profile">
+          <ProfilePage />
+        </Route>
+
+        <Route path="*">
+          <NotFound404 />
+        </Route>
+
+      </Switch>
     </div>
   );
 }

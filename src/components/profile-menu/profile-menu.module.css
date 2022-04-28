@@ -1,0 +1,17 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.link {
+    text-decoration: none;
+    padding: 17px 0;
+}
+
+.link_active {
+    color: #fff;
+}
+
+.text {
+    margin-top: 80px;
+}
