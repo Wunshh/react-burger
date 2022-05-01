@@ -1,5 +1,5 @@
 
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import AppHeader from '../app-header/app-header';
 import HomePage from '../../pages/home';

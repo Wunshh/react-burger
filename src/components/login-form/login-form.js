@@ -1,30 +1,60 @@
-import { Link } from 'react-router-dom';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { setLoginFormValue, login } from '../../services/actions/login';
+import { getCookie } from '../../utils/cookie';
 
 import loginStyle from './login-from.module.css';
 
 
 function LoginForm() {
-    
+
+    const history = useHistory();
+
+    const {
+        email,
+        password,
+    } = useSelector(state => state.loginFormReducer.form);
+    const loginSuccess = useSelector(state => state.loginFormReducer.loginSuccess);
+    const dispatch = useDispatch();
+
+    const onFormChange = (evt) => {
+        dispatch(setLoginFormValue(evt.target.name, evt.target.value));
+    }
+
+    const onFormSubmit = (evt) => {
+        evt.preventDefault();
+        dispatch(login(email, password));
+    }
+
+    useEffect(() => {
+        if (getCookie('accessToken') || loginSuccess) {
+            history.push('/');
+        }
+    }, [history, loginSuccess]);
+
     return (
         <section className={loginStyle.login}>
             <h3 className={`${loginStyle.title} text text_type_main-medium text-color mb-6`}>Вход</h3>
 
-            <form className={loginStyle.form}>
+            <form className={loginStyle.form} onSubmit={onFormSubmit}>
                 <div className={loginStyle.input}>
                     <Input 
                         type="email"   
                         placeholder="E-mail" 
-                        error={false}
-                        value="1"
                         errorText={'Некорректный email'}
+                        onChange={onFormChange}
+                        value={email}
+                        name='email'
                     />
                 </div>
                 <div className={loginStyle.input}>
                     <PasswordInput
-                        value='2'
+                        onChange={onFormChange}
+                        value={password}
+                        name='password'
                     />
                 </div>
 

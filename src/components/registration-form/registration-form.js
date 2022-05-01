@@ -1,11 +1,44 @@
-import { Link } from 'react-router-dom';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { 
+    Input, 
+    PasswordInput, 
+    Button
+} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { setRegistrationFormValue, register } from '../../services/actions/registration';
+import { getCookie } from '../../utils/cookie';
 
 import registrationStyle from './registration-form.module.css';
 
+
 function RegistrationForm() {
+    
+    const history = useHistory();
+
+    const {
+        email,
+        name,
+        password,
+    } = useSelector(state => state.registrationFormReducer.form);
+
+    const dispatch = useDispatch();
+
+    const onFormChange = (evt) => {
+        dispatch(setRegistrationFormValue(evt.target.name, evt.target.value));
+    }
+
+    const onFormSubmit = (evt) => {
+        evt.preventDefault();
+        dispatch(register(email, name, password));
+    }
+
+    useEffect(() => {
+        if (getCookie('accessToken')) {
+            history.push('/');
+        }
+    }, [history]);
 
     return (
          <section className={registrationStyle.registration}>
@@ -13,14 +46,16 @@ function RegistrationForm() {
                 Регистрация
             </h3>
 
-            <form className={registrationStyle.form}>
+            <form className={registrationStyle.form} onSubmit={onFormSubmit}>
                 <div className={registrationStyle.input}>
                     <Input 
                         type="email"   
                         placeholder="E-mail" 
                         error={false}
-                        value='1'
                         errorText={'Некорректный email'}
+                        onChange={onFormChange}
+                        value={email}
+                        name='email'
                     />
                 </div>
                 <div className={registrationStyle.input}>
@@ -28,13 +63,17 @@ function RegistrationForm() {
                         type="text"   
                         placeholder="Имя" 
                         error={false}
-                        value='2'
                         errorText={'Заполните поле'}
+                        onChange={onFormChange}
+                        value={name}
+                        name='name'
                     />
                 </div>
                 <div className={registrationStyle.input}>
                     <PasswordInput
-                        value='3'
+                        onChange={onFormChange}
+                        value={password}
+                        name='password'
                     />
                 </div>
 

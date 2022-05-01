@@ -1,56 +1,91 @@
-import { useState, useRef } from 'react';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/user';
 
 import profileFormStyle from './profile-form.module.css';
+import { useEffect, useState } from 'react';
 
 function ProfileForm() {
 
-    const [showPassword, setShowPassword] = useState(false);
-    const inputRef = useRef();
-    
-    const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0);
-        if(!showPassword) {
-            setShowPassword(true);
-        } else {
-            setShowPassword(false);
-        }
+    const [isFormChange, setIsFormChange] = useState(false);
+    const {
+        email,
+        name,
+        password,
+    } = useSelector(state => state.userDataReducer.form);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserData());
+    }, [dispatch]);
+
+    const onFormChange = (evt) => {
+        dispatch(setUserFormValue(evt.target.name, evt.target.value));
+        setIsFormChange(true);
+    }
+
+    const onFormSubmit = (evt) => {
+        evt.preventDefault();
+        dispatch(updateUserData(email, name, password));
+        setIsFormChange(false);
+    }
+
+    const getBackUserData = () => {
+        dispatch(getUserData());
+        setIsFormChange(false);
     }
 
     return (
-        <form>
+        <form> 
             <div className={profileFormStyle.input}>
                 <Input 
-                    ref={inputRef}
                     type="text"  
                     placeholder="Имя" 
-                    error={false}
-                    value='1'
                     icon={"EditIcon"}
-                    onIconClick={onIconClick}
+                    onChange={onFormChange}
+                    value={name}
+                    name='name'
                 />
             </div>
             <div className={profileFormStyle.input}>
                 <Input 
-                    ref={inputRef}
                     type="email"  
                     placeholder="Логин" 
-                    error={false}
-                    value='2'
                     icon={"EditIcon"}
-                    onIconClick={onIconClick}
+                    onChange={onFormChange}
+                    value={email}
+                    name='email'
+                    
                 />
             </div>
             <div className={profileFormStyle.input}>
                 <Input 
-                    ref={inputRef}
                     type="password"  
                     placeholder="Пароль" 
-                    error={false}
-                    value='3'
                     icon={"EditIcon"}
-                    onIconClick={onIconClick}
+                    onChange={onFormChange}
+                    value={password}
+                    name='password'
                 />
+            </div>
+
+            <div className={isFormChange ? profileFormStyle.buttons : profileFormStyle.invisible}>
+                <Button 
+                    type="secondary" 
+                    size="medium"
+                    onClick={getBackUserData}
+                >
+                    Отмена
+                </Button>
+                <Button 
+                    type="primary" 
+                    size="medium"
+                    onClick={onFormSubmit}
+                >
+                    Сохранить
+                </Button>
             </div>
         </form>
 

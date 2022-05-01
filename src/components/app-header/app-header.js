@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { 
     Logo, 
     BurgerIcon,
@@ -7,10 +8,17 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { getCookie } from '../../utils/cookie';
+
 import appHeaderStyles from './app-header.module.css';
 
 
 function AppHeader() {
+
+    const loginSuccess = useSelector(state => state.loginFormReducer.loginSuccess);
+
+    let path = getCookie('accessToken') || loginSuccess ? '/profile' : '/login';
+
     return(
         <header className={appHeaderStyles.header}>
             <nav className={appHeaderStyles.menu}>
@@ -28,7 +36,7 @@ function AppHeader() {
             
             <nav className={appHeaderStyles.login}>
                 <ProfileIcon type="secondary"/>
-                <Link  to='/login' className="link text text_type_main-default text_color_inactive ml-2">
+                <Link to={path} className="link text text_type_main-default text_color_inactive ml-2">
                     Личный кабинет
                 </Link>
             </nav>

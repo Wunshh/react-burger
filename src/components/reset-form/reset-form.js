@@ -1,10 +1,27 @@
 import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { setResetFormValue, reset } from '../../services/actions/reset';
 
 import resetFormStyle from './reset-form.module.css';
 
 function ResetForm() {
+
+    const { password, token } = useSelector(state => state.resetFormReducer.form);
+
+    const dispatch = useDispatch();
+
+    const onFormChange = (evt) => {
+        dispatch(setResetFormValue(evt.target.name, evt.target.value));
+    }
+
+    const onFormSubmit = (evt) => {
+        evt.preventDefault();
+        dispatch(reset(password, token));
+    }
+
     const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef();
     
@@ -23,16 +40,17 @@ function ResetForm() {
                 Восстановление пароля
             </h3>
 
-            <form className={resetFormStyle.form}>
+            <form className={resetFormStyle.form} onSubmit={onFormSubmit}>
                 <div className={resetFormStyle.input}>
                     <Input 
                         ref={inputRef}
                         type="password"  
                         placeholder="Введите новый пароль" 
-                        error={false}
-                        value='1'
                         icon={showPassword? "ShowIcon" : "HideIcon"}
                         onIconClick={onIconClick}
+                        onChange={onFormChange}
+                        value={password}
+                        name='password'
                     />
                 </div>
                 <div className={resetFormStyle.input}>
@@ -40,7 +58,9 @@ function ResetForm() {
                         type="text"  
                         placeholder="Введите код из письма" 
                         error={false}
-                        value='2'
+                        onChange={onFormChange}
+                        value={token}
+                        name='token'
                     />
                 </div>
 

@@ -1,3 +1,13 @@
 .input {
     margin-bottom: 24px;
 }
+
+.invisible {
+    display: none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 320px;
+}
