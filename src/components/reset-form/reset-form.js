@@ -23,14 +23,18 @@ function ResetForm() {
     }
 
     const [showPassword, setShowPassword] = useState(false);
+    const [isShown, setIsShown] = useState('password')
     const inputRef = useRef();
     
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0);
         if(!showPassword) {
             setShowPassword(true);
+            setIsShown('text');
+            
         } else {
             setShowPassword(false);
+            setIsShown('password');
         }
     }
 
@@ -44,14 +48,14 @@ function ResetForm() {
                 <div className={resetFormStyle.input}>
                     <Input 
                         ref={inputRef}
-                        type="password"  
+                        type={isShown} 
                         placeholder="Введите новый пароль" 
                         icon={showPassword? "ShowIcon" : "HideIcon"}
                         onIconClick={onIconClick}
                         onChange={onFormChange}
                         value={password}
                         name='password'
-                    />
+                    />       
                 </div>
                 <div className={resetFormStyle.input}>
                     <Input 
