@@ -9,6 +9,7 @@ import ForgotPasswordPage from '../../pages/forgot';
 import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
 import NotFound404 from '../../pages/not-found';
+import ProtectedRoute from '../ProtectedRoute';
 
 import appStyles from './app.module.css';
 
@@ -40,9 +41,10 @@ function App() {
           <ResetPage />
         </Route>
 
-        <Route exact path="/profile">
-          <ProfilePage />
-        </Route>
+        <ProtectedRoute
+          path="/profile"
+          component={ProfilePage}
+        />
 
         <Route path="*">
           <NotFound404 />

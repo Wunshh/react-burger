@@ -1,15 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setResetFormValue, reset } from '../../services/actions/reset';
+import { getCookie } from '../../utils/cookie';
 
 import resetFormStyle from './reset-form.module.css';
 
 function ResetForm() {
 
     const { password, token } = useSelector(state => state.resetFormReducer.form);
+    const forgotSuccess = useSelector(state => state.forgotPasswordFormReducer.forgotSuccess);
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -21,6 +24,12 @@ function ResetForm() {
         evt.preventDefault();
         dispatch(reset(password, token));
     }
+
+    useEffect(() => {
+        if (!forgotSuccess || getCookie('accessToken')) {
+            history.push('/');
+        }
+    }, [history, forgotSuccess]);
 
     const [showPassword, setShowPassword] = useState(false);
     const [isShown, setIsShown] = useState('password')

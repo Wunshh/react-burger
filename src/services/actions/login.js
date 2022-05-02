@@ -5,6 +5,7 @@ const LOGIN_FORM_SET_VALUE = 'LOGIN_FORM_SET_VALUE';
 const POST_LOGIN_FORM_SUBMIT = 'POST_LOGIN_FORM_SUBMIT';
 const POST_LOGIN_FORM_SUCCESS = 'POST_LOGIN_FORM_SUCCESS';
 const POST_LOGIN_FORM_FAILED = 'POST_LOGIN_FORM_FAILED';
+const LOGOUT = 'LOGOUT'
 
 const setLoginFormValue = (field, value) => ({
     type: LOGIN_FORM_SET_VALUE,
@@ -47,11 +48,22 @@ const login = (email, password) => {
     }
 }
 
+// const logout = () => {
+//     localStorage.removeItem('refreshToken');
+//     deleteCookie('accessToken');
+//     return function(dispatch) {
+//         dispatch({
+//             type: LOGOUT
+//         });
+//     }
+// }
+
 export {
     LOGIN_FORM_SET_VALUE,
     POST_LOGIN_FORM_SUBMIT,
     POST_LOGIN_FORM_SUCCESS,
     POST_LOGIN_FORM_FAILED,
+    LOGOUT,
     setLoginFormValue,
     login
 }

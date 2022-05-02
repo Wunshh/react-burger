@@ -21,3 +21,7 @@
 .link {
     text-decoration: none;
 }
+
+.active {
+    color: #fff;
+}

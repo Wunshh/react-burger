@@ -1,5 +1,6 @@
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,6 +21,7 @@ import { sendOrder } from '../../services/actions/order';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import { ORDER_MODAL_OPEN } from '../../services/actions/modal';
 import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
+import { getCookie } from '../../utils/cookie';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
@@ -28,6 +30,7 @@ function BurgerConstructor({ onButtonClick }) {
 
     const ingredients = useSelector(store => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
@@ -65,10 +68,14 @@ function BurgerConstructor({ onButtonClick }) {
 
     function hendelClick() {
         onButtonClick();
-        dispatch({
-            type: ORDER_MODAL_OPEN
-        });
-        dispatch(sendOrder(order.map((item) => item._id)));
+        if (getCookie('accessToken')) {
+            dispatch({
+                type: ORDER_MODAL_OPEN
+            });
+            dispatch(sendOrder(order.map((item) => item._id)));
+        } else {
+            history.push('/login');
+        }
     }
 
     const bunPrice = bun === undefined ? 0 : bun.price;

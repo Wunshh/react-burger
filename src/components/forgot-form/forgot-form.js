@@ -1,13 +1,14 @@
 
+import { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setForgotFormValue, forgotPassword } from '../../services/actions/forgotPassword';
+import { getCookie } from '../../utils/cookie';
 
 import forgotFormStyle from './forgot-form.module.css';
-import { useEffect } from 'react';
 
 function ForgotForm() {
 
@@ -15,7 +16,6 @@ function ForgotForm() {
 
     const { email } = useSelector(state => state.forgotPasswordFormReducer.form);
     const forgotSuccess = useSelector(state => state.forgotPasswordFormReducer.forgotSuccess);
-    console.log(forgotSuccess);
 
     const dispatch = useDispatch();
 
@@ -31,6 +31,8 @@ function ForgotForm() {
     useEffect(() => {
         if (forgotSuccess) {
             history.push('/reset-password');
+        } else if (getCookie('accessToken')) {
+            history.push('/');
         }
     }, [forgotSuccess, history]);
     

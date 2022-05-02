@@ -3,6 +3,7 @@ import {
     POST_LOGIN_FORM_SUBMIT,
     POST_LOGIN_FORM_SUCCESS,
     POST_LOGIN_FORM_FAILED,
+    LOGOUT
 } from '../actions/login';
 
 const initialState = {
@@ -48,6 +49,16 @@ const loginFormReducer = (state = initialState, action) => {
                 ...state,
                 loginRequest: false,
                 loginFailed: true
+            }
+        }
+        case LOGOUT: {
+            return {
+                form: {
+                    ...initialState.form
+                },
+                loginSuccess: false,
+                loginRequest: false,
+                loginFailed: false
             }
         }
         default: {

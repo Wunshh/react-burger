@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { 
     Logo, 
@@ -19,26 +19,47 @@ function AppHeader() {
 
     let path = getCookie('accessToken') || loginSuccess ? '/profile' : '/login';
 
+    let location= useLocation();
+
+    const celectType = (path) => {
+       return location.pathname === path ? "primary" : "secondary";
+    }
+
     return(
         <header className={appHeaderStyles.header}>
             <nav className={appHeaderStyles.menu}>
-                <BurgerIcon type="primary"/>
-                <Link to="/" className="link text-color text text_type_main-default ml-2 mr-10 cursor">
+
+                <BurgerIcon type={celectType('/')}/>
+                <NavLink 
+                    exact
+                    to="/" 
+                    className="link text text_type_main-default text_color_inactive ml-2 cursor mr-10" 
+                    activeClassName={appHeaderStyles.active}
+                >
                     Конструктор
-                </Link>
-                <ListIcon type="secondary"/>
-                <p className="text text_type_main-default text_color_inactive ml-2 cursor">
+                </NavLink>
+
+                <ListIcon type={celectType('/list')}/>
+                <NavLink 
+                    to="/list" 
+                    className="link text text_type_main-default text_color_inactive ml-2 cursor" 
+                    activeClassName={appHeaderStyles.active}
+                >
                     Лента заказов
-                </p>
+                </NavLink>
             </nav>
             
             <Logo />
             
             <nav className={appHeaderStyles.login}>
-                <ProfileIcon type="secondary"/>
-                <Link to={path} className="link text text_type_main-default text_color_inactive ml-2">
+                <ProfileIcon type={celectType(path)}/>
+                <NavLink 
+                    to={path} 
+                    className="link text text_type_main-default text_color_inactive ml-2" 
+                    activeClassName={appHeaderStyles.active}
+                >
                     Личный кабинет
-                </Link>
+                </NavLink>
             </nav>
         </header>
     );

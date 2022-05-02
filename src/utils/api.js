@@ -125,6 +125,7 @@ export const sendOrder = (itemsId) => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
         },
         body: JSON.stringify({
             ingredients: itemsId
