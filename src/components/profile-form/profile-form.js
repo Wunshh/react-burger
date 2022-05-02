@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 function ProfileForm() {
 
+    const [inputDisabled, setInputDisabled] = useState(true);
     const [isFormChange, setIsFormChange] = useState(false);
     const {
         email,
@@ -26,10 +27,16 @@ function ProfileForm() {
         setIsFormChange(true);
     }
 
+    const onIconClick = () => {
+        setInputDisabled(false);
+        setIsFormChange(true);
+    }
+
     const onFormSubmit = (evt) => {
         evt.preventDefault();
         dispatch(updateUserData(email, name, password));
         setIsFormChange(false);
+        setInputDisabled(true)
     }
 
     const getBackUserData = () => {
@@ -47,6 +54,8 @@ function ProfileForm() {
                     onChange={onFormChange}
                     value={name}
                     name='name'
+                    disabled={inputDisabled}
+                    onIconClick={onIconClick}
                 />
             </div>
             <div className={profileFormStyle.input}>
@@ -57,7 +66,8 @@ function ProfileForm() {
                     onChange={onFormChange}
                     value={email}
                     name='email'
-                    
+                    disabled={inputDisabled}
+                    onIconClick={onIconClick}
                 />
             </div>
             <div className={profileFormStyle.input}>
@@ -68,6 +78,8 @@ function ProfileForm() {
                     onChange={onFormChange}
                     value={password}
                     name='password'
+                    disabled={inputDisabled}
+                    onIconClick={onIconClick}
                 />
             </div>
 

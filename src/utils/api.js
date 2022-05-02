@@ -59,10 +59,6 @@ export const reset = (password, token) => {
     .then(checkResponse)
 }
 
-// export const updateUser = () => {
-
-// }
-
 export const getUserData = () => {
     return fetch(`${BASE_URL}/auth/user`, {
         method: "GET",
@@ -71,6 +67,43 @@ export const getUserData = () => {
             "Content-Type": "application/json",
             'Authorization': getCookie('accessToken'), 
         },
+    })
+    .then(checkResponse)
+}
+
+export const updateToken = () => {
+    return fetch(`${BASE_URL}/auth/token`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        })
+    })
+    .then(checkResponse)
+}
+
+export const updateUserData = (email, name, password) => {
+
+    return fetch(`${BASE_URL}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken'), 
+        },
+        body: password === '*********' ? 
+        JSON.stringify({
+            email: email || '',
+            name: name || ''
+        })
+        : 
+        JSON.stringify({
+            email: email || '',
+            name: name || '',
+            password: password
+        })
     })
     .then(checkResponse)
 }

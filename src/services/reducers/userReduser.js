@@ -33,13 +33,12 @@ const userDataReducer = (state = initialState, action) => {
             }
         }
         case GET_USER_DATA_SUCCESS: {
-            console.log(action.res);
             return {
                 ...state,
                 form: {
                     name: action.res.user.name,
                     email: action.res.user.email,
-                    password: '000000000'
+                    password: '*********'
                 },
                 userDataRequest: false
             }
