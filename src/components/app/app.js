@@ -64,15 +64,6 @@ function App() {
             </DndProvider>
           </main>
               
-          {isIngredientModalShown && 
-            <Modal 
-              header="Детали ингридиента"
-              onClose={handleModalClose}
-            >
-              <IngredientDetail />
-            </Modal>
-          }
-
           {isOrderModalShown && 
             <Modal
               onClose={handleModalClose}
@@ -102,16 +93,39 @@ function App() {
           path="/profile"
           component={ProfilePage}
         />
-        
+
         <ProtectedRoute
           path="/profile/orders"
           component={ProfilePage}
         />
+
+        <Route 
+          path='/ingredients/:ingredientId' 
+        >
+          <IngredientDetail />
+        </Route>
+
         <Route path="*">
           <NotFound404 />
         </Route>
 
       </Switch>
+
+      {background && (
+          <Route
+            path='/ingredients/:ingredientId'
+            children={
+              isIngredientModalShown && 
+              <Modal 
+                header="Детали ингридиента"
+                onClose={handleModalClose}
+              >
+                <IngredientDetail />
+              </Modal>
+            }
+          />
+      )}
+
     </div> 
   );
 }
