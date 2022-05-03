@@ -1,4 +1,4 @@
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import  { deleteCookie } from '../../utils/cookie';
@@ -9,7 +9,6 @@ import profileMenuStyle from './profile-menu.module.css';
 
 function ProfileMenu() {
 
-    const { url } = useRouteMatch();
     const dispatch = useDispatch();
 
     const logout = () => {
@@ -31,14 +30,14 @@ function ProfileMenu() {
                 Профиль
             </NavLink>
             <NavLink 
-                to={`${url}/orders`}
+                to="/profile/orders"
                 className={`text text_type_main-medium text_color_inactive ${profileMenuStyle.link}`}
                 activeClassName={profileMenuStyle.link_active}
             >
                 История заказов
             </NavLink>
             <NavLink 
-                to="/"
+                to="/login"
                 onClick={logout}
                 className={`text text_type_main-medium text_color_inactive ${profileMenuStyle.link}`}
             >
