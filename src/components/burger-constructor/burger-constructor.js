@@ -35,6 +35,8 @@ function BurgerConstructor({ onButtonClick }) {
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
+    let isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
+
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -67,8 +69,8 @@ function BurgerConstructor({ onButtonClick }) {
     const order = mainIngredients.concat(bun);
 
     function hendelClick() {
-        onButtonClick();
-        if (getCookie('accessToken')) {
+        if(isLoggin) {
+            onButtonClick();
             dispatch({
                 type: ORDER_MODAL_OPEN
             });

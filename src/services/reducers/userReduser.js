@@ -6,7 +6,8 @@ import {
     UPDATE_USER_DATA_REQUEST,
     UPDATE_USER_DATA_SUCCESS,
     UPDATE_USER_DATA_FAILED,
-    RESET_USER_DATA_FAILED
+    RESET_USER_DATA_FAILED,
+    USER_LOGOUT
 } from '../actions/user';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
         email: '',
         password: ''
     },
+    userIsLoggin: false,
     userDataRequest: false,
     userDataFailed: false
 }
@@ -44,6 +46,7 @@ const userDataReducer = (state = initialState, action) => {
                     email: action.res.user.email,
                     password: '*********'
                 },
+                userIsLoggin: true,
                 userDataRequest: false
             }
         }
@@ -84,6 +87,16 @@ const userDataReducer = (state = initialState, action) => {
                 form: {
                     ...initialState.form
                 },
+                userDataRequest: false,
+                userDataFailed: false
+            }
+        }
+        case USER_LOGOUT: {
+            return {
+                form: {
+                    ...initialState.form
+                },
+                userIsLoggin: false,
                 userDataRequest: false,
                 userDataFailed: false
             }

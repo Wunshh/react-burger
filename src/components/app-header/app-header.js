@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { 
     Logo, 
@@ -8,18 +8,17 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { getCookie } from '../../utils/cookie';
-
 import appHeaderStyles from './app-header.module.css';
 
 
 function AppHeader() {
 
-    const loginSuccess = useSelector(state => state.loginFormReducer.loginSuccess);
+    let isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
+    let loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
 
-    let path = getCookie('accessToken') || loginSuccess ? '/profile' : '/login';
+    let path = loginSuccess || isLoggin ? '/profile' : '/login';
 
-    let location= useLocation();
+    let location = useLocation();
 
     const celectType = (path) => {
        return location.pathname === path ? "primary" : "secondary";
@@ -48,9 +47,10 @@ function AppHeader() {
                     Лента заказов
                 </NavLink>
             </nav>
-            
-            <Logo />
-            
+
+            <Link to="/">
+                <Logo />
+            </Link>
             <nav className={appHeaderStyles.login}>
                 <ProfileIcon type={celectType(path)}/>
                 <NavLink 

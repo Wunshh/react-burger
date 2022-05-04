@@ -6,7 +6,6 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setForgotFormValue, forgotPassword } from '../../services/actions/forgotPassword';
-import { getCookie } from '../../utils/cookie';
 
 import forgotFormStyle from './forgot-form.module.css';
 
@@ -31,9 +30,7 @@ function ForgotForm() {
     useEffect(() => {
         if (forgotSuccess) {
             history.push('/reset-password');
-        } else if (getCookie('accessToken')) {
-            history.push('/');
-        }
+        } 
     }, [forgotSuccess, history]);
     
     return (

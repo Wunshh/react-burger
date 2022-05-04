@@ -48,16 +48,6 @@ const login = (email, password) => {
     }
 }
 
-// const logout = () => {
-//     localStorage.removeItem('refreshToken');
-//     deleteCookie('accessToken');
-//     return function(dispatch) {
-//         dispatch({
-//             type: LOGOUT
-//         });
-//     }
-// }
-
 export {
     LOGIN_FORM_SET_VALUE,
     POST_LOGIN_FORM_SUBMIT,

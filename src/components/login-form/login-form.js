@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setLoginFormValue, login } from '../../services/actions/login';
-import { getCookie } from '../../utils/cookie';
 
 import loginStyle from './login-from.module.css';
 
@@ -30,7 +29,7 @@ function LoginForm() {
     }
 
     useEffect(() => {
-        if (getCookie('accessToken') || loginSuccess) {
+        if (loginSuccess) {
             history.push('/');
         }
     }, [history, loginSuccess]);

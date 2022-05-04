@@ -16,7 +16,8 @@ import ForgotPasswordPage from '../../pages/forgot';
 import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
 import NotFound404 from '../../pages/not-found';
-import ProtectedRoute from '../ProtectedRoute';
+import ProtectedRoute from '../protected-route/ProtectedRoute';
+import ProtectedLogginUserRoute from '../protected-route/ProtectedLogginUserRoute';
 
 import appStyles from './app.module.css';
 
@@ -28,7 +29,7 @@ function App() {
 
   const location = useLocation();
   const history = useHistory();
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
 
   function handleIngredientClick() {
     setIsIngredientModalShown(true);
@@ -73,22 +74,30 @@ function App() {
           }
         </Route>
 
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
+        <ProtectedLogginUserRoute
+          exact 
+          path="/login"
+          component={LoginPage}
+        />
 
-        <Route exact path="/register">
-          <RegistrationPage /> 
-        </Route>
+        <ProtectedLogginUserRoute 
+          exact 
+          path="/register"
+          component={RegistrationPage}
+        />
+       
+        <ProtectedLogginUserRoute 
+          exact 
+          path="/forgot-password"
+          component={ForgotPasswordPage}
+        />
 
-        <Route exact path="/forgot-password">
-          <ForgotPasswordPage />
-        </Route>
-
-        <Route exact path="/reset-password">
-          <ResetPage />
-        </Route>
-
+        <ProtectedLogginUserRoute 
+          exact 
+          path="/reset-password"
+          component={ResetPage}
+        />
+        
         <ProtectedRoute
           path="/profile"
           component={ProfilePage}
@@ -115,10 +124,10 @@ function App() {
           <Route
             path='/ingredients/:ingredientId'
             children={
-              isIngredientModalShown && 
               <Modal 
                 header="Детали ингридиента"
                 onClose={handleModalClose}
+                isIngredientModalShown={isIngredientModalShown}
               >
                 <IngredientDetail />
               </Modal>

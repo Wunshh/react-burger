@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import  { deleteCookie } from '../../utils/cookie';
 import { LOGOUT } from '../../services/actions/login';
+import{ USER_LOGOUT } from  '../../services/actions/user';
 
 
 import profileMenuStyle from './profile-menu.module.css';
@@ -16,7 +17,10 @@ function ProfileMenu() {
         deleteCookie('accessToken');
         dispatch({
             type: LOGOUT
-        })
+        });
+        dispatch({
+            type: USER_LOGOUT
+        });
     }
 
     return (

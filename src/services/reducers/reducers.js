@@ -1,7 +1,6 @@
 import {
     ORDER_MODAL_OPEN,
-    INGREDIENT_MODAL_OPEN,
-    MODAL_CLOSE
+    INGREDIENT_MODAL_OPEN
 } from '../actions/modal';
 
 import {
@@ -102,16 +101,6 @@ const ingredient = (state = initialState, action) => {
                 ingredientModalOpen: true,
                 visible: true,
                 ingredient: action.item
-            };
-        }
-        case MODAL_CLOSE:  {
-            return {
-                ...state,
-                orderModalOpen: false,
-                visible: false,
-                order: null,
-                ingredient: null,
-                ingredientModalOpen: false,
             };
         }
         default: {

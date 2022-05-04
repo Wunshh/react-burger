@@ -41,7 +41,7 @@ const loginFormReducer = (state = initialState, action) => {
                     ...initialState.form
                 },
                 loginRequest: false,
-                loginSuccess: action.res.success
+                loginSuccess: true
             }
         }
         case POST_LOGIN_FORM_FAILED: {

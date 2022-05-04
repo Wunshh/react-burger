@@ -9,6 +9,7 @@ const UPDATE_USER_DATA_REQUEST = 'UPDATE_USER_DATA_REQUEST';
 const UPDATE_USER_DATA_SUCCESS = 'UPDATE_USER_DATA_SUCCESS';
 const UPDATE_USER_DATA_FAILED = 'UPDATE_USER_DATA_FAILED';
 const RESET_USER_DATA_FAILED = 'RESET_USER_DATA_FAILED';
+const USER_LOGOUT = 'USER_LOGOUT';
 
 const setUserFormValue = (field, value) => ({
     type: USER_FORM_SET_VALUE,
@@ -16,9 +17,15 @@ const setUserFormValue = (field, value) => ({
     value
 });
 
-function catchFetchError(typeErr) {
+function catchUserDataErr() {
     return {
-        type: typeErr
+        type: GET_USER_DATA_FAILED
+    };
+}
+
+function catchUserUpdateErr() {
+    return {
+        type: UPDATE_USER_DATA_FAILED
     };
 }
 
@@ -41,7 +48,7 @@ function getUserData() {
                 dispatch(updateToken(getUserData()))
             } else {
                 dispatch(
-                    catchFetchError(GET_USER_DATA_FAILED)
+                    catchUserDataErr()
                 );
                 console.log(res);
             }
@@ -77,13 +84,13 @@ const updateUserData = (name, email, password) => {
                 })
             } else {
                 dispatch(
-                    catchFetchError(UPDATE_USER_DATA_FAILED)
+                    catchUserUpdateErr()
                 );
             }
         })
         .catch((err) => {
             dispatch(
-                catchFetchError(UPDATE_USER_DATA_FAILED)
+                catchUserUpdateErr()
             );
             console.log(err);
         })
@@ -99,6 +106,7 @@ export {
     UPDATE_USER_DATA_SUCCESS,
     UPDATE_USER_DATA_FAILED,
     RESET_USER_DATA_FAILED,
+    USER_LOGOUT,
     setUserFormValue,
     getUserData,
     updateUserData

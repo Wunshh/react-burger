@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
     Input, 
@@ -8,14 +7,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setRegistrationFormValue, register } from '../../services/actions/registration';
-import { getCookie } from '../../utils/cookie';
 
 import registrationStyle from './registration-form.module.css';
 
 
 function RegistrationForm() {
-    
-    const history = useHistory();
 
     const {
         email,
@@ -33,12 +29,6 @@ function RegistrationForm() {
         evt.preventDefault();
         dispatch(register(email, name, password));
     }
-
-    useEffect(() => {
-        if (getCookie('accessToken')) {
-            history.push('/');
-        }
-    }, [history]);
 
     return (
          <section className={registrationStyle.registration}>
