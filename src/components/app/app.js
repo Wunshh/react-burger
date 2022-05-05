@@ -1,6 +1,6 @@
-
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
@@ -18,6 +18,7 @@ import ProfilePage from '../../pages/profile';
 import NotFound404 from '../../pages/not-found';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
 import ProtectedLogginUserRoute from '../protected-route/ProtectedLogginUserRoute';
+import { MODAL_CLOSE } from '../../services/actions/modal';
 
 import appStyles from './app.module.css';
 
@@ -26,6 +27,7 @@ function App() {
 
   const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
   const [isOrderModalShown, setIsOrderModalShown] = useState(false);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const history = useHistory();
@@ -37,7 +39,12 @@ function App() {
 
   function handleModalClose() {
     setIsIngredientModalShown(false);
-    setIsOrderModalShown(false);
+    if (isOrderModalShown) {
+      setIsOrderModalShown(false);
+      dispatch({
+        type: MODAL_CLOSE
+      })
+    }
     history.goBack();
   }
 
