@@ -13,12 +13,12 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    let isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
-    let loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+    const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
+    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
 
     let path = loginSuccess || isLoggin ? '/profile' : '/login';
 
-    let location = useLocation();
+    const location = useLocation();
 
     const celectType = (path) => {
        return location.pathname === path ? "primary" : "secondary";

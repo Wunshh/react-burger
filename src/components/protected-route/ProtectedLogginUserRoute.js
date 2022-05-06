@@ -1,23 +1,16 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Route, Redirect, useLocation } from 'react-router-dom';
-import { getUserData } from '../../services/actions/user';
-
+import { useSelector } from 'react-redux';
+import { Route, Redirect } from 'react-router-dom';
 
 function ProtectedLogginUserRoute({ component: Component, ...props }){
-  const location = useLocation();
   const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserData());
-  }, [dispatch]);
+  const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+  const location = props.location.state === null || props.location.state === undefined  ? '/' : props.location.state.from;
 
   return (
     <Route>
       {
-        () => (isLoggin ? 
-            <Redirect to={{ pathname: '/' , state: { from: location } }} />
+        () => (isLoggin || loginSuccess ? 
+            <Redirect to={{ pathname: location }} />
           :
             <Component {...props} /> 
         )

@@ -10,7 +10,6 @@ function OrderDetails() {
 
     const orderDetails = useSelector(store => store.ingredient.order);
     
-    console.log(orderDetails);
     return (
         orderDetails !== null ? 
         <div className={orderDetailsStyle.container}>

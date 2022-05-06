@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,13 +9,10 @@ import loginStyle from './login-from.module.css';
 
 function LoginForm() {
 
-    const history = useHistory();
-
     const {
         email,
         password,
     } = useSelector(state => state.loginFormReducer.form);
-    const loginSuccess = useSelector(state => state.loginFormReducer.loginSuccess);
     const dispatch = useDispatch();
 
     const onFormChange = (evt) => {
@@ -27,12 +23,6 @@ function LoginForm() {
         evt.preventDefault();
         dispatch(login(email, password));
     }
-
-    useEffect(() => {
-        if (loginSuccess) {
-            history.push('/');
-        }
-    }, [history, loginSuccess]);
 
     return (
         <section className={loginStyle.login}>

@@ -38,14 +38,16 @@ function App() {
   }
 
   function handleModalClose() {
-    setIsIngredientModalShown(false);
+    if (isIngredientModalShown) {
+      setIsIngredientModalShown(false);
+      history.goBack();
+    }
     if (isOrderModalShown) {
       setIsOrderModalShown(false);
       dispatch({
         type: MODAL_CLOSE
       })
     }
-    history.goBack();
   }
 
   function handleOrderClick() {

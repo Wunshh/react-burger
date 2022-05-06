@@ -21,7 +21,6 @@ import { sendOrder } from '../../services/actions/order';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import { ORDER_MODAL_OPEN } from '../../services/actions/modal';
 import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
-import { getCookie } from '../../utils/cookie';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
@@ -35,7 +34,7 @@ function BurgerConstructor({ onButtonClick }) {
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    let isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
+    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
 
 
     useEffect(() => {
@@ -69,14 +68,14 @@ function BurgerConstructor({ onButtonClick }) {
     const order = mainIngredients.concat(bun);
 
     function hendelClick() {
-        if(isLoggin) {
+        if(!loginSuccess) {
+            history.push('/login');
+        } else {
             onButtonClick();
             dispatch({
                 type: ORDER_MODAL_OPEN
             });
             dispatch(sendOrder(order.map((item) => item._id)));
-        } else {
-            history.push('/login');
         }
     }
 
@@ -97,7 +96,7 @@ function BurgerConstructor({ onButtonClick }) {
             type: MOVE_ITEM,
             newCards
         })
-    }, [dispatch, mainIngredients, ingredients]);
+    }, [dispatch, mainIngredients]);
 
     return (
  
