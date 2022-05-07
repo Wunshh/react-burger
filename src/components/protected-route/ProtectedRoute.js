@@ -11,7 +11,7 @@ function ProtectedRoute({ component: Component, ...props }){
         () => (isLoggin || loginSuccess ? 
           <Component {...props} /> 
         :  
-          <Redirect to={{ pathname: "/login", state: { from: props.location.pathname}}} />
+          <Redirect to={{ pathname: "/login", state: { from: props.location}}} />
         )
       }
     </Route>

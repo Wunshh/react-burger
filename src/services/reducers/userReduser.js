@@ -72,14 +72,16 @@ const userDataReducer = (state = initialState, action) => {
                     email: action.res.user.email,
                     password: '*********'
                 },
-                userDataRequest: false
+                userDataRequest: false,
+                userIsLoggin: true
             }
         }
         case UPDATE_USER_DATA_FAILED: {
             return {
                 ...state,
                 userDataRequest: false,
-                userDataFailed: true
+                userDataFailed: true,
+                userIsLoggin: false
             }
         }
         case RESET_USER_DATA_FAILED: {
@@ -88,7 +90,8 @@ const userDataReducer = (state = initialState, action) => {
                     ...initialState.form
                 },
                 userDataRequest: false,
-                userDataFailed: false
+                userDataFailed: false,
+                userIsLoggin: false
             }
         }
         case USER_LOGOUT: {

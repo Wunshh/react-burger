@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -17,8 +17,8 @@ import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
 import NotFound404 from '../../pages/not-found';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
-import ProtectedLogginUserRoute from '../protected-route/ProtectedLogginUserRoute';
 import { MODAL_CLOSE } from '../../services/actions/modal';
+import { getUserData } from '../../services/actions/user';
 
 import appStyles from './app.module.css';
 
@@ -54,6 +54,10 @@ function App() {
     setIsOrderModalShown(true);
   }
 
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
   return (
     <div className={appStyles.app}>
 
@@ -83,25 +87,25 @@ function App() {
           }
         </Route>
 
-        <ProtectedLogginUserRoute
+        <Route
           exact 
           path="/login"
           component={LoginPage}
         />
 
-        <ProtectedLogginUserRoute 
+        <Route 
           exact 
           path="/register"
           component={RegistrationPage}
         />
        
-        <ProtectedLogginUserRoute 
+        <Route 
           exact 
           path="/forgot-password"
           component={ForgotPasswordPage}
         />
 
-        <ProtectedLogginUserRoute 
+        <Route 
           exact 
           path="/reset-password"
           component={ResetPage}

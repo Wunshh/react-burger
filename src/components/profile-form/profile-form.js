@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/user';
 
 import profileFormStyle from './profile-form.module.css';
-import { useEffect, useState } from 'react';
 
 function ProfileForm() {
 
