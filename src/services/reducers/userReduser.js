@@ -28,7 +28,8 @@ const userDataReducer = (state = initialState, action) => {
                 form: {
                     ...state.form,
                     [action.field]: action.value
-                }
+                },
+                userIsLoggin: true
             }
         }
         case GET_USER_DATA_REQUEST: {
