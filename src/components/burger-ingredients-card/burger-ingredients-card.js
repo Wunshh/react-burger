@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useLocation, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { 
@@ -21,6 +22,8 @@ function BurgerIngredientsCard({item, onCardClick}) {
         })
     });
 
+    const location = useLocation();
+
     const dispatch = useDispatch();
     const baseCountNumber = 0;
 
@@ -34,22 +37,33 @@ function BurgerIngredientsCard({item, onCardClick}) {
         });
     }
 
+    const ingredientId = item['_id'];
+
     return (
-        <div className={burgerCardStyle.card} onClick={hendelClick} style={{opacity}} ref={dragRef}>
-            {count && <Counter count={item.__v} size="default" />}
-            <img 
-                className={burgerCardStyle.img} 
-                alt="изображение ингридиента"
-                src={item.image}
-            />
-            <div className={burgerCardStyle.currency}>
-                <p className="text text_type_digits-default mr-2">{item.price}</p>
-                <CurrencyIcon type="primary" />
+        <Link 
+            className={burgerCardStyle.link}
+            key={ingredientId}
+            to={{
+                pathname: `/ingredients/${ingredientId}`,
+                state: { background: location }
+            }}
+        >
+            <div className={burgerCardStyle.card} onClick={hendelClick} style={{opacity}} ref={dragRef}>
+                {count && <Counter count={item.__v} size="default" />}
+                <img 
+                    className={burgerCardStyle.img} 
+                    alt="изображение ингридиента"
+                    src={item.image}
+                />
+                <div className={burgerCardStyle.currency}>
+                    <p className="text text_type_digits-default mr-2">{item.price}</p>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <p className="text text_type_main-small text-align">
+                    {item.name}
+                </p>
             </div>
-            <p className="text text_type_main-small text-align">
-                {item.name}
-            </p>
-        </div>
+        </Link>
     );
 }
 

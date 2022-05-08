@@ -1,0 +1,25 @@
+.forgot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.input {
+    margin-bottom: 24px;
+}
+
+.link {
+    margin-left: 8px;
+    text-decoration: none;
+    color: #4C4CFF;
+}
+
+.title {
+    margin-top: 80px;
+}

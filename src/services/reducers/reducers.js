@@ -9,7 +9,9 @@ import {
 } from '../actions/ingredients';
 
 import {
-    SEND_ORDER_SUCCESS
+    SEND_ORDER_SUCCESS,
+    SEND_ORDER_REQUEST,
+    SEND_ORDER_FAILED
 } from '../actions/order';
 
 import {
@@ -25,7 +27,9 @@ const initialState = {
     order: null,
     ingredientModalOpen: false,
     orderModalOpen: false,
-    visible: false
+    visible: false,
+    orederRequest: false,
+    orderFailed: false
 };
 
 const ingredient = (state = initialState, action) => {
@@ -72,13 +76,19 @@ const ingredient = (state = initialState, action) => {
             };
         }
         case MOVE_ITEM: {
-            
             return {
                 ...state,
                 constructorIngredients: [...state.constructorIngredients].filter(item => 
                     item.type === 'bun').concat(action.newCards)
             }
         }
+        case SEND_ORDER_REQUEST: {
+            return {
+                ...state,
+                orederRequest: true,
+                orderFailed: false
+            }
+        } 
         case SEND_ORDER_SUCCESS: {
             return {
                 ...state,
@@ -86,8 +96,19 @@ const ingredient = (state = initialState, action) => {
                 constructorIngredients: [],
                 allIngredients: [...state.allIngredients].map(item => 
                     item && { ...item, __v: 0}
-                )
+                ),
+                orederRequest: false,
+                orderFailed: false
             };
+        }
+        case SEND_ORDER_FAILED: {
+            return {
+                ...state,
+                order: {...initialState.state.order},
+                allIngredients: {...initialState.state.allIngredients},
+                orederRequest: false,
+                orderFailed: true
+            }
         }
         case ORDER_MODAL_OPEN: {
             return {
@@ -96,22 +117,20 @@ const ingredient = (state = initialState, action) => {
                 visible: true
             };
         }
+        case MODAL_CLOSE: {
+            return {
+                ...state,
+                order: null,
+                orederRequest: false,
+                orderFailed: false
+            }
+        }
         case INGREDIENT_MODAL_OPEN: {
             return {
                 ...state,
                 ingredientModalOpen: true,
                 visible: true,
                 ingredient: action.item
-            };
-        }
-        case MODAL_CLOSE:  {
-            return {
-                ...state,
-                orderModalOpen: false,
-                visible: false,
-                order: null,
-                ingredient: null,
-                ingredientModalOpen: false,
             };
         }
         default: {

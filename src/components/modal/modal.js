@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,9 @@ import modalStyle from './modal.module.css';
 
 const Modal = ({children, header, onClose}) => {
 
-  const visible = useSelector(store => store.ingredient.visible);
+  const location = useLocation();
+  const modalOpen = useSelector(store => store.ingredient.visible);
+  const visible = modalOpen || location.pathname.indexOf('ingredients')
   const modalRoot = document.getElementById("react-modals"); 
 
   const handleModalCloseKeyDown = useCallback((evt) => {

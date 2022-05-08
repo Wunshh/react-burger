@@ -1,5 +1,6 @@
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,10 +29,13 @@ function BurgerConstructor({ onButtonClick }) {
 
     const ingredients = useSelector(store => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
+    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -64,11 +68,15 @@ function BurgerConstructor({ onButtonClick }) {
     const order = mainIngredients.concat(bun);
 
     function hendelClick() {
-        onButtonClick();
-        dispatch({
-            type: ORDER_MODAL_OPEN
-        });
-        dispatch(sendOrder(order.map((item) => item._id)));
+        if(!loginSuccess) {
+            history.push('/login');
+        } else {
+            onButtonClick();
+            dispatch({
+                type: ORDER_MODAL_OPEN
+            });
+            dispatch(sendOrder(order.map((item) => item._id)));
+        }
     }
 
     const bunPrice = bun === undefined ? 0 : bun.price;
@@ -88,7 +96,7 @@ function BurgerConstructor({ onButtonClick }) {
             type: MOVE_ITEM,
             newCards
         })
-    }, [dispatch, mainIngredients, ingredients]);
+    }, [dispatch, mainIngredients]);
 
     return (
  
@@ -132,7 +140,12 @@ function BurgerConstructor({ onButtonClick }) {
                     <p className="text text_type_digits-medium mr-2">{mainIngredients && calculateCost()}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" onClick={ingredients && hendelClick} disabled={bun && order.length > 1 ? false : true}>
+                <Button 
+                    type="primary" 
+                    size="large" 
+                    onClick={ingredients && hendelClick} 
+                    disabled={bun && order.length > 1 ? false : true}
+                >
                     Оформить заказ
                 </Button>
             </div>

@@ -1,14 +1,30 @@
-import { useSelector } from 'react-redux';
-import {dataPropTypes} from '../../utils/types';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { dataPropTypes } from '../../utils/types';
+
+import { getIngredientsData } from '../../services/actions/ingredients'; 
 
 import ingredientDetailsStyle from './ingredient-details.module.css';
 
 function IngredientDetail() {
 
-    const item = useSelector(state => state.ingredient.ingredient);
+    const ingredientId = useParams();  
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
+
+    const modalItem = useSelector(state => state.ingredient.ingredient);
+    const ingredients = useSelector(store => store.ingredient.allIngredients);
+   
+    const ingredient = (ingredients.filter((item) => item._id === ingredientId.ingredientId))[0];
+
+    const item = ingredient || modalItem;
 
     return (
-        item !== null && 
+        item && 
         <div className={ingredientDetailsStyle.card}>
             <img                 
                 alt="изображение ингридиента"
