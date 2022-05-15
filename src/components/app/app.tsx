@@ -15,21 +15,25 @@ import RegistrationPage from '../../pages/registration';
 import ForgotPasswordPage from '../../pages/forgot';
 import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
+import IngredientPage from '../../pages/ingredient-page';
 import NotFound404 from '../../pages/not-found';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
 import { MODAL_CLOSE } from '../../services/actions/modal';
 import { getUserData } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
+import { TLocation } from '../../utils/types';
 
 import appStyles from './app.module.css';
 
 
 function App() {
 
-  const [isIngredientModalShown, setIsIngredientModalShown] = useState(false);
-  const [isOrderModalShown, setIsOrderModalShown] = useState(false);
+  const [isIngredientModalShown, setIsIngredientModalShown] = useState<boolean>(false);
+  const [isOrderModalShown, setIsOrderModalShown] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location: TLocation = useLocation();
+  
   const history = useHistory();
   const background = location.state && location.state.background;
 
@@ -48,6 +52,9 @@ function App() {
         type: MODAL_CLOSE
       })
     }
+    if (location.pathname.indexOf('ingredients') === 1) {
+      history.goBack();
+    }
   }
 
   function handleOrderClick() {
@@ -55,7 +62,9 @@ function App() {
   }
 
   useEffect(() => {
-    dispatch(getUserData());
+    if (getCookie('accessToken')) {
+      dispatch(getUserData());
+    }
   }, [dispatch]);
 
   return (
@@ -86,6 +95,12 @@ function App() {
             </Modal>
           }
         </Route>
+
+        <Route
+          exact
+          path='/ingredients/:ingredientId'
+          component={IngredientPage}
+        />
 
         <Route
           exact 
@@ -120,14 +135,7 @@ function App() {
           path="/profile/orders"
           component={ProfilePage}
         />
-
-        <Route 
-          path='/ingredients/:ingredientId' 
-        >
-          <IngredientDetail />
-        </Route>
-
-        <Route path="*">
+        <Route>
           <NotFound404 />
         </Route>
 
@@ -140,7 +148,6 @@ function App() {
               <Modal 
                 header="Детали ингридиента"
                 onClose={handleModalClose}
-                isIngredientModalShown={isIngredientModalShown}
               >
                 <IngredientDetail />
               </Modal>

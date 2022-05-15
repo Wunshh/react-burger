@@ -8,19 +8,21 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { TLocation } from '../../utils/types';
+
 import appHeaderStyles from './app-header.module.css';
 
 
 function AppHeader() {
 
-    const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
-    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+    const isLoggin = useSelector((store: any ) => store.userDataReducer.userIsLoggin);
+    const loginSuccess = useSelector((store: any ) => store.loginFormReducer.loginSuccess);
 
-    let path = loginSuccess || isLoggin ? '/profile' : '/login';
+    let path: string = loginSuccess || isLoggin ? '/profile' : '/login';
 
-    const location = useLocation();
+    const location: TLocation = useLocation();
 
-    const celectType = (path) => {
+    const celectType = (path: string) => {
        return location.pathname === path ? "primary" : "secondary";
     }
 

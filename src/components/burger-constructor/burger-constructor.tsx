@@ -1,8 +1,7 @@
-import { useEffect, useState, memo, useCallback } from 'react';
+import { useEffect, useState, memo, useCallback, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import { 
@@ -21,20 +20,25 @@ import { sendOrder } from '../../services/actions/order';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import { ORDER_MODAL_OPEN } from '../../services/actions/modal';
 import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
+import { TIngredients } from '../../utils/types';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
+type TButtonClick = {
+    onButtonClick: () => void;
+};  
 
-function BurgerConstructor({ onButtonClick }) {
 
-    const ingredients = useSelector(store => store.ingredient.constructorIngredients);
+const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick = () => null }) => {
+
+    const ingredients = useSelector((store: any) => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
     const history = useHistory();
 
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+    const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);
 
 
     useEffect(() => {
@@ -49,7 +53,7 @@ function BurgerConstructor({ onButtonClick }) {
 
     const [, dropTarget] = useDrop({
         accept: "items",
-        drop(item) {
+        drop(item: any) {
             const newItem = {
                 ...item,
                 uuid: uuidv4()
@@ -61,9 +65,9 @@ function BurgerConstructor({ onButtonClick }) {
         }
     });
 
-    const bun = ingredients.find((m) => m.type === 'bun'); 
+    const bun = ingredients.find((m: TIngredients) => m.type === 'bun'); 
 
-    const mainIngredients = ingredients.filter((m) => m.type !== 'bun');
+    const mainIngredients = ingredients.filter((m: TIngredients) => m.type !== 'bun');
 
     const order = mainIngredients.concat(bun);
 
@@ -75,14 +79,14 @@ function BurgerConstructor({ onButtonClick }) {
             dispatch({
                 type: ORDER_MODAL_OPEN
             });
-            dispatch(sendOrder(order.map((item) => item._id)));
+            dispatch(sendOrder(order.map((item: TIngredients) => item._id)));
         }
     }
 
     const bunPrice = bun === undefined ? 0 : bun.price;
 
     function calculateCost() {
-        return (mainIngredients.reduce((sum, current) => sum + current.price, 0) + bunPrice * 2);
+        return (mainIngredients.reduce((sum: number, current: number): number => sum + current.price, 0) + bunPrice * 2);
     }
 
 
@@ -114,7 +118,7 @@ function BurgerConstructor({ onButtonClick }) {
                         thumbnail={bun.image_mobile}
                     />}
                     <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
-                        {mainIngredients.map((item, index) => {
+                        {mainIngredients.map((item: any, index: number) => {
                             return (
                                 <BurgerConstructorCard 
                                     key={item.uuid}
@@ -151,10 +155,6 @@ function BurgerConstructor({ onButtonClick }) {
             </div>
         </section>
     );
-}
-
-BurgerConstructor.propTypes = {
-    onButtonClick: PropTypes.func
 }
 
 export default memo(BurgerConstructor);
