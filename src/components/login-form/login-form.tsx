@@ -1,3 +1,4 @@
+import { SyntheticEvent, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,14 +13,14 @@ function LoginForm() {
     const {
         email,
         password,
-    } = useSelector(state => state.loginFormReducer.form);
+    } = useSelector((state: any) => state.loginFormReducer.form);
     const dispatch = useDispatch();
 
-    const onFormChange = (evt) => {
+    const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
         dispatch(setLoginFormValue(evt.target.name, evt.target.value));
     }
 
-    const onFormSubmit = (evt) => {
+    const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
         dispatch(login(email, password));
     }
