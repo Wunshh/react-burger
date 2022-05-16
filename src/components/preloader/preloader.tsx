@@ -3,7 +3,7 @@ import preloaderStyle from './preloader.module.css'
 
 function Preloader() {
 
-    const isSerch = useSelector(store => store.ingredient.orederRequest);
+    const isSerch = useSelector((store: any) => store.ingredient.orederRequest);
 
     return (
         <div className={ isSerch ? preloaderStyle.preloader : preloaderStyle.preloaderInvisible }>

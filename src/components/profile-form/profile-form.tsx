@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SyntheticEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -14,7 +14,7 @@ function ProfileForm() {
         email,
         name,
         password,
-    } = useSelector(state => state.userDataReducer.form);
+    } = useSelector((state: any) => state.userDataReducer.form);
 
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ function ProfileForm() {
         dispatch(getUserData());
     }, [dispatch]);
 
-    const onFormChange = (evt) => {
+    const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
         dispatch(setUserFormValue(evt.target.name, evt.target.value));
         setIsFormChange(true);
     }
@@ -32,7 +32,7 @@ function ProfileForm() {
         setIsFormChange(true);
     }
 
-    const onFormSubmit = (evt) => {
+    const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
         dispatch(updateUserData(email, name, password));
         setIsFormChange(false);

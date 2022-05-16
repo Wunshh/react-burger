@@ -43,7 +43,7 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);
+    const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);  
 
 
     useEffect(() => {
@@ -75,8 +75,10 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
     const mainIngredients = ingredients.filter((m: TIngredients) => m.type !== 'bun');
 
     const order = mainIngredients.concat(bun);
-
+        
+    
     function hendelClick() {
+        debugger;
         if(!loginSuccess) {
             history.push('/login');
         } else {

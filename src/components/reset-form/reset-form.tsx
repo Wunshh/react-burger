@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,17 +10,17 @@ import resetFormStyle from './reset-form.module.css';
 
 function ResetForm() {
 
-    const { password, token } = useSelector(state => state.resetFormReducer.form);
-    const forgotSuccess = useSelector(state => state.forgotPasswordFormReducer.forgotSuccess);
+    const { password, token } = useSelector((state: any) => state.resetFormReducer.form);
+    const forgotSuccess = useSelector((state: any) => state.forgotPasswordFormReducer.forgotSuccess);
     const history = useHistory();
 
     const dispatch = useDispatch();
 
-    const onFormChange = (evt) => {
+    const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
         dispatch(setResetFormValue(evt.target.name, evt.target.value));
     }
 
-    const onFormSubmit = (evt) => {
+    const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
         dispatch(reset(password, token));
     }
@@ -32,11 +32,12 @@ function ResetForm() {
     }, [history, forgotSuccess]);
 
     const [showPassword, setShowPassword] = useState(false);
-    const [isShown, setIsShown] = useState('password')
-    const inputRef = useRef();
+    const [isShown, setIsShown] = useState<"password" | "text" | "email" | undefined>('password');
+    const inputRef = useRef<HTMLInputElement>(null);
     
     const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0);
+        
+        setTimeout(() => inputRef.current?.focus(), 0);
         if(!showPassword) {
             setShowPassword(true);
             setIsShown('text');

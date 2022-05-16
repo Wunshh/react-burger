@@ -1,9 +1,16 @@
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-function ProtectedRoute({ component: Component, ...props }){
-  const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
-  const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
+interface IProtected {
+  component: any;
+  location?: object;
+  path: string;
+};
+
+const ProtectedRoute: FC<IProtected> = ({ component: Component, ...props }) => {
+  const isLoggin = useSelector((store: any) => store.userDataReducer.userIsLoggin);
+  const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);  
 
   return (
     <Route>

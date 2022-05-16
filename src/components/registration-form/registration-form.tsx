@@ -1,3 +1,4 @@
+import { ChangeEvent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -17,15 +18,15 @@ function RegistrationForm() {
         email,
         name,
         password,
-    } = useSelector(state => state.registrationFormReducer.form);
+    } = useSelector((state: any) => state.registrationFormReducer.form);
 
     const dispatch = useDispatch();
 
-    const onFormChange = (evt) => {
+    const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
         dispatch(setRegistrationFormValue(evt.target.name, evt.target.value));
     }
 
-    const onFormSubmit = (evt) => {
+    const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
         dispatch(register(email, name, password));
     }
