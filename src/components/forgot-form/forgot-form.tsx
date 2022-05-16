@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, SyntheticEvent, ChangeEvent} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,16 +13,16 @@ function ForgotForm() {
 
     const history = useHistory();
 
-    const { email } = useSelector(state => state.forgotPasswordFormReducer.form);
-    const forgotSuccess = useSelector(state => state.forgotPasswordFormReducer.forgotSuccess);
+    const { email } = useSelector((state: any) => state.forgotPasswordFormReducer.form);
+    const forgotSuccess = useSelector((state: any) => state.forgotPasswordFormReducer.forgotSuccess);
 
     const dispatch = useDispatch();
 
-    const onFormChange = (evt) => {
+    const onFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
         dispatch(setForgotFormValue(evt.target.name, evt.target.value));
     }
 
-    const onFormSubmit = (evt) => {
+    const onFormSubmit = (evt: SyntheticEvent<HTMLFormElement>) => {
         evt.preventDefault();
         dispatch(forgotPassword(email));
     }
