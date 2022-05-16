@@ -7,7 +7,6 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { dataPropTypes } from '../../utils/types';
 import { INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';

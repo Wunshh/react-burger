@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { dataPropTypes } from '../../utils/types';
 
 import { getIngredientsData } from '../../services/actions/ingredients'; 
+import { TIngredients } from '../../utils/types';
 
 import ingredientDetailsStyle from './ingredient-details.module.css';
 
 function IngredientDetail() {
 
-    const ingredientId = useParams();  
+    const ingredientId: {ingredientId: string} = useParams();  
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getIngredientsData());
     }, [dispatch]);
 
-    const modalItem = useSelector(state => state.ingredient.ingredient);
-    const ingredients = useSelector(store => store.ingredient.allIngredients);
+    const modalItem = useSelector((state: any) => state.ingredient.ingredient);
+    const ingredients = useSelector((store: any) => store.ingredient.allIngredients);
    
-    const ingredient = (ingredients.filter((item) => item._id === ingredientId.ingredientId))[0];
+    const ingredient = (ingredients.filter((item: TIngredients) => item._id === ingredientId.ingredientId))[0];
 
     const item = ingredient || modalItem;
 
@@ -58,8 +58,5 @@ function IngredientDetail() {
     );
 }
 
-IngredientDetail.propTypes = {
-    item: dataPropTypes
-}
 
 export default IngredientDetail;
