@@ -1,11 +1,16 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 import { 
     CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import modalHeaderStyle from './modal-header.module.css';
 
-function ModalHeader({ header, onClose }) {
+interface IModal {
+    header?: string;
+    onClose: () => void;
+};
+
+const ModalHeader: FC<IModal> = ({ header, onClose }) => {
 
     return (
         <div className={modalHeaderStyle.head}>
@@ -17,11 +22,6 @@ function ModalHeader({ header, onClose }) {
             </div>
         </div>
     );
-}
-
-ModalHeader.propTypes = {
-    header: PropTypes.string,
-    onClose: PropTypes.func
 }
 
 export default ModalHeader;

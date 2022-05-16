@@ -1,22 +1,26 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import ModalHeader from '../modal-header/modal-header';
 
 import modalStyle from './modal.module.css';
 
+interface IModal {
+  children: ReactNode;
+  header?: string;
+  onClose: () => void;
+};
 
-const Modal = ({children, header, onClose}) => {
+const Modal: FC<IModal> = ({children, header, onClose}) => {
 
   const location = useLocation();
-  const modalOpen = useSelector(store => store.ingredient.visible);
+  const modalOpen = useSelector((store: any) => store.ingredient.visible);
   const visible = modalOpen || location.pathname.indexOf('ingredients')
   const modalRoot = document.getElementById("react-modals"); 
-
+  
   const handleModalCloseKeyDown = useCallback((evt) => {
     if (evt.key === 'Escape') {
       onClose();
@@ -40,14 +44,8 @@ const Modal = ({children, header, onClose}) => {
       </div>
       <ModalOverlay onClose={onClose}/>
     </div>,
-    modalRoot
+    modalRoot as HTMLElement
   );
-}
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  header: PropTypes.string,
-  onClose: PropTypes.func
 }
 
 export default Modal;
