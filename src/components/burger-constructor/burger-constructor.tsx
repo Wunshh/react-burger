@@ -28,8 +28,13 @@ type TButtonClick = {
     onButtonClick: () => void;
 };  
 
+type TMoveCallback = (
+    dragIndex: number,
+    hoverIndex: number
+) => void;
 
-const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick = () => null }) => {
+
+const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) => {
 
     const ingredients = useSelector((store: any) => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
@@ -86,11 +91,10 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick = () => null }) => 
     const bunPrice = bun === undefined ? 0 : bun.price;
 
     function calculateCost() {
-        return (mainIngredients.reduce((sum: number, current: number): number => sum + current.price, 0) + bunPrice * 2);
+        return (mainIngredients.reduce((sum: number, current: TIngredients): number => sum + current.price, 0) + bunPrice * 2);
     }
 
-
-    const moveCard = useCallback((dragIndex, hoverIndex) => { 
+    const moveCard = useCallback<TMoveCallback>((dragIndex, hoverIndex) => { 
         const dragCard = mainIngredients[dragIndex];
         const newCards = [...mainIngredients];
         newCards.splice(dragIndex, 1);
@@ -103,7 +107,6 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick = () => null }) => 
     }, [dispatch, mainIngredients]);
 
     return (
- 
         <section className={burgerConstructorStyle.section} ref={dropTarget}>
             {ingredients &&
                 <div 

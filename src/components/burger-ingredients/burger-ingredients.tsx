@@ -12,33 +12,42 @@ import {
 } from '../../utils/data';
 import { getIngredientsData } from '../../services/actions/ingredients';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
+import { TIngredients } from '../../utils/types';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
+type TCardClick = {
+    onCardClick: () => void;
+}; 
 
-function BurgerIngredients({ onCardClick }) {
+
+function BurgerIngredients({ onCardClick }: TCardClick) {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
-    const bonRef = useRef();
-    const souseRef = useRef();
-    const fillingRef = useRef();
-    const allIngredients = useRef();
+    const bonRef = useRef<HTMLParagraphElement>(null);
+    const souseRef = useRef<HTMLParagraphElement>(null);
+    const fillingRef = useRef<HTMLParagraphElement>(null);
+    const allIngredientsRef = useRef<HTMLDivElement>(null);
 
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
 
-    const ingredients = useSelector(store => store.ingredient.allIngredients);
+    const ingredients = useSelector((store: any) => store.ingredient.allIngredients);
 
     useEffect(() => {
         dispatch(getIngredientsData());
     }, [dispatch]);
 
     const hendelScroll = () => {
-        const top = allIngredients.current.scrollTop + allIngredients.current.offsetTop;
-        if (top < souseRef.current.offsetTop) {
+        const top: any = allIngredientsRef.current !== null ? allIngredientsRef.current.scrollTop + allIngredientsRef.current.offsetTop: null;
+        if (souseRef.current !== null && top < souseRef.current.offsetTop) {
             setCurrent('one');
-        } else if (fillingRef.current.offsetTop > top && top >= souseRef.current.offsetTop) {
+        } else if (
+                fillingRef.current !== null && 
+                souseRef.current !== null && 
+                fillingRef.current.offsetTop > top && top >= souseRef.current.offsetTop
+            ) {
             setCurrent('two');
         } else {
             setCurrent('three');
@@ -53,19 +62,19 @@ function BurgerIngredients({ onCardClick }) {
         }
     }, [windowHeight]);
 
-    const tabClick = (currentName) => {
+    const tabClick = (currentName: string): void => {
         setCurrent(currentName);
 
-        if (currentName === "one") {
+        if (currentName === "one" && bonRef.current !== null) {
             bonRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
-        } else if (currentName === "two") {
+        } else if (currentName === "two" && souseRef.current !== null) {
             souseRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
-        } else if (currentName === "three") {
+        } else if (currentName === "three" && fillingRef.current !== null) {
             fillingRef.current.scrollIntoView({ block: "start", behavior: "smooth"});
         }
     }
     
-    const ingridnentsFilter = (type) => ingredients.filter(m => m.type === type);
+    const ingridnentsFilter = (type: string): Array<TIngredients> => ingredients.filter((m: TIngredients) => m.type === type);
 
     return (
         <section className={`${burgerIngredientsStyle.section} ${'navigation'}`}>
@@ -86,12 +95,12 @@ function BurgerIngredients({ onCardClick }) {
                     </Tab>
                 </div>      
                 
-                <div className={burgerIngredientsStyle.ingredients} ref={allIngredients} onScroll={hendelScroll}>    
+                <div className={burgerIngredientsStyle.ingredients} ref={allIngredientsRef} onScroll={hendelScroll}>    
                     <p className="text text_type_main-medium mb-6" ref={bonRef}>
                         Булки
                     </p>
                     <div className={burgerIngredientsStyle.cards}>
-                        {ingridnentsFilter("bun").map((item) => {
+                        {ingridnentsFilter("bun").map((item: TIngredients) => {
                             return (
                                 <BurgerIngredientsCard 
                                     key={item._id}  

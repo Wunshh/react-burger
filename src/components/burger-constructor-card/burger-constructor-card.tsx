@@ -1,23 +1,28 @@
-import { useRef } from 'react';
+import { useRef, FC, MouseEvent } from 'react';
 import { 
     ConstructorElement,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 
-import { dataPropTypes } from '../../utils/types';
 import { DELETE_ITEM } from '../../services/actions/constructor';
+import { TIngredients } from '../../utils/types';
 
 import burgerCardStyle from './burger-constructor-card.module.css';
 
+interface IBurgerProps {
+    ingridient: TIngredients;
+    index: number;
+    moveCard: (dragIndex: number, hoverIndex: number) => void;
+  }
 
-function BurgerConstructorCard({ingridient, index, moveCard}) {
+
+const BurgerConstructorCard: FC<IBurgerProps> = ({ingridient, index, moveCard}) => {
 
     const dispatch = useDispatch();
     const id = ingridient._id;
-    const ref = useRef(null); 
+    const ref = useRef<HTMLDivElement>(null);   
 
     const handleDelete = () => {
         dispatch({
@@ -33,7 +38,7 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
               handlerId: monitor.getHandlerId()
             }
         },
-        hover(item, monitor) {
+        hover(item: any, monitor) {
            
             if (!ref.current) {
                 return;
@@ -48,8 +53,9 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const clientOffset: any = monitor.getClientOffset();
+            const hoverClientY: number = clientOffset.y - hoverBoundingRect.top;
+            
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
@@ -78,7 +84,7 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
 
     ingridient.type !== 'bun' && drag(dropRef(ref));
 
-    const preventDefault = (e) => e.preventDefault();
+    const preventDefault = (event: MouseEvent<HTMLDivElement>) => event.preventDefault();
     
     return (
         <div 
@@ -97,12 +103,6 @@ function BurgerConstructorCard({ingridient, index, moveCard}) {
             />
         </div>
     );
-}
-
-BurgerConstructorCard.propTypes = {
-    ingridient: dataPropTypes.isRequired,
-    moveCard: PropTypes.func,
-    index: PropTypes.number
 }
 
 export default BurgerConstructorCard;
