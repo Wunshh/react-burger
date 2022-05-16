@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { 
     Counter,
@@ -11,8 +11,15 @@ import { dataPropTypes } from '../../utils/types';
 import { INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
 
 import burgerCardStyle from './burger-ingredients-card.module.css';
+import { TIngredients } from '../../utils/types';
 
-function BurgerIngredientsCard({item, onCardClick}) {
+interface IBurgerIngredients {
+    item: TIngredients;
+    onCardClick: () => void;
+}
+
+
+const BurgerIngredientsCard: FC<IBurgerIngredients> = ({item, onCardClick}) => {
 
     const [{opacity}, dragRef] = useDrag({
         type: "items",
@@ -65,11 +72,6 @@ function BurgerIngredientsCard({item, onCardClick}) {
             </div>
         </Link>
     );
-}
-
-BurgerIngredientsCard.propTypes = {
-    item: dataPropTypes.isRequired,
-    onCardClick: PropTypes.func
 }
 
 export default BurgerIngredientsCard;
