@@ -11,7 +11,7 @@ function catchFetchError() {
 }
 
 function getIngredientsData() {
-    return function(dispatch) {
+    return function(dispatch: any) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });

@@ -35,8 +35,7 @@ const userDataReducer = (state = initialState, action) => {
         case GET_USER_DATA_REQUEST: {
             return {
                 ...state,
-                userDataRequest: true,
-                userDataFailed: false
+                userDataRequest: true
             }
         }
         case GET_USER_DATA_SUCCESS: {
@@ -62,7 +61,8 @@ const userDataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDataRequest: true,
-                userDataFailed: false
+                userDataFailed: false,
+                userIsLoggin: false
             }
         }
         case UPDATE_USER_DATA_SUCCESS: {

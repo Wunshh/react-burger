@@ -5,7 +5,7 @@ const POST_RESET_FORM_SUBMIT = 'POST_RESET_FORM_SUBMIT';
 const POST_RESET_FORM_SUCCESS = 'POST_RESET_FORM_SUCCESS';
 const POST_RESET_FORM_FAILED = 'POST_RESET_FORM_FAILED';
 
-const setResetFormValue = (field, value) => ({
+const setResetFormValue = (field: string, value: string) => ({
     type: RESET_FORM_SET_VALUE,
     field,
     value
@@ -17,8 +17,9 @@ function catchFetchError() {
     };
 }
 
-const reset = (password, token) => {
-    return function(dispatch) {
+const reset = (password: string, token: string) => {
+    
+    return function(dispatch: any) {
         dispatch({
             type: POST_RESET_FORM_SUBMIT
         });

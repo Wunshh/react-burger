@@ -32,7 +32,6 @@ const forgotPasswordFormReducer = (state = initialState, action) => {
             }
         }
         case POST_FORGOT_FORM_SUCCESS: {
-            console.log(action.res);
             return {
                 ...state,
                 form: {

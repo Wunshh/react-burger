@@ -5,7 +5,7 @@ const POST_FORGOT_FORM_SUBMIT = 'POST_FORGOT_FORM_SUBMIT';
 const POST_FORGOT_FORM_SUCCESS = 'POST_FORGOT_FORM_SUCCESS';
 const POST_FORGOT_FORM_FAILED = 'POST_FORGOT_FORM_FAILED';
 
-const setForgotFormValue = (field, value) => ({
+const setForgotFormValue = (field: string, value: string) => ({
     type: FORGOT_FORM_SET_VALUE,
     field,
     value
@@ -17,8 +17,8 @@ function catchFetchError() {
     };
 }
 
-const forgotPassword = (email) => {
-    return function(dispatch) {
+const forgotPassword = (email: string) => {
+    return function(dispatch: any) {
         dispatch({
             type: POST_FORGOT_FORM_SUBMIT
         });

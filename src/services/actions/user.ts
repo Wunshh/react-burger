@@ -11,7 +11,7 @@ const UPDATE_USER_DATA_FAILED = 'UPDATE_USER_DATA_FAILED';
 const RESET_USER_DATA_FAILED = 'RESET_USER_DATA_FAILED';
 const USER_LOGOUT = 'USER_LOGOUT';
 
-const setUserFormValue = (field, value) => ({
+const setUserFormValue = (field: string, value: string) => ({
     type: USER_FORM_SET_VALUE,
     field,
     value
@@ -30,7 +30,7 @@ function catchUserUpdateErr() {
 }
 
 function getUserData() {
-    return function(dispatch) {
+    return function(dispatch: any) {
         dispatch({
             type: GET_USER_DATA_REQUEST
         });
@@ -56,8 +56,10 @@ function getUserData() {
     }
 }
 
-const updateToken = (afterRefresh) => {
-    return function(dispatch) {
+const updateToken = (afterRefresh: any) => {
+    console.log(afterRefresh);
+    
+    return function(dispatch: any) {
         dispatch({
             type: GET_USER_DATA_REQUEST
         });
@@ -70,8 +72,8 @@ const updateToken = (afterRefresh) => {
     }
 }
 
-const updateUserData = (name, email, password) => {
-    return function(dispatch) {
+const updateUserData = (name: string, email: string, password: string) => {
+    return function(dispatch: any) {
         dispatch({
             type: UPDATE_USER_DATA_REQUEST
         });

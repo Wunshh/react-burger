@@ -78,7 +78,6 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
         
     
     function hendelClick() {
-        debugger;
         if(!loginSuccess) {
             history.push('/login');
         } else {

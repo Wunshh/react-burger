@@ -9,6 +9,8 @@ import orderDetailsStyle from './order-details.module.css';
 function OrderDetails() {
 
     const orderDetails = useSelector((store: any) => store.ingredient.order);
+    console.log(orderDetails);
+    
     
     return (
         orderDetails !== null ? 

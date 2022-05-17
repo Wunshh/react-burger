@@ -5,7 +5,7 @@ const POST_REGISTER_FORM_SUBMIT = 'POST_REGISTER_FORM_SUBMIT';
 const POST_REGISTER_FORM_SUCCESS = 'POST_REGISTER_FORM_SUCCESS';
 const POST_REGISTER_FORM_FAILED = 'POST_REGISTER_FORM_FAILED';
 
-const setRegistrationFormValue = (field, value) => ({
+const setRegistrationFormValue = (field: string, value: string) => ({
     type: REGISTER_FORM_SET_VALUE,
     field,
     value
@@ -17,8 +17,8 @@ function catchFetchError() {
     };
 }
 
-const register = (email, name, password) => {
-    return function(dispatch) {
+const register = (email: string, name: string, password: string) => {
+    return function(dispatch: any) {
         dispatch({
             type: POST_REGISTER_FORM_SUBMIT
         });

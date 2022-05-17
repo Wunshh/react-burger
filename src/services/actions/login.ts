@@ -7,7 +7,7 @@ const POST_LOGIN_FORM_SUCCESS = 'POST_LOGIN_FORM_SUCCESS';
 const POST_LOGIN_FORM_FAILED = 'POST_LOGIN_FORM_FAILED';
 const LOGOUT = 'LOGOUT'
 
-const setLoginFormValue = (field, value) => ({
+const setLoginFormValue = (field: string, value: string) => ({
     type: LOGIN_FORM_SET_VALUE,
     field,
     value
@@ -19,8 +19,8 @@ function catchFetchError() {
     };
 }
 
-const login = (email, password) => {
-    return function(dispatch) {
+const login = (email: string, password: string) => {
+    return function(dispatch: any) {
         dispatch({
             type: POST_LOGIN_FORM_SUBMIT
         });
