@@ -1,3 +1,4 @@
+import { TForm } from '../../utils/types';
 import { 
     FORGOT_FORM_SET_VALUE,
     POST_FORGOT_FORM_SUBMIT,
@@ -5,7 +6,14 @@ import {
     POST_FORGOT_FORM_FAILED
 } from '../actions/forgotPassword';
 
-const initialState = {
+export type TForgotPasswordState = {
+    form: TForm;
+    forgotSuccess: boolean;
+    forgorRequest: boolean;
+    forgotFailed: boolean;
+}
+
+const initialState: TForgotPasswordState = {
     form: {
         email: '',
     },
@@ -14,7 +22,7 @@ const initialState = {
     forgotFailed: false
 }
 
-const forgotPasswordFormReducer = (state = initialState, action) => {
+const forgotPasswordFormReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case FORGOT_FORM_SET_VALUE: {
             return {

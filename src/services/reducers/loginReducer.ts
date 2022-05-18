@@ -1,3 +1,4 @@
+import { TForm } from '../../utils/types';
 import { 
     LOGIN_FORM_SET_VALUE,
     POST_LOGIN_FORM_SUBMIT,
@@ -6,7 +7,14 @@ import {
     LOGOUT
 } from '../actions/login';
 
-const initialState = {
+export type TLoginState = {
+    form: TForm;
+    loginSuccess: boolean;
+    loginRequest: boolean;
+    loginFailed: boolean;
+};
+
+const initialState: TLoginState = {
     form: {
         email: '',
         password: '',
@@ -16,7 +24,7 @@ const initialState = {
     loginFailed: false
 }
 
-const loginFormReducer = (state = initialState, action) => {
+const loginFormReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case LOGIN_FORM_SET_VALUE: {
             return {

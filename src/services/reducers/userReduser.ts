@@ -1,3 +1,4 @@
+import { TForm } from '../../utils/types';
 import {
     USER_FORM_SET_VALUE,
     GET_USER_DATA_SUCCESS,
@@ -10,7 +11,14 @@ import {
     USER_LOGOUT
 } from '../actions/user';
 
-const initialState = {
+export type TUserState = {
+    form: TForm;
+    userIsLoggin: boolean;
+    userDataRequest: boolean;
+    userDataFailed: boolean;
+}
+
+const initialState: TUserState = {
     form: {
         name: '',
         email: '',
@@ -21,7 +29,7 @@ const initialState = {
     userDataFailed: false
 }
 
-const userDataReducer = (state = initialState, action) => {
+const userDataReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case USER_FORM_SET_VALUE: {
             return {

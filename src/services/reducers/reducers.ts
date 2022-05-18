@@ -1,3 +1,5 @@
+import { TIngredients, TOrder } from '../../utils/types';
+
 import {
     ORDER_MODAL_OPEN,
     INGREDIENT_MODAL_OPEN,
@@ -20,7 +22,19 @@ import {
     MOVE_ITEM
 } from '../actions/constructor';
 
-const initialState = {
+export type TReducersState = {
+    allIngredients: Array<TIngredients>;
+    constructorIngredients: Array<TIngredients>;
+    ingredient: null | TIngredients;
+    order: null | TOrder;
+    ingredientModalOpen: boolean;
+    orderModalOpen: boolean;
+    visible: boolean;
+    orederRequest: boolean;
+    orderFailed: boolean;
+};
+
+const initialState: TReducersState = {
     allIngredients: [],
     constructorIngredients: [],
     ingredient: null,
@@ -32,7 +46,7 @@ const initialState = {
     orderFailed: false
 };
 
-const ingredient = (state = initialState, action) => {
+const ingredient = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_INGREDIENTS_SUCCESS: {
             return {
@@ -102,10 +116,11 @@ const ingredient = (state = initialState, action) => {
             };
         }
         case SEND_ORDER_FAILED: {
+            
             return {
                 ...state,
-                order: {...initialState.state.order},
-                allIngredients: {...initialState.state.allIngredients},
+                order: {...initialState.order},
+                allIngredients: {...initialState.allIngredients},
                 orederRequest: false,
                 orderFailed: true
             }

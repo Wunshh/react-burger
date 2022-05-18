@@ -1,3 +1,4 @@
+import { TForm } from '../../utils/types';
 import { 
     RESET_FORM_SET_VALUE,
     POST_RESET_FORM_SUBMIT,
@@ -5,7 +6,13 @@ import {
     POST_RESET_FORM_FAILED
 } from '../actions/reset';
 
-const initialState = {
+export type TResetState ={
+    form: TForm;
+    resetRequest: boolean;
+    resetFailed: boolean;
+};
+
+const initialState: TResetState = {
     form: {
         password: '',
         token: ''
@@ -14,7 +21,7 @@ const initialState = {
     resetFailed: false
 }
 
-const resetFormReducer = (state = initialState, action) => {
+const resetFormReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case RESET_FORM_SET_VALUE: {
             return {

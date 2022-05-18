@@ -11,7 +11,6 @@ function catchFetchError() {
 }
 
 const sendOrder = (itemsId: Array<string>) => {
-    console.log(itemsId);
     return function(dispatch: any) {
         dispatch({
             type: SEND_ORDER_REQUEST

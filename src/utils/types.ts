@@ -1,3 +1,11 @@
+import { store } from '../services/store/store';
+import { TForgotPasswordState } from '../services/reducers/forgotPasswordReducer';
+import { TLoginState } from '../services/reducers/loginReducer';
+import { TReducersState } from '../services/reducers/reducers';
+import { TRegistrationState} from '../services/reducers/registrationReducer';
+import { TResetState} from '../services/reducers/resetReduser';
+import { TUserState} from '../services/reducers/userReduser';
+
 export type TOrder = {
     name: string;   
     order: number;
@@ -25,4 +33,22 @@ export type TLocation = {
     pathname: string;
     search: string;
     state?: any
+};
+
+export type TForm = {
+    email?: string;
+    name?: string;
+    password?: string;
+    codeFromEmail?: string;
+    token?: string; 
+};
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = {
+    ingredient: TReducersState;
+    registrationFormReducer: TRegistrationState;
+    loginFormReducer: TLoginState;
+    resetFormReducer: TResetState;
+    forgotPasswordFormReducer: TForgotPasswordState;
+    userDataReducer: TUserState;
 };

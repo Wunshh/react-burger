@@ -43,9 +43,8 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);  
-
-
+    const userName = useSelector((store: any) => store.userDataReducer.form.name); 
+    
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
             setDeviceHeihgt(mainHeight);
@@ -78,7 +77,7 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
         
     
     function hendelClick() {
-        if(!loginSuccess) {
+        if(!userName) {
             history.push('/login');
         } else {
             onButtonClick();
