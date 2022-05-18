@@ -32,7 +32,7 @@ const login = (email: string, password: string) => {
                     res
                 }); 
                 localStorage.setItem('refreshToken', res.refreshToken); 
-                setCookie('accessToken', res.accessToken);
+                setCookie('accessToken', res.accessToken, {});
             } else {
                 dispatch(
                     catchFetchError()

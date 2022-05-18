@@ -65,7 +65,7 @@ function App() {
     if (getCookie('accessToken')) {
       dispatch(getUserData());
     }
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   return (
     <div className={appStyles.app}>

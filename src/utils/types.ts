@@ -44,6 +44,12 @@ export type TForm = {
     token?: string; 
 };
 
+export type THeaders = {
+    "Accept": string;
+    "Content-Type": string;
+    'Authorization'?: string; 
+};
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = {
     ingredient: TReducersState;

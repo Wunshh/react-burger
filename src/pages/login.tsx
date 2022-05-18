@@ -1,20 +1,22 @@
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 
-import LoginForm from '../components/login-form/login-form';
 import { TLocation } from '../utils/types';
+
+import LoginForm from '../components/login-form/login-form';
 
 function LoginPage() {
 
-    const userName = useSelector((store: any) => store.userDataReducer.form.name); 
+    const isLoggin = useSelector((store: any) => store.userDataReducer.userIsLoggin);
+    const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);
     const location: TLocation = useLocation();
     const path = location.state === null || location.state === undefined ? '/' : location.state.from.pathname;
 
     return (
-        userName.length === 0 || userName === undefined ?
-        <LoginForm />
+        (isLoggin || loginSuccess) ?
+        <Redirect to={path} /> 
         :
-        <Redirect to={path} />    
+        <LoginForm />
     );
 }
 

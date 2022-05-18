@@ -65,7 +65,7 @@ const updateToken = (afterRefresh: any) => {
         api.updateToken() 
         .then((res) => {
             localStorage.setItem('refreshToken', res.refreshToken); 
-            setCookie('accessToken', res.accessToken);
+            setCookie('accessToken', res.accessToken, {});
             dispatch(afterRefresh);
         })
     }
