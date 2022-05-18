@@ -4,13 +4,13 @@ import { Route, Redirect } from 'react-router-dom';
 
 interface IProtected {
   component: any;
-  location?: object;
+  location?: string;
   path: string;
 };
 
 const ProtectedRoute: FC<IProtected> = ({ component: Component, ...props }) => {
   const isLoggin = useSelector((store: any) => store.userDataReducer.userIsLoggin);
-  const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);  
+  const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);
 
   return (
     <Route>

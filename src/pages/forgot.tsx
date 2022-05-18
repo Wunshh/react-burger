@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux';
 import ForgotForm from '../components/forgot-form/forgot-form';
 
 function ForgotPasswordPage() {
-    const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
-    const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
-
+    const userName = useSelector((store: any) => store.userDataReducer.form.name); 
+    
     return (
-        (loginSuccess || isLoggin ) ?
-        <Redirect to={{ pathname: "/"}} /> 
-        :
+        userName.length === 0 || userName === undefined ?
         <ForgotForm />
+        : 
+        <Redirect to={{ pathname: "/"}} /> 
     );
 }
 

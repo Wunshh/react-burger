@@ -5,6 +5,7 @@ import { TReducersState } from '../services/reducers/reducers';
 import { TRegistrationState} from '../services/reducers/registrationReducer';
 import { TResetState} from '../services/reducers/resetReduser';
 import { TUserState} from '../services/reducers/userReduser';
+import { type } from 'os';
 
 export type TOrder = {
     name: string;   

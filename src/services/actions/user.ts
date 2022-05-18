@@ -57,8 +57,7 @@ function getUserData() {
 }
 
 const updateToken = (afterRefresh: any) => {
-    console.log(afterRefresh);
-    
+ 
     return function(dispatch: any) {
         dispatch({
             type: GET_USER_DATA_REQUEST

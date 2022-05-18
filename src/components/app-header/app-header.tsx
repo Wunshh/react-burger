@@ -15,10 +15,9 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    const isLoggin = useSelector((store: any ) => store.userDataReducer.userIsLoggin);
-    const loginSuccess = useSelector((store: any ) => store.loginFormReducer.loginSuccess);
+    const userName = useSelector((store: any) => store.userDataReducer.form.name); 
 
-    let path: string = loginSuccess || isLoggin ? '/profile' : '/login';
+    let path: string = userName.length === 0 || userName === undefined ? '/login' : '/profile';
 
     const location: TLocation = useLocation();
 
