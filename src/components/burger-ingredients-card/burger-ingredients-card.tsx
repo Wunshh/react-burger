@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import { useLocation, Link } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { 

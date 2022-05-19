@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useParams } from 'react-router-dom';
 
 import { getIngredientsData } from '../../services/actions/ingredients'; 
@@ -16,8 +16,8 @@ function IngredientDetail() {
         dispatch(getIngredientsData());
     }, [dispatch]);
 
-    const modalItem = useSelector((state: any) => state.ingredient.ingredient);
-    const ingredients = useSelector((store: any) => store.ingredient.allIngredients);
+    const modalItem = useSelector(state=> state.ingredient.ingredient);
+    const ingredients = useSelector(store => store.ingredient.allIngredients);
    
     const ingredient = (ingredients.filter((item: TIngredients) => item._id === ingredientId.ingredientId))[0];
 

@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent, ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/user';
@@ -14,7 +14,7 @@ function ProfileForm() {
         email,
         name,
         password,
-    } = useSelector((state: any) => state.userDataReducer.form);
+    } = useSelector(state => state.userDataReducer.form);
 
     const dispatch = useDispatch();
 
@@ -30,7 +30,9 @@ function ProfileForm() {
 
     const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
-        dispatch(updateUserData(email, name, password));
+        if (email !== undefined && name !== undefined && password !== undefined) {
+            dispatch(updateUserData(email, name, password));
+        }
         setIsFormChange(false);
         setInputDisabled(true)
     }

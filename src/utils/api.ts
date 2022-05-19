@@ -2,7 +2,7 @@ import { BASE_URL } from './data';
 import { getCookie } from './cookie';
 import { THeaders } from './types';
 
-const checkResponse = async (res: any) => {
+const checkResponse = async (res: Response) => {
     if (res.ok) {
         return res.json();
     }

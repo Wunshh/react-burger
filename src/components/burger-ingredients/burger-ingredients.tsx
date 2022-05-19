@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -33,7 +33,7 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
     const [current, setCurrent] = useState('one');
     const [deviceHeihgt, setDeviceHeihgt] = useState(765);
 
-    const ingredients = useSelector((store: any) => store.ingredient.allIngredients);
+    const ingredients = useSelector(store => store.ingredient.allIngredients);
 
     useEffect(() => {
         dispatch(getIngredientsData());

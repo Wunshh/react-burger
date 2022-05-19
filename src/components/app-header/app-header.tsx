@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import { 
     Logo, 
     BurgerIcon,
@@ -15,9 +15,9 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    const userName = useSelector((store: any) => store.userDataReducer.form.name); 
+    const userName = useSelector(store => store.userDataReducer.form.name); 
 
-    let path: string = userName.length === 0 || userName === undefined ? '/login' : '/profile';
+    let path: string = userName === undefined || userName.length === 0 ? '/login' : '/profile';
 
     const location: TLocation = useLocation();
 

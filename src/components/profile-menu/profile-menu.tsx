@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 
 import  { deleteCookie } from '../../utils/cookie';
 import { LOGOUT } from '../../services/actions/login';

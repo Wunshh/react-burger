@@ -1,7 +1,7 @@
 import { useEffect, useCallback, FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import ModalHeader from '../modal-header/modal-header';
@@ -17,11 +17,11 @@ interface IModal {
 const Modal: FC<IModal> = ({children, header, onClose}) => {
 
   const location = useLocation();
-  const modalOpen = useSelector((store: any) => store.ingredient.visible);
+  const modalOpen = useSelector(store => store.ingredient.visible);
   const visible = modalOpen || location.pathname.indexOf('ingredients')
   const modalRoot = document.getElementById("react-modals"); 
   
-  const handleModalCloseKeyDown = useCallback((evt) => {
+  const handleModalCloseKeyDown = useCallback((evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       onClose();
     }

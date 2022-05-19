@@ -1,5 +1,5 @@
 import { useEffect, useState, memo, useCallback, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useHistory } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,14 +36,14 @@ type TMoveCallback = (
 
 const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) => {
 
-    const ingredients = useSelector((store: any) => store.ingredient.constructorIngredients);
+    const ingredients = useSelector(store => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
     const history = useHistory();
 
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const userName = useSelector((store: any) => store.userDataReducer.form.name);
+    const userName = useSelector(store => store.userDataReducer.form.name);
     
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -73,18 +73,20 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
 
     const mainIngredients = ingredients.filter((m: TIngredients) => m.type !== 'bun');
 
-    const order = mainIngredients.concat(bun);
+    const order = bun !== undefined ? mainIngredients.concat(bun) : undefined;
         
     
     function hendelClick() {
-        if( userName.length === 0 || userName === undefined ) {
+        if( userName === undefined || userName.length === 0 ) {
             history.push('/login');
         } else {
             onButtonClick();
             dispatch({
                 type: ORDER_MODAL_OPEN
             });
-            dispatch(sendOrder(order.map((item: TIngredients) => item._id)));
+            if (order) {
+                dispatch(sendOrder(order.map((item: TIngredients) => item._id)));
+            }
         }
     }
 
@@ -151,7 +153,7 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
                     type="primary" 
                     size="large" 
                     onClick={ingredients && hendelClick} 
-                    disabled={bun && order.length > 1 ? false : true}
+                    disabled={order && bun && order.length > 1 ? false : true}
                 >
                     Оформить заказ
                 </Button>

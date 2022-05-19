@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 
 import odrerModalImg from '../../images/graphics.png';
 import Preloader from '../preloader/preloader';
@@ -9,7 +9,6 @@ import orderDetailsStyle from './order-details.module.css';
 function OrderDetails() {
 
     const orderDetails = useSelector((store: any) => store.ingredient.order);
-    
     
     return (
         orderDetails !== null ?

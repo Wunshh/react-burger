@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/hooks';
 import preloaderStyle from './preloader.module.css'
 
 function Preloader() {
 
-    const isSerch = useSelector((store: any) => store.ingredient.orederRequest);
+    const isSerch = useSelector(store=> store.ingredient.orederRequest);
 
     return (
         <div className={ isSerch ? preloaderStyle.preloader : preloaderStyle.preloaderInvisible }>

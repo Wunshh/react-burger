@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Link, useHistory } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -10,7 +10,7 @@ import resetFormStyle from './reset-form.module.css';
 
 function ResetForm() {
 
-    const { password, token } = useSelector((state: any) => state.resetFormReducer.form);
+    const { password, token } = useSelector(state => state.resetFormReducer.form);
     const forgotSuccess = useSelector((state: any) => state.forgotPasswordFormReducer.forgotSuccess);
     const history = useHistory();
 
@@ -22,7 +22,9 @@ function ResetForm() {
 
     const onFormSubmit = (evt: SyntheticEvent) => {
         evt.preventDefault();
-        dispatch(reset(password, token));
+        if (password !== undefined && token !== undefined) {
+            dispatch(reset(password, token));
+        }
     }
 
     useEffect(() => {
