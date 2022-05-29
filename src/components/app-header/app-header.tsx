@@ -41,7 +41,7 @@ function AppHeader() {
 
                 <ListIcon type={celectType('/list')}/>
                 <NavLink 
-                    to="/list" 
+                    to="/feed" 
                     className="link text text_type_main-default text_color_inactive ml-2 cursor" 
                     activeClassName={appHeaderStyles.active}
                 >

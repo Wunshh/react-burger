@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from '../../utils/hooks';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import {
@@ -147,10 +146,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
             </div>
         </section>
     );
-}
-
-BurgerIngredients.propTypes = {
-    onCardClick: PropTypes.func
 }
 
 export default memo(BurgerIngredients);

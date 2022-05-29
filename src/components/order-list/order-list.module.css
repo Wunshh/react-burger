@@ -1,0 +1,15 @@
+.orders {
+    overflow-y: scroll;
+}
+
+.orders::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders::-webkit-scrollbar-track {
+    background-color: #8585AD;
+}
+
+.orders::-webkit-scrollbar-thumb {
+    background-color: #2F2F37;
+}

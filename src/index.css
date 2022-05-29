@@ -21,3 +21,15 @@ body {
 .text-color {
   color: #fff;
 }
+
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 536px; 
+  width: 100%;
+}
+
+.color {
+  color: rgba(0, 204, 204, 1);
+}

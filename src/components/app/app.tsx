@@ -17,6 +17,7 @@ import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
 import IngredientPage from '../../pages/ingredient-page';
 import NotFound404 from '../../pages/not-found';
+import FeedPage from '../../pages/feed';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
 import { MODAL_CLOSE } from '../../services/actions/modal';
 import { getUserData } from '../../services/actions/user';
@@ -125,6 +126,12 @@ function App() {
           path="/reset-password"
           component={ResetPage}
         />
+
+        <Route
+          exact
+          path="/feed"
+          component={FeedPage}
+        />
         
         <ProtectedRoute
           path="/profile"
@@ -135,6 +142,7 @@ function App() {
           path="/profile/orders"
           component={ProfilePage}
         />
+        
         <Route>
           <NotFound404 />
         </Route>
