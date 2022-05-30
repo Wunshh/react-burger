@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+
+import useWindowHeight from '../../utils/hooks/useWindowHeight';
+import { desctopHeight } from '../../utils/data';
 
 import orderHistoryStyle from './order-history.module.css';
 
@@ -9,11 +12,22 @@ import {ordersTestData} from '../../utils/testData';
 
 const OrderHistory: FC = () => {
 
+    const windowHeight = useWindowHeight();
+    const [deviceHeihgt, setDeviceHeihgt] = useState(740);
+
     const readyOrder = ordersTestData.orders.filter((item: any) => item.status === "done");
     const createdOrder = ordersTestData.orders.filter((item: any) => item.status === "created");
 
+    useEffect(() => {
+        if (windowHeight <= desctopHeight) {
+            setDeviceHeihgt(560);
+        } else {
+            setDeviceHeihgt(740);
+        }
+    }, [windowHeight]);
+
     return (
-        <section className={orderHistoryStyle.section}>
+        <section className={orderHistoryStyle.section} style={{maxHeight: deviceHeihgt}}>
             <div className={orderHistoryStyle.order}> 
                 <div className={orderHistoryStyle.numbers}>
                     <p className='text text_type_main-medium mb-6'>Готовы:</p>

@@ -25,11 +25,27 @@ const OrderListCard: FC<IOrderListCard> = ({item}) => {
         orderIngredients.indexOf(item) === index
     );
     
-
     if (orderIngredients.length > 6) {
         imageOpacity = true;
     }
 
+    // const today =  item.createdAt.split('T')[0];
+    // console.log(today.split('-').reverse().join('-'));
+
+    const time = item.createdAt.slice(11, 16);
+    const today = new Date().toISOString().split('T')[0];
+
+    let day: string | null = null;
+    const dayOfOrder = item.createdAt.slice(8,10);
+
+    if (today.slice(8) === dayOfOrder) {
+        day = "Сегодня"
+    } else if (Number(today.slice(8)) - 1 == dayOfOrder) {
+        day = "Вчера"
+    } else {
+        day = (Number(today.slice(8)) - Number(dayOfOrder)).toString() + " дня назад"
+    }
+    
 
     return (
         <div className={orderCardStyle.card}>
@@ -38,7 +54,7 @@ const OrderListCard: FC<IOrderListCard> = ({item}) => {
                     #{item.number}
                 </div>
                 <div className="text text_type_main-default text_color_inactive">
-                    {item.createdAt}
+                    {day}, {time} i-GMT+3
                 </div>
             </div>
             <p className="text text_type_main-medium mt-6 mb-6 name">

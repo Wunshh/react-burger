@@ -9,7 +9,7 @@ export const ordersTestData: any = {
           ],
           "status": "done",
           "name": "Spicy антарианский бургер",
-          "createdAt": "2022-05-28T11:13:41.889Z",
+          "createdAt": "2022-05-30T11:13:41.889Z",
           "updatedAt": "2022-05-28T11:13:42.258Z",
           number: 15980
       },
@@ -21,7 +21,7 @@ export const ordersTestData: any = {
           ],
           "status": "done",
           "name": "Spicy space бургер",
-          "createdAt": "2022-05-28T11:12:33.595Z",
+          "createdAt": "2022-05-29T11:12:33.595Z",
           "updatedAt": "2022-05-28T11:12:33.922Z",
           number: 15979
       },

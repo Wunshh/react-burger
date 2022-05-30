@@ -1,9 +1,7 @@
 import { FC, memo, useState, useEffect } from 'react';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
-import {
-    desctopHeight,
-} from '../../utils/data';
+import { desctopHeight } from '../../utils/data';
 import OrderListCard from '../order-list-card/order-list-card';
 import { useDispatch} from '../../utils/hooks';
 import { getIngredientsData } from '../../services/actions/ingredients';
