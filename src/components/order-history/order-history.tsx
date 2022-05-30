@@ -16,7 +16,7 @@ const OrderHistory: FC = () => {
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
 
     const readyOrder = ordersTestData.orders.filter((item: any) => item.status === "done");
-    const createdOrder = ordersTestData.orders.filter((item: any) => item.status === "created");
+    const createdOrder = ordersTestData.orders.filter((item: any) => item.status === "pending");
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {

@@ -1,19 +1,20 @@
 import { FC, memo, useState, useEffect } from 'react';
+import { Route } from 'react-router-dom';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
 import OrderListCard from '../order-list-card/order-list-card';
 import { useDispatch} from '../../utils/hooks';
 import { getIngredientsData } from '../../services/actions/ingredients';
+import { TListOrders } from '../../utils/types';
 
 import orderListStyle from './order-list.module.css';
 
+interface IOrderList {
+    data: TListOrders;
+}
 
-
-import {ordersTestData} from '../../utils/testData';
-
-
-const OrderList: FC = () => {
+const OrderList: FC<IOrderList> = ({ data }) => {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -33,11 +34,13 @@ const OrderList: FC = () => {
 
     return (
         <section className={orderListStyle.section}>
-            <h1 className="text text_type_main-large mb-5">
-                Лента заказов
-            </h1>
+            <Route exact path="/feed">
+                <h1 className="text text_type_main-large mb-5">
+                    Лента заказов
+                </h1>
+            </Route>
             <div className={orderListStyle.orders} style={{maxHeight: deviceHeihgt}}> 
-                {ordersTestData.orders.map((item: any) => {
+                {data.orders.map((item: any) => {
                         return (
                             <OrderListCard
                                 key={item._id}

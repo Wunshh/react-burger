@@ -102,7 +102,7 @@ export const getIngredientsData = () => {
 }
 
 export const sendOrder = (itemsId: Array<string>) => {
-    return fetch(`${BASE_URL}/orders`, {
+    return fetch(`${BASE_URL}/orders?token=${getCookie('accessToken')}`, {
         method: "POST",
         headers,
         body: JSON.stringify({

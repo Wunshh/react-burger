@@ -59,3 +59,19 @@ export type RootState = {
     forgotPasswordFormReducer: TForgotPasswordState;
     userDataReducer: TUserState;
 };
+
+export type TOrders = {
+    _id: string;
+    ingredients: Array<string>;
+    status: string;
+    name: string;
+    createdAt: string;
+    number: number;
+};
+
+export type TListOrders = {
+    success: boolean;
+    orders: Array<TOrders>;
+    total: number;
+    totalToday: number;
+}

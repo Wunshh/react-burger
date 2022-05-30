@@ -5,10 +5,12 @@ import OrderHistory from '../components/order-history/order-history';
 
 import feedPageStyle from './feed.module.css';
 
-const FeedPage: FC = ()  =>{
+import { ordersTestData } from '../utils/testData';
+
+const FeedPage: FC = () => {
     return (
         <section className={feedPageStyle.page}>
-            <OrderList/>
+            <OrderList data={ordersTestData}/>
             <OrderHistory/>
         </section>
     )

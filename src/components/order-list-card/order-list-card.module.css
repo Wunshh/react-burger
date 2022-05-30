@@ -18,6 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 24px;
 }
 
 .images {
@@ -84,4 +85,10 @@
     box-sizing: border-box;
     top: -14px;
     left: 221px;
+}
+
+
+.link {
+    text-decoration:  none;
+    color: #fff;
 }

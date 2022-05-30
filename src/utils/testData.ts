@@ -19,7 +19,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733cd",
               "60d3b41abdacab0026a733cc"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Spicy space бургер",
           "createdAt": "2022-05-29T11:12:33.595Z",
           "updatedAt": "2022-05-28T11:12:33.922Z",
@@ -169,7 +169,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733cd",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Space флюоресцентный бургер",
           "createdAt": "2022-05-28T10:25:58.899Z",
           "updatedAt": "2022-05-28T10:25:59.247Z",
@@ -313,7 +313,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c8",
               "60d3b41abdacab0026a733c6"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Астероидный метеоритный антарианский краторный люминесцентный экзо-плантаго бургер",
           "createdAt": "2022-05-28T09:05:27.575Z",
           "updatedAt": "2022-05-28T09:05:27.886Z",
@@ -421,7 +421,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c8",
               "60d3b41abdacab0026a733c6"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Астероидный метеоритный антарианский краторный люминесцентный экзо-плантаго бургер",
           "createdAt": "2022-05-28T09:04:21.701Z",
           "updatedAt": "2022-05-28T09:04:22.035Z",
@@ -541,7 +541,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c7",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Флюоресцентный бургер",
           "createdAt": "2022-05-28T08:57:06.225Z",
           "updatedAt": "2022-05-28T08:57:06.519Z",
@@ -565,7 +565,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c7",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Флюоресцентный бургер",
           "createdAt": "2022-05-28T08:56:59.571Z",
           "updatedAt": "2022-05-28T08:56:59.845Z",
@@ -589,7 +589,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c7",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Флюоресцентный бургер",
           "createdAt": "2022-05-28T08:56:36.607Z",
           "updatedAt": "2022-05-28T08:56:36.920Z",
@@ -613,7 +613,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c7",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Флюоресцентный бургер",
           "createdAt": "2022-05-28T08:55:23.786Z",
           "updatedAt": "2022-05-28T08:55:24.132Z",
@@ -673,7 +673,7 @@ export const ordersTestData: any = {
               "60d3b41abdacab0026a733c7",
               "60d3b41abdacab0026a733c7"
           ],
-          "status": "done",
+          "status": "pending",
           "name": "Флюоресцентный бургер",
           "createdAt": "2022-05-28T08:52:47.898Z",
           "updatedAt": "2022-05-28T08:52:48.223Z",

@@ -1,7 +1,15 @@
+import OrderList from '../order-list/order-list';
+import OrderIngreients from '../order-ingreients/order-ingreients';
+
+import profileOrdersStyle from './profile-orders.module.css';
+
+import { ordersTestData } from '../../utils/testData';
+
 function ProfileOrders() {
     return (
-        <section>
-            <h2>Тут будет история заказов</h2>
+        <section className={profileOrdersStyle.section}>
+            <OrderIngreients/>
+            <OrderList data={ordersTestData}/>
         </section>
     );
 }
