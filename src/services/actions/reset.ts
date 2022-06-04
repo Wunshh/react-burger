@@ -1,4 +1,5 @@
 import * as api from '../../utils/api';
+import { AppDispatch, AppThunk } from '../../utils/types';
 
 const RESET_FORM_SET_VALUE = 'RESET_FORM_SET_VALUE';
 const POST_RESET_FORM_SUBMIT = 'POST_RESET_FORM_SUBMIT';
@@ -23,7 +24,7 @@ export interface IPostResetFormFaildAction {
     readonly type: typeof POST_RESET_FORM_FAILED;
 }
 
-export type IResetAction = 
+export type TResetAction = 
 | IResetFormSetValueAction
 | IPostResetFormSubmitAction
 | IPostResetFormSuccessAction
@@ -50,9 +51,9 @@ function catchFetchError(): IPostResetFormFaildAction {
     };
 }
 
-const reset = (password: string, token: string) => {
+const reset: AppThunk = (password: string, token: string) => {
     
-    return function(dispatch: any) {
+    return function(dispatch: AppDispatch) {
         dispatch(postResetFormSubmitAction());
         api.reset(password, token) 
         .then((res) => {

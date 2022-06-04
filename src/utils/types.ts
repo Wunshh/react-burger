@@ -9,7 +9,8 @@ import { TResetState} from '../services/reducers/resetReduser';
 import { TUserState} from '../services/reducers/userReduser';
 import { TActions } from '../services/actions/wsActions';
 import { TUserAction } from '../services/actions/user';
-import { IResetAction } from '../services/actions/reset';
+import { TResetAction } from '../services/actions/reset';
+import { TRegistrationAction } from '../services/actions/registration';
 
 export type TOrder = {
     name: string;   
@@ -59,7 +60,8 @@ export type THeaders = {
 type TApplicationActions = 
 | TActions
 | TUserAction
-| IResetAction
+| TResetAction
+| TRegistrationAction
 
 
 export type AppDispatch = typeof store.dispatch;
