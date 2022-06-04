@@ -4,7 +4,8 @@ import {
     POST_LOGIN_FORM_SUBMIT,
     POST_LOGIN_FORM_SUCCESS,
     POST_LOGIN_FORM_FAILED,
-    LOGOUT
+    LOGOUT,
+    TLoginAction
 } from '../actions/login';
 
 export type TLoginState = {
@@ -24,7 +25,7 @@ const initialState: TLoginState = {
     loginFailed: false
 }
 
-const loginFormReducer = (state = initialState, action: any) => {
+const loginFormReducer = (state = initialState, action: TLoginAction) => {
     switch(action.type) {
         case LOGIN_FORM_SET_VALUE: {
             return {

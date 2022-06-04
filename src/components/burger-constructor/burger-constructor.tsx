@@ -19,7 +19,7 @@ import {
 import { sendOrder } from '../../services/actions/order';
 import BurgerConstructorCard from '../burger-constructor-card/burger-constructor-card';
 import { ORDER_MODAL_OPEN } from '../../services/actions/modal';
-import { ADD_ITEM, MOVE_ITEM } from '../../services/actions/constructor';
+import { addItemAction, MOVE_ITEM } from '../../services/actions/constructor';
 import { TIngredients } from '../../utils/types';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
@@ -37,6 +37,9 @@ type TMoveCallback = (
 const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) => {
 
     const ingredients = useSelector(store => store.ingredient.constructorIngredients);
+    console.log(ingredients);
+    
+    
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -58,14 +61,10 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
     const [, dropTarget] = useDrop({
         accept: "items",
         drop(item: any) {
-            const newItem = {
+            dispatch(addItemAction({
                 ...item,
                 uuid: uuidv4()
-            }
-            dispatch({
-                type: ADD_ITEM,
-                ...newItem
-            });
+            }));
         }
     });
 
@@ -127,7 +126,7 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
                             return (
                                 <BurgerConstructorCard 
                                     key={item.uuid}
-                                    ingridient={item} 
+                                    ingridient={item.item} 
                                     index={index} 
                                     moveCard={moveCard}
                                 />

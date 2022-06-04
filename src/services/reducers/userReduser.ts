@@ -8,7 +8,8 @@ import {
     UPDATE_USER_DATA_SUCCESS,
     UPDATE_USER_DATA_FAILED,
     RESET_USER_DATA_FAILED,
-    USER_LOGOUT
+    USER_LOGOUT,
+    TUserAction
 } from '../actions/user';
 
 export type TUserState = {
@@ -29,7 +30,7 @@ const initialState: TUserState = {
     userDataFailed: false,
 }
 
-const userDataReducer = (state = initialState, action: any) => {
+const userDataReducer = (state = initialState, action: TUserAction) => {
     switch(action.type) {
         case USER_FORM_SET_VALUE: {
             return {

@@ -5,6 +5,7 @@ import { loginFormReducer } from './loginReducer';
 import { resetFormReducer } from './resetReduser';
 import { forgotPasswordFormReducer } from './forgotPasswordReducer';
 import { userDataReducer } from './userReduser';
+import { wsReduser } from './wsReduser';
 
 export const rootReducer = combineReducers({
     ingredient,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
     loginFormReducer,
     resetFormReducer,
     forgotPasswordFormReducer,
-    userDataReducer
+    userDataReducer,
+    wsReduser
 });

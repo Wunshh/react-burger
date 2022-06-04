@@ -6,7 +6,7 @@ const MOVE_ITEM: 'MOVE_ITEM' = 'MOVE_ITEM';
 
 export interface IAddItemAction {
     readonly type: typeof ADD_ITEM;
-    constructorIngredients: ReadonlyArray<TIngredients>;
+    item: TIngredients;
 }
 
 export interface IDeleteItemAction {
@@ -25,9 +25,9 @@ export type TConstructorAction =
 | IMoveItemAction
 
 
-export const addItemAction = (constructorIngredients: ReadonlyArray<TIngredients>): IAddItemAction => ({
+export const addItemAction = (item: TIngredients): IAddItemAction => ({
     type: ADD_ITEM,
-    constructorIngredients
+    item
 });
 
 export const deleteItemAction = (id: string): IDeleteItemAction => ({
