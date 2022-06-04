@@ -11,6 +11,7 @@ import { TActions } from '../services/actions/wsActions';
 import { TUserAction } from '../services/actions/user';
 import { TResetAction } from '../services/actions/reset';
 import { TRegistrationAction } from '../services/actions/registration';
+import { TOrderAction } from '../services/actions/order';
 
 export type TOrder = {
     name: string;   
@@ -62,6 +63,7 @@ type TApplicationActions =
 | TUserAction
 | TResetAction
 | TRegistrationAction
+| TOrderAction
 
 
 export type AppDispatch = typeof store.dispatch;
