@@ -1,28 +1,22 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import { useSelector } from '../../utils/hooks';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 interface IProtected {
-  component: any;
   location?: string;
   path: string;
+  children: ReactElement;
 };
 
-const ProtectedRoute: FC<IProtected> = ({ component: Component, ...props }) => {
+const ProtectedRoute: FC<IProtected> = ({ children, ...props }) => {
   const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
   const loginSuccess = useSelector((store: any) => store.loginFormReducer.loginSuccess);
 
-  return (
-    <Route>
-      { 
-        () => (isLoggin || loginSuccess ? 
-          <Component {...props} /> 
-        :  
-          <Redirect to={{ pathname: "/login", state: { from: props.location}}} />
-        )
-      }
-    </Route>
-  )
+  if (isLoggin || loginSuccess) {
+    return children
+  } else {
+    return <Redirect to={{ pathname: "/login", state: { from: props.location}}} />
+  }
 };
 
 export default ProtectedRoute;

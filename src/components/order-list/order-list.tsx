@@ -12,9 +12,10 @@ import orderListStyle from './order-list.module.css';
 
 interface IOrderList {
     data: TListOrders;
+    onCardClick: () => void;
 }
 
-const OrderList: FC<IOrderList> = ({ data }) => {
+const OrderList: FC<IOrderList> = ({ data, onCardClick }) => {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -45,6 +46,7 @@ const OrderList: FC<IOrderList> = ({ data }) => {
                             <OrderListCard
                                 key={item._id}
                                 item={item}
+                                onCardClick={onCardClick}
                             />
                         );
                     })

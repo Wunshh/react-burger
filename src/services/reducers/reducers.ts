@@ -1,8 +1,9 @@
-import { TIngredients, TOrder } from '../../utils/types';
+import { TIngredients, TOrder, TOrders } from '../../utils/types';
 
 import {
     ORDER_MODAL_OPEN,
     INGREDIENT_MODAL_OPEN,
+    ORDER_INGREDIENT_MODAL_OPEN,
     MODAL_CLOSE
 } from '../actions/modal';
 
@@ -26,9 +27,11 @@ export type TReducersState = {
     allIngredients: Array<TIngredients>;
     constructorIngredients: Array<TIngredients>;
     ingredient: null | TIngredients;
+    orderIngredient: null | TOrders;
     order: null | TOrder;
     ingredientModalOpen: boolean;
     orderModalOpen: boolean;
+    orderIngredientModalOpen: boolean;
     visible: boolean;
     orederRequest: boolean;
     orderFailed: boolean;
@@ -38,9 +41,11 @@ const initialState: TReducersState = {
     allIngredients: [],
     constructorIngredients: [],
     ingredient: null,
+    orderIngredient: null,
     order: null,
     ingredientModalOpen: false,
     orderModalOpen: false,
+    orderIngredientModalOpen: false,
     visible: false,
     orederRequest: false,
     orderFailed: false
@@ -116,7 +121,6 @@ const ingredient = (state = initialState, action: any) => {
             };
         }
         case SEND_ORDER_FAILED: {
-            
             return {
                 ...state,
                 order: {...initialState.order},
@@ -137,7 +141,8 @@ const ingredient = (state = initialState, action: any) => {
                 ...state,
                 order: null,
                 orederRequest: false,
-                orderFailed: false
+                orderFailed: false,
+                orderIngredientModalOpen: false
             }
         }
         case INGREDIENT_MODAL_OPEN: {
@@ -146,6 +151,14 @@ const ingredient = (state = initialState, action: any) => {
                 ingredientModalOpen: true,
                 visible: true,
                 ingredient: action.item
+            };
+        }
+        case ORDER_INGREDIENT_MODAL_OPEN: {
+            return {
+                ...state,
+                orderIngredientModalOpen: true,
+                visible: true,
+                orderIngredient: action.item
             };
         }
         default: {

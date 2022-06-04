@@ -18,7 +18,7 @@ const Modal: FC<IModal> = ({children, header, onClose}) => {
 
   const location = useLocation();
   const modalOpen = useSelector(store => store.ingredient.visible);
-  const visible = modalOpen || location.pathname.indexOf('ingredients')
+  const visible = modalOpen || location.pathname.indexOf('ingredients') || location.pathname.indexOf('orders') || location.pathname.indexOf('feed');
   const modalRoot = document.getElementById("react-modals"); 
   
   const handleModalCloseKeyDown = useCallback((evt: KeyboardEvent) => {

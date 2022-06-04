@@ -5,7 +5,15 @@ export const ordersTestData: any = {
           "_id": "629203e5fa747e001bd4ae5d",
           "ingredients": [
               "60d3b41abdacab0026a733cc",
-              "60d3b41abdacab0026a733cf"
+              "60d3b41abdacab0026a733cf",
+              "60d3b41abdacab0026a733c7",
+              "60d3b41abdacab0026a733cd",
+              "60d3b41abdacab0026a733cd",
+              "60d3b41abdacab0026a733cf",
+              "60d3b41abdacab0026a733cf",
+              "60d3b41abdacab0026a733ca",
+              "60d3b41abdacab0026a733c8",
+              "60d3b41abdacab0026a733c6"
           ],
           "status": "done",
           "name": "Spicy антарианский бургер",

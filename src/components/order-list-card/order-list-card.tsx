@@ -2,31 +2,39 @@ import { FC } from 'react';
 import { Route, Link, useLocation } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useSelector } from '../../utils/hooks';
-import { TIngredients } from '../../utils/types';
+import { useSelector, useDispatch } from '../../utils/hooks';
+import { ORDER_INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
+import { TIngredients, TOrders } from '../../utils/types';
 
 import orderCardStyle from './order-list-card.module.css';
 
 interface IOrderListCard {
-    item: any
+    item: TOrders;
+    onCardClick: () => void;
 }
 
-const OrderListCard: FC<IOrderListCard> = ({ item }) => {    
+const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {    
 
     const ingredients = useSelector(store => store.ingredient.allIngredients);
+    const dispatch = useDispatch();
     let imageOpacity: boolean = false;
 
     const orderIngredients = item.ingredients.map((item: any) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     }); 
     
-    const price = orderIngredients.reduce((sum: number, current: TIngredients): number => sum + current.price, 0);
+    
+    const price = orderIngredients.reduce((sum: number, current: any): number => sum + current.price, 0);
 
-    const deleteDuplicate = orderIngredients.filter((item: TIngredients, index: number) => 
+    const deleteDuplicate = orderIngredients.filter((item: any, index: number) => 
         orderIngredients.indexOf(item) === index
     );
     
-    if (orderIngredients.length > 6) {
+    const bun = deleteDuplicate.filter((item) => item?.type === 'bun');
+
+    const newOrderIngredients = bun.concat(deleteDuplicate.filter((item) => item?.type !== 'bun'));
+
+    if (deleteDuplicate.length > 6) {
         imageOpacity = true;
     }
 
@@ -38,7 +46,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
 
     if (today.slice(8) === dayOfOrder) {
         day = "Сегодня"
-    } else if (Number(today.slice(8)) - 1 == dayOfOrder) {
+    } else if (Number(today.slice(8)) - 1 === Number(dayOfOrder)) {
         day = "Вчера"
     } else {
         day = (Number(today.slice(8)) - Number(dayOfOrder)).toString() + " дня назад"
@@ -56,17 +64,25 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
 
     const location = useLocation();
     const orderNumber = item['number'];
+
+    const hendelClick = () => {
+        onCardClick();
+        dispatch({
+            type: ORDER_INGREDIENT_MODAL_OPEN,
+            item
+        });
+    }
     
     return (
         <Link 
             className={orderCardStyle.link}
             key={orderNumber}
             to={{
-                pathname: `/ingredients/${orderNumber}`,
+                pathname: `${location.pathname}/${orderNumber}`,
                 state: { background: location }
             }}
         >
-            <div className={orderCardStyle.card}>
+            <div className={orderCardStyle.card} onClick={hendelClick}>
                 <div className={orderCardStyle.top}>
                     <div className="text text_type_digits-default">
                         #{item.number}
@@ -87,7 +103,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
 
                 <div className={orderCardStyle.bottom}>
                     <div className={orderCardStyle.images}> 
-                        {deleteDuplicate.slice(0, 6).map((item: TIngredients, index: number) => {
+                        {newOrderIngredients.slice(0, 6).map((item: any, index: number) => {
                             return (
                                 <img 
                                     className={orderCardStyle.img} 
@@ -99,7 +115,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
                         })
                         }
                         <p className={imageOpacity ? orderCardStyle.opacity : orderCardStyle.none}> 
-                            + {orderIngredients.length - 6}
+                            + {newOrderIngredients.length - 6}
                         </p>
                     </div>
                     <div className={orderCardStyle.prise}>

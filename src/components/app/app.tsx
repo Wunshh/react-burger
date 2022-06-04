@@ -19,10 +19,13 @@ import IngredientPage from '../../pages/ingredient-page';
 import NotFound404 from '../../pages/not-found';
 import FeedPage from '../../pages/feed';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
+import OrderIngreients from '../order-ingreients/order-ingreients';
+import OrderIngreientsPage from '../../pages/order-ingredient-page';
 import { MODAL_CLOSE } from '../../services/actions/modal';
 import { getUserData } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
 import { TLocation } from '../../utils/types';
+
 
 import appStyles from './app.module.css';
 
@@ -31,10 +34,11 @@ function App() {
 
   const [isIngredientModalShown, setIsIngredientModalShown] = useState<boolean>(false);
   const [isOrderModalShown, setIsOrderModalShown] = useState<boolean>(false);
+  const [isOrderIngredientModalShown, setOrderIngredientModalShown] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const location: TLocation = useLocation();
-  
+
   const history = useHistory();
   const background = location.state && location.state.background;
 
@@ -42,9 +46,21 @@ function App() {
     setIsIngredientModalShown(true);
   }
 
+  function orderIngredientClick() {
+    setOrderIngredientModalShown(true);
+  }
+
+  function handleOrderClick() {
+    setIsOrderModalShown(true);
+  }
+
   function handleModalClose() {
     if (isIngredientModalShown) {
       setIsIngredientModalShown(false);
+      history.goBack();
+    }
+    if (isOrderIngredientModalShown) {
+      setOrderIngredientModalShown(false);
       history.goBack();
     }
     if (isOrderModalShown) {
@@ -56,10 +72,6 @@ function App() {
     if (location.pathname.indexOf('ingredients') === 1) {
       history.goBack();
     }
-  }
-
-  function handleOrderClick() {
-    setIsOrderModalShown(true);
   }
 
   useEffect(() => {
@@ -104,6 +116,18 @@ function App() {
         />
 
         <Route
+          exact
+          path='/feed/:number'
+          component={OrderIngreientsPage}
+        />
+
+        <Route
+          exact
+          path='/profile/orders/:number'
+          component={OrderIngreientsPage}
+        />
+
+        <Route
           exact 
           path="/login"
           component={LoginPage}
@@ -130,18 +154,25 @@ function App() {
         <Route
           exact
           path="/feed"
-          component={FeedPage}
-        />
+        >
+          <FeedPage 
+            onCardClick={orderIngredientClick}
+          />
+        </Route>  
         
-        <ProtectedRoute
-          path="/profile"
-          component={ProfilePage}
-        />
+        
+        <ProtectedRoute path="/profile">
+          <ProfilePage 
+            onCardClick={orderIngredientClick}
+          />
+        </ProtectedRoute> 
 
-        <ProtectedRoute
-          path="/profile/orders"
-          component={ProfilePage}
-        />
+        <ProtectedRoute path="/profile/orders">
+          <ProfilePage 
+            onCardClick={orderIngredientClick}
+          />
+        </ProtectedRoute> 
+
         
         <Route>
           <NotFound404 />
@@ -150,17 +181,43 @@ function App() {
       </Switch>
 
       {background && (
-          <Route
-            path='/ingredients/:ingredientId'
-            children={
-              <Modal 
-                header="Детали ингридиента"
-                onClose={handleModalClose}
-              >
-                <IngredientDetail />
-              </Modal>
-            }
-          />
+        <Route
+          path='/ingredients/:ingredientId'
+          children={
+            <Modal 
+              header="Детали ингридиента"
+              onClose={handleModalClose}
+            >
+              <IngredientDetail />
+            </Modal>
+          }
+        />
+      )}
+
+      {background && (
+        <Route
+          path='/feed/:number'
+          children={
+            <Modal 
+              onClose={handleModalClose}
+            >
+              <OrderIngreients />
+            </Modal>
+          }
+        />
+      )}
+
+      {background && (
+        <Route
+          path='/profile/orders/:number'
+          children={
+            <Modal 
+              onClose={handleModalClose}
+            >
+              <OrderIngreients />
+            </Modal>
+          }
+        />
       )}
 
     </div> 

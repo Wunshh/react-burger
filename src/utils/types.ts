@@ -26,6 +26,7 @@ export type TIngredients = {
     readonly image_mobile: string;
     readonly image_large: string;
     __v: number;
+    num?: number
 };
 
 
