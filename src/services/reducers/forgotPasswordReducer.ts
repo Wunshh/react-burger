@@ -40,13 +40,14 @@ const forgotPasswordFormReducer = (state = initialState, action: any) => {
             }
         }
         case POST_FORGOT_FORM_SUCCESS: {
+            
             return {
                 ...state,
                 form: {
                     ...initialState.form
                 },
                 forgorRequest: false,
-                forgotSuccess: action.res.success
+                forgotSuccess: action.res
             }
         }
         case POST_FORGOT_FORM_FAILED: {

@@ -14,6 +14,9 @@ import { TRegistrationAction } from '../services/actions/registration';
 import { TOrderAction } from '../services/actions/order';
 import { TModalAction } from "../services/actions/modal";
 import { TLoginAction } from "../services/actions/login";
+import { TIngredientsAction } from "../services/actions/ingredients";
+import { TForgotFormAction } from "../services/actions/forgotPassword";
+import { TConstructorAction } from "../services/actions/constructor";
 
 export type TOrder = {
     name: string;   
@@ -68,6 +71,9 @@ type TApplicationActions =
 | TOrderAction
 | TModalAction
 | TLoginAction
+| TIngredientsAction
+| TForgotFormAction
+| TConstructorAction
 
 
 export type AppDispatch = typeof store.dispatch;
