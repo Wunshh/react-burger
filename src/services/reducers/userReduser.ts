@@ -26,7 +26,7 @@ const initialState: TUserState = {
     },
     userIsLoggin: false,
     userDataRequest: false,
-    userDataFailed: false
+    userDataFailed: false,
 }
 
 const userDataReducer = (state = initialState, action: any) => {
@@ -50,8 +50,8 @@ const userDataReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 form: {
-                    name: action.res.user.name,
-                    email: action.res.user.email,
+                    email: action.res.email,
+                    name: action.res.name,
                     password: '*********'
                 },
                 userIsLoggin: true,
@@ -77,8 +77,8 @@ const userDataReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 form: {
-                    name: action.res.user.name,
-                    email: action.res.user.email,
+                    email: action.res.email,
+                    name: action.res.name,
                     password: '*********'
                 },
                 userDataRequest: false,

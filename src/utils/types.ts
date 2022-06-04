@@ -1,3 +1,5 @@
+import { ThunkAction } from "redux-thunk";
+import { Action, ActionCreator } from 'redux';
 import { store } from '../services/store/store';
 import { TForgotPasswordState } from '../services/reducers/forgotPasswordReducer';
 import { TLoginState } from '../services/reducers/loginReducer';
@@ -5,7 +7,9 @@ import { TReducersState } from '../services/reducers/reducers';
 import { TRegistrationState} from '../services/reducers/registrationReducer';
 import { TResetState} from '../services/reducers/resetReduser';
 import { TUserState} from '../services/reducers/userReduser';
-import { type } from 'os';
+import { TActions } from '../services/actions/wsActions';
+import { TUserAction } from '../services/actions/user';
+import { IResetAction } from '../services/actions/reset';
 
 export type TOrder = {
     name: string;   
@@ -51,6 +55,13 @@ export type THeaders = {
     'Authorization'?: string; 
 };
 
+
+type TApplicationActions = 
+| TActions
+| TUserAction
+| IResetAction
+
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = {
     ingredient: TReducersState;
@@ -60,6 +71,10 @@ export type RootState = {
     forgotPasswordFormReducer: TForgotPasswordState;
     userDataReducer: TUserState;
 };
+
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+>;
 
 export type TOrders = {
     _id: string;
@@ -75,4 +90,9 @@ export type TListOrders = {
     orders: Array<TOrders>;
     total: number;
     totalToday: number;
+}
+
+export type TUser = {
+    name: string;
+    email: string;
 }
