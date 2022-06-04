@@ -1,9 +1,9 @@
 import * as api from '../../utils/api';
 import { AppDispatch, AppThunk, TOrder } from '../../utils/types';
 
-const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
-const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
-const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
+const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
+const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
+const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
 
 export interface ISendOrderSuccessAction {
     readonly type: typeof SEND_ORDER_SUCCESS;
