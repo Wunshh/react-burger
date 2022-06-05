@@ -1,6 +1,5 @@
 import { ThunkAction } from "redux-thunk";
 import { Action, ActionCreator , Dispatch} from 'redux';
-import { store } from '../services/store/store';
 import { TActions } from '../services/actions/wsActions';
 import { TUserAction } from '../services/actions/user';
 import { TResetAction } from '../services/actions/reset';
@@ -12,6 +11,12 @@ import { TIngredientsAction } from "../services/actions/ingredients";
 import { TForgotFormAction } from "../services/actions/forgotPassword";
 import { TConstructorAction } from "../services/actions/constructor";
 import { TWsState } from "../services/reducers/wsReduser";
+import { TReducersState } from "../services/reducers/reducers";
+import { TRegistrationState } from "../services/reducers/registrationReducer";
+import { TLoginState } from "../services/reducers/loginReducer";
+import { TResetState } from "../services/reducers/resetReduser";
+import { TForgotPasswordState } from "../services/reducers/forgotPasswordReducer";
+import { TUserState } from "../services/reducers/userReduser";
 
 export type TOrder = {
     name: string;   
@@ -49,8 +54,13 @@ export type TForm = {
     name?: string;
     password?: string;
     codeFromEmail?: string;
-    token?: string; 
+    token?: string;
 };
+
+export type TUser = {
+    name?: string;
+    email?: string;
+}
 
 export type THeaders = {
     "Accept": string;
@@ -70,31 +80,33 @@ export type TApplicationActions =
 | TForgotFormAction
 | TConstructorAction
 
+export type AppDispatch = Dispatch<TApplicationActions>; 
+export type RootState = {
+    ingredient: TReducersState;
+    registrationFormReducer: TRegistrationState;
+    loginFormReducer: TLoginState;
+    resetFormReducer: TResetState;
+    forgotPasswordFormReducer: TForgotPasswordState;
+    userDataReducer: TUserState;
+    wsReduser: TWsState;
+};
 
-export type AppDispatch = Dispatch<TApplicationActions>;
-export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
 
-
 export type TOrders = {
-    _id: string;
     ingredients: Array<string>;
-    status: string;
+    _id: string;
     name: string;
-    createdAt: string;
+    status: string;
     number: number;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type TListOrders = {
-    success: boolean;
     orders: Array<TOrders>;
     total: number;
     totalToday: number;
-}
-
-export type TUser = {
-    name: string;
-    email: string;
 }

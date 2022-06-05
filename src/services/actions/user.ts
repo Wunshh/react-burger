@@ -1,6 +1,6 @@
 import * as api from '../../utils/api';
 import { setCookie } from '../../utils/cookie';
-import { AppDispatch, AppThunk, TUser } from '../../utils/types';
+import { AppDispatch, AppThunk, TForm } from '../../utils/types';
 
 const USER_FORM_SET_VALUE: 'USER_FORM_SET_VALUE' = 'USER_FORM_SET_VALUE';
 const GET_USER_DATA_SUCCESS: 'GET_USER_DATA_SUCCESS' = 'GET_USER_DATA_SUCCESS';
@@ -22,7 +22,7 @@ export interface ICatchUserUpdateErrAction {
 
 export interface IGetUserSuccessAction {
     readonly type: typeof GET_USER_DATA_SUCCESS;
-    readonly res: TUser
+    readonly user: TForm
 }
 
 
@@ -41,7 +41,7 @@ export interface IUpdateUserRequestAction {
 
 export interface IUpdateUserSuccessAction {
     readonly type: typeof UPDATE_USER_DATA_SUCCESS;
-    readonly res: TUser
+    readonly user: TForm
 } 
 
 export interface IResetUserDataFaildAction {
@@ -82,22 +82,24 @@ const catchUserUpdateErr = () => {
 }
 
 const getUserData: AppThunk = () => {
-    return function(dispatch: AppDispatch) {
+    return function(dispatch: any) {
         dispatch({
             type: GET_USER_DATA_REQUEST
         });
         api.getUserData()
         .then((res) => {
-            if (res) {
+            const user = res.user;
+            if (res.user) {
                 dispatch({
                     type: GET_USER_DATA_SUCCESS,
-                    res
+                    user
                 })
             }
         })
         .catch((res) => {
             if (res.message === 'jwt expired') {
-                dispatch(updateToken(getUserData()))
+                dispatch(updateToken());
+                dispatch(getUserData());
             } else {
                 dispatch(
                     catchUserDataErr()
@@ -130,10 +132,11 @@ const updateUserData: AppThunk = (name: string, email: string, password: string)
         });
         api.updateUserData(name, email, password) 
         .then((res) => {
-            if (res) {
+            const user = res.user;
+            if (res.user) {                
                 dispatch({
                     type: UPDATE_USER_DATA_SUCCESS,
-                    res
+                    user
                 })
             } else {
                 dispatch(

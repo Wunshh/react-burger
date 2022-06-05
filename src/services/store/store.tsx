@@ -5,7 +5,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 
-import { createSocketMiddleware } from '../middleware/socketMiddleware';
+import { socketMiddleware } from '../middleware/socketMiddleware';
 import { rootReducer } from '../reducers/rootReducer';
 import { WS_URL } from '../../utils/data';
 import { wsActions } from '../actions/wsActions'; 
@@ -18,6 +18,6 @@ declare global {
 
 export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, createSocketMiddleware(WS_URL, wsActions)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(WS_URL, wsActions)));
 
 export const store = createStore(rootReducer, enhancer);

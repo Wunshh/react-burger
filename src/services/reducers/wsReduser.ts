@@ -10,23 +10,29 @@ import {
 
 export type TWsState = {
     wsConnect: boolean;
-    orders: Array<TOrders>
+    orders: Array<TOrders>;
+    total: number;
+    totalToday: number;
 }
 
 const initialState: TWsState  = {
     wsConnect: false,
-    orders: []
+    orders: [],
+    total: 0,
+    totalToday: 0
 }
 
 const wsReduser = (state = initialState, action: TActions) => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS: {
+            
             return {
                 ...state,
                 wsConnect: true
             }
         }
         case WS_CONNECTION_ERROR: {
+            
             return {
                 ...state,
                 wsConnect: false
@@ -41,7 +47,9 @@ const wsReduser = (state = initialState, action: TActions) => {
         case WS_GET_ORDERS: {
             return {
                 ...state,
-                orders: action.orders
+                orders: action.orders.orders,
+                total: action.orders.total,
+                totalToday: action.orders.totalToday
             }
         }
         default: {

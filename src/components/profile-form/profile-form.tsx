@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, ChangeEvent } from 'react';
+import { useState, SyntheticEvent, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -36,6 +36,10 @@ function ProfileForm() {
         setIsFormChange(false);
         setInputDisabled(true)
     }
+
+    useEffect(() => {
+        dispatch(getUserData());
+    }, [dispatch]);
 
     const getBackUserData = () => {
         dispatch(getUserData());

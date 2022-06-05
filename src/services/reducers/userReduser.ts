@@ -51,8 +51,8 @@ const userDataReducer = (state = initialState, action: TUserAction) => {
             return {
                 ...state,
                 form: {
-                    email: action.res.email,
-                    name: action.res.name,
+                    email: action.user.email,
+                    name: action.user.name,
                     password: '*********'
                 },
                 userIsLoggin: true,
@@ -78,8 +78,8 @@ const userDataReducer = (state = initialState, action: TUserAction) => {
             return {
                 ...state,
                 form: {
-                    email: action.res.email,
-                    name: action.res.name,
+                    email: action.user.email,
+                    name: action.user.name,
                     password: '*********'
                 },
                 userDataRequest: false,

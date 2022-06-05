@@ -5,7 +5,7 @@ export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS'
 export const WS_GET_ORDERS: 'WS_GET_ORDERS' = 'WS_GET_ORDERS';
-
+export const WS_CONNECTING: 'WS_CONNECTING' = 'WS_CONNECTING';
 export interface IWsConnectionClosed {
     readonly type: typeof WS_CONNECTION_CLOSED
 }
@@ -15,8 +15,8 @@ export interface IWsConnectionError {
 }
 
 export interface IWsConnectionStart {
-    readonly type: typeof WS_CONNECTION_START,
-    readonly payload: string
+    readonly type: typeof WS_CONNECTION_START;
+    readonly payload: string;
 }
 
 export interface IWsConnectionSuccess {
@@ -33,7 +33,7 @@ export type TActions =
     | IWsConnectionError
     | IWsConnectionStart
     | IWsConnectionSuccess
-    | IWsGetOrders;
+    | IWsGetOrders
 
 export const wsConnectionClosed = (): IWsConnectionClosed => {
     return {
@@ -60,7 +60,6 @@ export const wsConnectionSuccess = (): IWsConnectionSuccess => {
     };
 };
   
-
 export const wsGetOrders = (orders: TListOrders): IWsGetOrders => {
     return {
       type: WS_GET_ORDERS,
@@ -69,7 +68,7 @@ export const wsGetOrders = (orders: TListOrders): IWsGetOrders => {
 };
 
 export type TWsActions = {
-    wsInit: typeof WS_CONNECTION_START;
+    onInit: typeof WS_CONNECTION_START;
     onOpen: typeof WS_CONNECTION_SUCCESS;
     onClose: typeof WS_CONNECTION_CLOSED;
     onError: typeof WS_CONNECTION_ERROR;
@@ -77,9 +76,9 @@ export type TWsActions = {
 };
 
 export const wsActions: TWsActions = {
-    wsInit: WS_CONNECTION_START,
+    onInit: WS_CONNECTION_START,
     onOpen: WS_CONNECTION_SUCCESS,
     onClose: WS_CONNECTION_CLOSED,
     onError: WS_CONNECTION_ERROR,
-    onGetOrders: WS_GET_ORDERS
+    onGetOrders: WS_GET_ORDERS,
 };

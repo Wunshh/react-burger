@@ -4,7 +4,7 @@ const mainHeight = 260;
 const selectedHeight = 460;
 
 const BASE_URL = 'https://norma.nomoreparties.space/api';
-const WS_URL = 'wss://norma.nomoreparties.space/orders';
+const WS_URL = "wss://norma.nomoreparties.space/orders";
 
 export {
    desctopHeight,

@@ -4,33 +4,39 @@ import { AppDispatch, RootState  } from '../../utils/types';
 import { TWsActions } from '../actions/wsActions';
 
 
-export const createSocketMiddleware = (wsUrl: string, wsActions: TWsActions): Middleware => {
-    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+export const socketMiddleware = (
+    wsUrl: string, 
+    wsActions: TWsActions
+    ): Middleware => {
+    return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
         return (next) => (action) => {
             const { dispatch } = store;
             const { type, payload } = action;
             const {
-                wsInit,
+                onInit,
                 onOpen,
                 onClose,
                 onError,
                 onGetOrders
             } = wsActions;
 
-            if (type === wsInit) {
+            if (type === onInit) {
+                debugger
                 wsUrl = payload;
                 socket = new WebSocket(wsUrl);
             }
 
+            
             if (socket) {
-                socket.onopen = () => {
-                    dispatch({ type: onOpen });
+                
+                socket.onopen = (event) => {
+                    dispatch({ type: onOpen, payload: event});
                 };
         
-                socket.onerror = () => {
-                    dispatch({ type: onError });
+                socket.onerror = (event) => {
+                    dispatch({ type: onError, payload: event });
                 };
         
                 socket.onmessage = (event) => {
@@ -40,15 +46,12 @@ export const createSocketMiddleware = (wsUrl: string, wsActions: TWsActions): Mi
                     dispatch({ type: onGetOrders, orders: restParsedData });
                 };
 
-                socket.onclose = () => {
-                    dispatch({ type: onClose });
-                };
-        
-                socket.onclose = () => {
-                    dispatch({ type: onClose });
+                socket.onclose = (event) => {
+                    dispatch({ type: onClose, payload: event });
                 };
             }
             next(action);
         };
-    };
+        
+    }) as Middleware;
 };

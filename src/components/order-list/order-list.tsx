@@ -1,12 +1,13 @@
 import { FC, memo, useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useRouteMatch } from 'react-router-dom';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
-import OrderListCard from '../order-list-card/order-list-card';
-import { useDispatch} from '../../utils/hooks';
-import { getIngredientsData } from '../../services/actions/ingredients';
+// import OrderListCard from '../order-list-card/order-list-card';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { TListOrders } from '../../utils/types';
+import {wsConnectionStart, wsConnectionClosed} from '../../services/actions/wsActions';
+import { WS_URL } from '../../utils/data';
 
 import orderListStyle from './order-list.module.css';
 
@@ -15,11 +16,16 @@ interface IOrderList {
     onCardClick: () => void;
 }
 
-const OrderList: FC<IOrderList> = ({ data, onCardClick }) => {
+const OrderList: FC<IOrderList> = ({ onCardClick }) => {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
+    const pathCurrent = useRouteMatch();
+    const data = useSelector(store => store.wsReduser.orders);
+
+    console.log(data);
+    
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -28,10 +34,20 @@ const OrderList: FC<IOrderList> = ({ data, onCardClick }) => {
             setDeviceHeihgt(740);
         }
     }, [windowHeight]);
-    
+
     useEffect(() => {
-        dispatch(getIngredientsData());
-    }, [dispatch]);
+        dispatch(
+            pathCurrent.path === '/feed' ? 
+                wsConnectionStart(WS_URL + '/all')
+            : 
+                wsConnectionStart(`${WS_URL}/all`)
+        );
+
+        return () => {
+            (dispatch(wsConnectionClosed));
+        }
+    }, [dispatch, pathCurrent.path]);
+    
 
     return (
         <section className={orderListStyle.section}>
@@ -41,7 +57,7 @@ const OrderList: FC<IOrderList> = ({ data, onCardClick }) => {
                 </h1>
             </Route>
             <div className={orderListStyle.orders} style={{maxHeight: deviceHeihgt}}> 
-                {data.orders.map((item: any) => {
+                {/* {data.orders.map((item: any) => {
                         return (
                             <OrderListCard
                                 key={item._id}
@@ -50,7 +66,7 @@ const OrderList: FC<IOrderList> = ({ data, onCardClick }) => {
                             />
                         );
                     })
-                }
+                } */}
             </div>
         </section>
     )

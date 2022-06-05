@@ -3,7 +3,9 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { TIngredients } from '../../utils/types';
 import { useSelector } from '../../utils/hooks';
 
+
 import orderIngreientsStyle from './order-ingreients.module.css';
+
 
 const OrderIngreients = () => {
 
@@ -28,6 +30,10 @@ const OrderIngreients = () => {
     const bun = deleteDuplicate.filter((item: TIngredients) => item?.type === 'bun');
 
     const correctOrderIngredients = bun.concat(deleteDuplicate.filter((item: TIngredients) => item?.type !== 'bun'));
+
+    // const listIngredients  = correctOrderIngredients.map((item: TIngredients) => {
+    //     return {...item, uuid: uuidv4()}
+    // });    
     
     let orderStatus: string | null = null;
 
@@ -71,25 +77,22 @@ const OrderIngreients = () => {
                 Состав: 
             </p>
             <div className={orderIngreientsStyle.ingredients}>
-                {correctOrderIngredients.map((item: any, index: number) => {
+                {correctOrderIngredients.map((item: any) => {
                         return (
-                            <>
-                                <div className={orderIngreientsStyle.data}>
-                                    <img 
-                                        className={orderIngreientsStyle.img} 
-                                        src={item.image_mobile} 
-                                        key={index}
-                                        alt={item.name}
-                                    />
-                                    <p className="text text_type_main-default mr-4 ml-4" style={{width: 320}}>
-                                        {item.name}
-                                    </p>
-                                    <div className={orderIngreientsStyle.prise}>
-                                        <p className="text text_type_digits-default mr-2">{item.type === 'bun' ? 2 : item.num} x {item.price}</p>
-                                        <CurrencyIcon type="primary" />
-                                    </div>  
-                                </div>
-                            </>
+                            <div className={orderIngreientsStyle.data} key={item._id}>
+                                <img 
+                                    className={orderIngreientsStyle.img} 
+                                    src={item.image_mobile} 
+                                    alt={item.name}
+                                />
+                                <p className="text text_type_main-default mr-4 ml-4" style={{width: 320}}>
+                                    {item.name}
+                                </p>
+                                <div className={orderIngreientsStyle.prise}>
+                                    <p className="text text_type_digits-default mr-2">{item.type === 'bun' ? 2 : item.num} x {item.price}</p>
+                                    <CurrencyIcon type="primary" />
+                                </div>  
+                            </div>  
                         )
                     })
                 }
