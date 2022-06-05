@@ -38,25 +38,13 @@ export type TLoginAction =
 | IPostLoginFormFaildAction
 | ILogout
 
-const postLoginFormSubmitAction = (): IPostLoginFormSubmitAction => ({
-    type: POST_LOGIN_FORM_SUBMIT
-});
-
-const postLoginFormSuccessAction = (): IPostLoginFormSuccessAction => ({
-    type: POST_LOGIN_FORM_SUCCESS
-});
-
-export const logout = (): ILogout => ({
-    type: LOGOUT
-});
-
-const setLoginFormValue = (field: string, value: string): ILoginFormSetValueAction => ({
+const setLoginFormValue = (field: string, value: string) => ({
     type: LOGIN_FORM_SET_VALUE,
     field,
     value
 });
 
-function catchFetchError(): IPostLoginFormFaildAction {
+function catchFetchError() {
     return {
         type: POST_LOGIN_FORM_FAILED
     };
@@ -64,11 +52,15 @@ function catchFetchError(): IPostLoginFormFaildAction {
 
 const login: AppThunk = (email: string, password: string) => {
     return function(dispatch: AppDispatch) {
-        dispatch(postLoginFormSubmitAction());
+        dispatch({
+            type: POST_LOGIN_FORM_SUBMIT
+        });
         api.login(email, password) 
         .then((res) => {
             if (res) {
-                dispatch(postLoginFormSuccessAction()); 
+                dispatch({
+                    type: POST_LOGIN_FORM_SUCCESS
+                }); 
                 localStorage.setItem('refreshToken', res.refreshToken); 
                 setCookie('accessToken', res.accessToken, {});
             } else {

@@ -30,21 +30,13 @@ export type TRegistrationAction =
 | IPostRegisterFormSuccessAction
 | IPostRegisterFormFaildAction
 
-const setRegistrationFormValue = (field: string, value: string): IRegisterFormSetValueAction => ({
+const setRegistrationFormValue = (field: string, value: string) => ({
     type: REGISTER_FORM_SET_VALUE,
     field,
     value
 });
 
-const postRegisterFormSubmitAction = (): IPostRegisterFormSubmitAction => ({
-    type: POST_REGISTER_FORM_SUBMIT
-});
-
-const postRegisterFormSuccessAction = (): IPostRegisterFormSuccessAction => ({
-    type: POST_REGISTER_FORM_SUCCESS
-});
-
-function catchFetchError(): IPostRegisterFormFaildAction  {
+function catchFetchError() {
     return {
         type: POST_REGISTER_FORM_FAILED
     };
@@ -52,11 +44,16 @@ function catchFetchError(): IPostRegisterFormFaildAction  {
 
 const register: AppThunk = (email: string, name: string, password: string) => {
     return function(dispatch: AppDispatch) {
-        dispatch(postRegisterFormSubmitAction());
+        dispatch({
+            type: POST_REGISTER_FORM_SUBMIT
+        });
         api.register(email, name, password) 
         .then((res) => {
             if (res) {
-                dispatch(postRegisterFormSuccessAction()); 
+                dispatch({
+                    type: POST_REGISTER_FORM_SUCCESS,
+                    res
+                }); 
             } else {
                 dispatch(
                     catchFetchError()

@@ -1,15 +1,14 @@
 import { 
   compose, 
   createStore, 
-  applyMiddleware,
+  applyMiddleware
 } from 'redux';
 import thunk from 'redux-thunk';
+
 import { createSocketMiddleware } from '../middleware/socketMiddleware';
 import { rootReducer } from '../reducers/rootReducer';
 import { WS_URL } from '../../utils/data';
 import { wsActions } from '../actions/wsActions'; 
-
-const socketFeedOrdersMiddleware = createSocketMiddleware(WS_URL, wsActions);
 
 declare global {
   interface Window {
@@ -17,15 +16,8 @@ declare global {
   }
 }
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
+export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketFeedOrdersMiddleware)
-);
-
+const enhancer = composeEnhancers(applyMiddleware(thunk, createSocketMiddleware(WS_URL, wsActions)));
 
 export const store = createStore(rootReducer, enhancer);
-

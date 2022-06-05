@@ -33,12 +33,11 @@ export const createSocketMiddleware = (wsUrl: string, wsActions: TWsActions): Mi
                     dispatch({ type: onError });
                 };
         
-                socket.onmessage = event => {
+                socket.onmessage = (event) => {
                     const { data } = event;
                     const parsedData = JSON.parse(data);
                     const { success, ...restParsedData } = parsedData;
-            
-                    dispatch({ type: onGetOrders, payload: restParsedData });
+                    dispatch({ type: onGetOrders, orders: restParsedData });
                 };
 
                 socket.onclose = () => {

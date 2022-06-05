@@ -23,30 +23,12 @@ export interface IModalCloseAction {
     readonly type: typeof MODAL_CLOSE
 }
 
-
 export type TModalAction = 
 | IOrderModalOpenAction
 | IIngredientModalOpenAction
 | IOrderIngtedientModalOpenAction
 | IModalCloseAction
 
-export const orderModalOpenAction = (): IOrderModalOpenAction => ({
-    type: ORDER_MODAL_OPEN
-});
-
-export const ingredientModalOpenAction = (item: TIngredients): IIngredientModalOpenAction => ({
-    type: INGREDIENT_MODAL_OPEN,
-    item
-});
-
-export const orderIngtedientModalOpenAction = (item: TOrders): IOrderIngtedientModalOpenAction => ({
-    type: ORDER_INGREDIENT_MODAL_OPEN,
-    item
-});
-
-export const modalCloseAction = (): IModalCloseAction => ({
-    type: MODAL_CLOSE
-});
 
 export {
     ORDER_MODAL_OPEN,

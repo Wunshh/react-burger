@@ -1,4 +1,4 @@
-import { TOrders } from '../../utils/types';
+import { TListOrders } from '../../utils/types';
 
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
@@ -25,7 +25,7 @@ export interface IWsConnectionSuccess {
 
 export interface IWsGetOrders {
     readonly type: typeof WS_GET_ORDERS,
-    readonly orders: TOrders
+    readonly orders: TListOrders
 }
 
 export type TActions = 
@@ -61,7 +61,7 @@ export const wsConnectionSuccess = (): IWsConnectionSuccess => {
 };
   
 
-export const wsGetOrders = (orders: TOrders): IWsGetOrders => {
+export const wsGetOrders = (orders: TListOrders): IWsGetOrders => {
     return {
       type: WS_GET_ORDERS,
       orders

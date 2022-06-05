@@ -30,22 +30,13 @@ export type TResetAction =
 | IPostResetFormSuccessAction
 | IPostResetFormFaildAction
 
-const setResetFormValue = (field: string, value: string): IResetFormSetValueAction => ({
+const setResetFormValue = (field: string, value: string) => ({
     type: RESET_FORM_SET_VALUE,
     field,
     value
 });
 
-const postResetFormSubmitAction = (): IPostResetFormSubmitAction => ({
-    type: POST_RESET_FORM_SUBMIT 
-});
-
-const postResetFormSuccessAction = (): IPostResetFormSuccessAction => ({
-    type: POST_RESET_FORM_SUCCESS
-});
-
-
-function catchFetchError(): IPostResetFormFaildAction {
+function catchFetchError() {
     return {
         type: POST_RESET_FORM_FAILED 
     };
@@ -54,11 +45,15 @@ function catchFetchError(): IPostResetFormFaildAction {
 const reset: AppThunk = (password: string, token: string) => {
     
     return function(dispatch: AppDispatch) {
-        dispatch(postResetFormSubmitAction());
+        dispatch({
+            type: POST_RESET_FORM_SUBMIT
+        });
         api.reset(password, token) 
         .then((res) => {
             if (res) {
-                dispatch(postResetFormSuccessAction()); 
+                dispatch({
+                    type: POST_RESET_FORM_SUCCESS,
+                }); 
             } else {
                 dispatch(
                     catchFetchError()

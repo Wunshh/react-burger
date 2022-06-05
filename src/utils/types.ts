@@ -1,12 +1,6 @@
 import { ThunkAction } from "redux-thunk";
-import { Action, ActionCreator } from 'redux';
+import { Action, ActionCreator , Dispatch} from 'redux';
 import { store } from '../services/store/store';
-import { TForgotPasswordState } from '../services/reducers/forgotPasswordReducer';
-import { TLoginState } from '../services/reducers/loginReducer';
-import { TReducersState } from '../services/reducers/reducers';
-import { TRegistrationState} from '../services/reducers/registrationReducer';
-import { TResetState} from '../services/reducers/resetReduser';
-import { TUserState} from '../services/reducers/userReduser';
 import { TActions } from '../services/actions/wsActions';
 import { TUserAction } from '../services/actions/user';
 import { TResetAction } from '../services/actions/reset';
@@ -17,6 +11,7 @@ import { TLoginAction } from "../services/actions/login";
 import { TIngredientsAction } from "../services/actions/ingredients";
 import { TForgotFormAction } from "../services/actions/forgotPassword";
 import { TConstructorAction } from "../services/actions/constructor";
+import { TWsState } from "../services/reducers/wsReduser";
 
 export type TOrder = {
     name: string;   
@@ -63,8 +58,7 @@ export type THeaders = {
     'Authorization'?: string; 
 };
 
-
-type TApplicationActions = 
+export type TApplicationActions = 
 | TActions
 | TUserAction
 | TResetAction
@@ -77,19 +71,12 @@ type TApplicationActions =
 | TConstructorAction
 
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = {
-    ingredient: TReducersState;
-    registrationFormReducer: TRegistrationState;
-    loginFormReducer: TLoginState;
-    resetFormReducer: TResetState;
-    forgotPasswordFormReducer: TForgotPasswordState;
-    userDataReducer: TUserState;
-};
-
+export type AppDispatch = Dispatch<TApplicationActions>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
+
 
 export type TOrders = {
     _id: string;

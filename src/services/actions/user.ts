@@ -63,50 +63,36 @@ export type TUserAction =
 | IUserLogout
 | IUpdateUserSuccessAction
 
-
-const setUserFormValue = (field: string, value: string): ISetUserFormValueAction => ({
+const setUserFormValue = (field: string, value: string) => ({
     type: USER_FORM_SET_VALUE,
     field,
     value
 });
 
-const catchUserDataErr = ():ICatchUserDataErrAction => {
+const catchUserDataErr = () => {
     return {
         type: GET_USER_DATA_FAILED
     };
 }
 
-const catchUserUpdateErr = ():ICatchUserUpdateErrAction => {
+const catchUserUpdateErr = () => {
     return {
         type: UPDATE_USER_DATA_FAILED
     };
 }
 
-const getUserSuccessAction = ( res: TUser ):IGetUserSuccessAction => ({
-    type: GET_USER_DATA_SUCCESS,
-    res
-});
-
-const getUserRequestAction = (): IGetUserRequestAction => ({
-    type: GET_USER_DATA_REQUEST,
-});
-
-const updateUserRequestAction = (): IUpdateUserRequestAction => ({
-    type: UPDATE_USER_DATA_REQUEST
-});
-
-const updateUserSuccessAction = ( res: TUser ): IUpdateUserSuccessAction => ({
-    type: UPDATE_USER_DATA_SUCCESS,
-    res
-})
-
 const getUserData: AppThunk = () => {
     return function(dispatch: AppDispatch) {
-        dispatch(getUserRequestAction());
+        dispatch({
+            type: GET_USER_DATA_REQUEST
+        });
         api.getUserData()
         .then((res) => {
             if (res) {
-                dispatch(getUserSuccessAction(res.user));
+                dispatch({
+                    type: GET_USER_DATA_SUCCESS,
+                    res
+                })
             }
         })
         .catch((res) => {
@@ -125,7 +111,9 @@ const getUserData: AppThunk = () => {
 const updateToken: AppThunk = (afterRefresh: any) => {
  
     return function(dispatch: AppDispatch) {
-        dispatch(getUserRequestAction());
+        dispatch({
+            type: GET_USER_DATA_REQUEST
+        });
         api.updateToken() 
         .then((res) => {
             localStorage.setItem('refreshToken', res.refreshToken); 
@@ -137,11 +125,16 @@ const updateToken: AppThunk = (afterRefresh: any) => {
 
 const updateUserData: AppThunk = (name: string, email: string, password: string) => {
     return function(dispatch: AppDispatch) {
-        dispatch(updateUserRequestAction());
+        dispatch({
+            type: UPDATE_USER_DATA_REQUEST
+        });
         api.updateUserData(name, email, password) 
         .then((res) => {
             if (res) {
-                dispatch(updateUserSuccessAction(res.user));
+                dispatch({
+                    type: UPDATE_USER_DATA_SUCCESS,
+                    res
+                })
             } else {
                 dispatch(
                     catchUserUpdateErr()

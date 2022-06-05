@@ -22,17 +22,7 @@ export type TOrderAction =
 | ISendOrderRequestAction
 | ISendOrderFaildAction
 
-
-const sendOrderRequestAction = (): ISendOrderRequestAction => ({
-    type: SEND_ORDER_REQUEST 
-});
-
-const sendOrderSuccessAction = (order: TOrder): ISendOrderSuccessAction => ({
-    type: SEND_ORDER_SUCCESS,
-    order
-});
-
-function catchFetchError(): ISendOrderFaildAction {
+function catchFetchError() {
     return {
         type: SEND_ORDER_FAILED
     };
@@ -40,11 +30,16 @@ function catchFetchError(): ISendOrderFaildAction {
 
 const sendOrder: AppThunk = (itemsId: Array<string>) => {
     return function(dispatch: AppDispatch) {
-        dispatch(sendOrderRequestAction());
+        dispatch({
+            type: SEND_ORDER_REQUEST
+        });
         api.sendOrder(itemsId) 
         .then((res) => {
             if (res) {
-                dispatch(sendOrderSuccessAction(res)); 
+                dispatch({
+                    type: SEND_ORDER_SUCCESS,
+                    order: res
+                }); 
             } else {
                 dispatch(
                     catchFetchError()

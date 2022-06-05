@@ -27,6 +27,12 @@ import {
     TConstructorAction
 } from '../actions/constructor';
 
+export type TReduserAction = 
+| TOrderAction 
+| TConstructorAction 
+| TIngredientsAction
+| TModalAction
+
 export type TReducersState = {
     allIngredients: Array<TIngredients>;
     constructorIngredients: Array<TIngredients>;
@@ -55,7 +61,7 @@ const initialState: TReducersState = {
     orderFailed: false
 };
 
-const ingredient = (state = initialState, action: TOrderAction | TConstructorAction | TIngredientsAction| TModalAction) => {
+const ingredient = (state = initialState, action: TReduserAction) => {
     switch (action.type) {
         case GET_INGREDIENTS_SUCCESS: {
             return {
@@ -63,27 +69,26 @@ const ingredient = (state = initialState, action: TOrderAction | TConstructorAct
                 allIngredients: action.allIngredients,
             };
         }
-        case ADD_ITEM: {
-            const item = action.item.item;
-            debugger;
+        case ADD_ITEM: {            
+            const uuid = action.uuid;
             return {
                 ...state,
                 constructorIngredients: 
-                    item.type === 'bun' ?
-                        [...state.constructorIngredients].filter(item => item.type !== 'bun').concat(item)
+                    action.item.type === 'bun' ?
+                        [...state.constructorIngredients].filter(item => item.type !== 'bun').concat(action.item)
                     : 
-                        [...state.constructorIngredients, {...action.item}]
+                        [...state.constructorIngredients, {...action.item, uuid}]
                 ,
 
-                allIngredients: item.type !== 'bun' ?
-                [...state.allIngredients].map(m => (m.type !== 'bun' &&
-                    m._id === item._id) ? { ...m, __v: ++m.__v } : m)
+                allIngredients: action.item.type !== 'bun' ?
+                [...state.allIngredients].map(item => 
+                    item._id === action.item._id && action.item.type !== 'bun' ? { ...item, __v: ++item.__v } : item)
                 :
-                [...state.allIngredients].filter(m => 
-                    m.type === 'bun').map(m => m._id === item._id ? 
-                        {...m, __v: 1 } 
+                [...state.allIngredients].filter(item => 
+                    item.type === 'bun').map(item => item._id === action.item._id ? 
+                        {...item, __v: 1 } 
                         : 
-                        {...m, __v: 0 }).concat(...state.allIngredients.filter(m => m.type !== "bun"))
+                        {...item, __v: 0 }).concat(...state.allIngredients.filter(item => item.type !== "bun"))
             };
         }
         case DELETE_ITEM: {

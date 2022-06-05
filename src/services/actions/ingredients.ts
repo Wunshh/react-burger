@@ -7,7 +7,7 @@ const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED
 
 export interface IGetIngredientSuccess {
     readonly type: typeof GET_INGREDIENTS_SUCCESS;
-    readonly allIngredients: ReadonlyArray<TIngredients>;
+    readonly allIngredients: Array<TIngredients>;
 }
 
 export interface IGetIngredientRequest {
@@ -23,17 +23,7 @@ export type TIngredientsAction =
 | IGetIngredientRequest
 | IGetIngredientFailed
 
-
-const getIngredientRequest = (): IGetIngredientRequest => ({
-    type: GET_INGREDIENTS_REQUEST
-});
-
-const getIngredientSuccess = (allIngredients: ReadonlyArray<TIngredients>): IGetIngredientSuccess => ({
-    type: GET_INGREDIENTS_SUCCESS,
-    allIngredients
-})
-
-function catchFetchError(): IGetIngredientFailed {
+function catchFetchError() {
     return {
         type: GET_INGREDIENTS_FAILED
     };
@@ -41,11 +31,16 @@ function catchFetchError(): IGetIngredientFailed {
 
 const getIngredientsData: AppThunk = () => {
     return function(dispatch: AppDispatch) {
-        dispatch(getIngredientRequest());
+        dispatch({
+            type: GET_INGREDIENTS_REQUEST
+        });
         api.getIngredientsData()
         .then((res) => {
             if (res) {
-                dispatch(getIngredientSuccess(res.data));
+                dispatch({
+                    type: GET_INGREDIENTS_SUCCESS,
+                    allIngredients: res.data
+                })
             } else {
                 dispatch(
                     catchFetchError()

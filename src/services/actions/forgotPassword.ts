@@ -14,6 +14,7 @@ export interface IForgotFormSetValueAction {
 
 export interface IPostForgotFormSubmitAction {
     readonly type: typeof POST_FORGOT_FORM_SUBMIT;
+
 }
 
 export interface IPostForgotFormSuccessAction {
@@ -31,22 +32,13 @@ export type TForgotFormAction =
 | IPostForgotFormSuccessAction
 | IPostForgotFormFailedAction
 
-const postForgotFormSubmitAction = (): IPostForgotFormSubmitAction => ({
-    type: POST_FORGOT_FORM_SUBMIT
-});
-
-const postForgotFormSuccessAction = (res: boolean): IPostForgotFormSuccessAction => ({
-    type: POST_FORGOT_FORM_SUCCESS,
-    res
-});
-
-const setForgotFormValue = (field: string, value: string): IForgotFormSetValueAction => ({
+const setForgotFormValue = (field: string, value: string) => ({
     type: FORGOT_FORM_SET_VALUE,
     field,
     value
 });
 
-function catchFetchError(): IPostForgotFormFailedAction {
+function catchFetchError() {
     return {
         type: POST_FORGOT_FORM_FAILED
     };
@@ -54,11 +46,16 @@ function catchFetchError(): IPostForgotFormFailedAction {
 
 const forgotPassword: AppThunk = (email: string) => {
     return function(dispatch: AppDispatch) {
-        dispatch(postForgotFormSubmitAction());
+        dispatch({
+            type: POST_FORGOT_FORM_SUBMIT
+        });
         api.forgotPassword(email) 
         .then((res) => {
-            if (res) {
-                dispatch(postForgotFormSuccessAction(res.success)); 
+            if (res.success) {
+                dispatch({
+                    type: POST_FORGOT_FORM_SUCCESS,
+                    res
+                }); 
             } else {
                 dispatch(
                     catchFetchError()

@@ -21,7 +21,7 @@ import FeedPage from '../../pages/feed';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
 import OrderIngreients from '../order-ingreients/order-ingreients';
 import OrderIngreientsPage from '../../pages/order-ingredient-page';
-import { modalCloseAction } from '../../services/actions/modal';
+import { MODAL_CLOSE } from '../../services/actions/modal';
 import { getUserData } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
 import { TLocation } from '../../utils/types';
@@ -65,7 +65,9 @@ function App() {
     }
     if (isOrderModalShown) {
       setIsOrderModalShown(false);
-      dispatch(modalCloseAction());
+      dispatch({
+        type: MODAL_CLOSE
+      })
     }
     if (location.pathname.indexOf('ingredients') === 1) {
       history.goBack();
