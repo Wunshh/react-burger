@@ -63,7 +63,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
     }
 
     const location = useLocation();
-    const orderNumber = item['number'];
+    const orderNumber = (item['number']).toString();
 
     const hendelClick = () => {
         onCardClick();

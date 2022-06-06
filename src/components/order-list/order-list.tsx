@@ -22,11 +22,9 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
     const pathCurrent = useRouteMatch();
     const data = useSelector(store => store.wsReduser.orders);
-    const token = pathCurrent.path === '/feed' ? "" : `?token=${getCookie('accessToken').replace('Bearer ', '')}`;   
-    
-    console.log(token);
-    
+    const token = `?token=${getCookie('accessToken').replace('Bearer ', '')}`;   
 
+    
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
             setDeviceHeihgt(560);

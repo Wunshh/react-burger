@@ -1,16 +1,32 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { TIngredients } from '../../utils/types';
-import { useSelector } from '../../utils/hooks';
-
+import { TIngredients, TOrders } from '../../utils/types';
+import { useSelector, useDispatch } from '../../utils/hooks';
+import { getIngredientsData } from '../../services/actions/ingredients'; 
 
 import orderIngreientsStyle from './order-ingreients.module.css';
 
-
 const OrderIngreients = () => {
 
+    const dispatch = useDispatch();
+    const orderNumber: {orderNumber: string} = useParams(); 
+    
+    
     const ingredients = useSelector(store => store.ingredient.allIngredients);
-    const order = useSelector(store => store.ingredient.orderIngredient);
+    let order = useSelector(store => store.ingredient.orderIngredient);
+    const data = useSelector(store => store.wsReduser.orders);
+    let newOrder;
+
+    if (order === null || order === undefined) {
+        newOrder = data.find((item: TOrders) => (item.number).toString() === orderNumber.orderNumber);
+        order = newOrder ? newOrder : null
+    }
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
 
     const orderIngredients = order !== null ? order.ingredients.map((item: string) => {
         return ingredients.find((m: TIngredients) => m._id === item)

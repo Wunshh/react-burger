@@ -10,6 +10,7 @@ import ingredientDetailsStyle from './ingredient-details.module.css';
 function IngredientDetail() {
 
     const ingredientId: {ingredientId: string} = useParams();  
+    
     const dispatch = useDispatch();
 
     useEffect(() => {

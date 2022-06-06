@@ -117,13 +117,13 @@ function App() {
 
         <Route
           exact
-          path='/feed/:number'
+          path='/feed/:orderNumber'
           component={OrderIngreientsPage}
         />
 
         <Route
           exact
-          path='/profile/orders/:number'
+          path='/profile/orders/:orderNumber'
           component={OrderIngreientsPage}
         />
 
@@ -196,7 +196,7 @@ function App() {
 
       {background && (
         <Route
-          path='/feed/:number'
+          path='/feed/:orderNumber'
           children={
             <Modal 
               onClose={handleModalClose}
@@ -209,7 +209,7 @@ function App() {
 
       {background && (
         <Route
-          path='/profile/orders/:number'
+          path='/profile/orders/:orderNumber'
           children={
             <Modal 
               onClose={handleModalClose}
