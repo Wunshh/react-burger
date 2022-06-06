@@ -23,7 +23,6 @@ export const socketMiddleware = (
             } = wsActions;
 
             if (type === onInit) {
-                debugger
                 wsUrl = payload;
                 socket = new WebSocket(wsUrl);
             }

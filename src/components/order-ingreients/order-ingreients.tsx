@@ -29,11 +29,7 @@ const OrderIngreients = () => {
 
     const bun = deleteDuplicate.filter((item: TIngredients) => item?.type === 'bun');
 
-    const correctOrderIngredients = bun.concat(deleteDuplicate.filter((item: TIngredients) => item?.type !== 'bun'));
-
-    // const listIngredients  = correctOrderIngredients.map((item: TIngredients) => {
-    //     return {...item, uuid: uuidv4()}
-    // });    
+    const correctOrderIngredients = bun.concat(deleteDuplicate.filter((item: TIngredients) => item?.type !== 'bun'));   
     
     let orderStatus: string | null = null;
 

@@ -3,7 +3,7 @@ import { Route, useRouteMatch } from 'react-router-dom';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
-// import OrderListCard from '../order-list-card/order-list-card';
+import OrderListCard from '../order-list-card/order-list-card';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { TListOrders } from '../../utils/types';
 import {wsConnectionStart, wsConnectionClosed} from '../../services/actions/wsActions';
@@ -23,8 +23,6 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
     const pathCurrent = useRouteMatch();
     const data = useSelector(store => store.wsReduser.orders);
-
-    console.log(data);
     
 
     useEffect(() => {
@@ -57,7 +55,7 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
                 </h1>
             </Route>
             <div className={orderListStyle.orders} style={{maxHeight: deviceHeihgt}}> 
-                {/* {data.orders.map((item: any) => {
+                {data.map((item: any, index: number) => {
                         return (
                             <OrderListCard
                                 key={item._id}
@@ -66,7 +64,7 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
                             />
                         );
                     })
-                } */}
+                }
             </div>
         </section>
     )

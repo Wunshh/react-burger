@@ -13,7 +13,7 @@ interface IOrderListCard {
     onCardClick: () => void;
 }
 
-const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {    
+const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {   
 
     const ingredients = useSelector(store => store.ingredient.allIngredients);
     const dispatch = useDispatch();
@@ -23,20 +23,23 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     }); 
     
+    // const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
+    // console.log(price);
     
-    const price = orderIngredients.reduce((sum: number, current: any): number => sum + current.price, 0);
 
-    const deleteDuplicate = orderIngredients.filter((item: any, index: number) => 
-        orderIngredients.indexOf(item) === index
-    );
+    const deleteDuplicate = orderIngredients.filter((item: any, index: number) => {
+       return orderIngredients.indexOf(item) === index
+    });
     
     const bun = deleteDuplicate.filter((item) => item?.type === 'bun');
 
-    const newOrderIngredients = bun.concat(deleteDuplicate.filter((item) => item?.type !== 'bun'));
+    const newOrderIngredients = bun ? bun.concat(deleteDuplicate.filter((item) => item?.type !== 'bun')) : deleteDuplicate.filter((item) => item?.type !== 'bun');
 
-    if (deleteDuplicate.length > 6) {
+    console.log(deleteDuplicate);
+    
+    if (newOrderIngredients.length > 6) {
         imageOpacity = true;
-    }
+    }    
 
     const time = item.createdAt.slice(11, 16);
     const today = new Date().toISOString().split('T')[0];
@@ -103,23 +106,23 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
 
                 <div className={orderCardStyle.bottom}>
                     <div className={orderCardStyle.images}> 
-                        {newOrderIngredients.slice(0, 6).map((item: any, index: number) => {
+                        {/* {newOrderIngredients.slice(0, 6).map((item: any) => {
                             return (
                                 <img 
                                     className={orderCardStyle.img} 
                                     src={item.image_mobile} 
-                                    key={index}
+                                    key={item._id}
                                     alt={item.name}
                                 />
                             )
                         })
-                        }
+                        } */}
                         <p className={imageOpacity ? orderCardStyle.opacity : orderCardStyle.none}> 
                             + {newOrderIngredients.length - 6}
                         </p>
                     </div>
                     <div className={orderCardStyle.prise}>
-                        <p className="text text_type_digits-medium mr-2">{price}</p>
+                        {/* <p className="text text_type_digits-medium mr-2">{price}</p> */}
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>
