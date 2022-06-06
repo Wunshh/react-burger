@@ -5,14 +5,13 @@ import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
 import OrderListCard from '../order-list-card/order-list-card';
 import { useDispatch, useSelector } from '../../utils/hooks';
-import { TListOrders } from '../../utils/types';
-import {wsConnectionStart, wsConnectionClosed} from '../../services/actions/wsActions';
+import { wsConnectionStart, wsConnectionClosed}  from '../../services/actions/wsActions';
+import { getCookie } from '../../utils/cookie';
 import { WS_URL } from '../../utils/data';
 
 import orderListStyle from './order-list.module.css';
 
 interface IOrderList {
-    data: TListOrders;
     onCardClick: () => void;
 }
 
@@ -23,6 +22,9 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
     const pathCurrent = useRouteMatch();
     const data = useSelector(store => store.wsReduser.orders);
+    const token = pathCurrent.path === '/feed' ? "" : `?token=${getCookie('accessToken').replace('Bearer ', '')}`;   
+    
+    console.log(token);
     
 
     useEffect(() => {
@@ -38,13 +40,13 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
             pathCurrent.path === '/feed' ? 
                 wsConnectionStart(WS_URL + '/all')
             : 
-                wsConnectionStart(`${WS_URL}/all`)
+                wsConnectionStart(WS_URL + token)
         );
 
         return () => {
             (dispatch(wsConnectionClosed));
         }
-    }, [dispatch, pathCurrent.path]);
+    }, [dispatch, pathCurrent.path, token]);
     
 
     return (
@@ -55,7 +57,7 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
                 </h1>
             </Route>
             <div className={orderListStyle.orders} style={{maxHeight: deviceHeihgt}}> 
-                {data.map((item: any, index: number) => {
+                {data.map((item: any) => {
                         return (
                             <OrderListCard
                                 key={item._id}

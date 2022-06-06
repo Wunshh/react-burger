@@ -23,19 +23,16 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     }); 
     
-    // const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
-    // console.log(price);
-    
+    const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
 
-    const deleteDuplicate = orderIngredients.filter((item: any, index: number) => {
+    
+    const deleteDuplicate = (orderIngredients.filter((item: any, index: number) => {
        return orderIngredients.indexOf(item) === index
-    });
+    })).filter((item: any) => item !== undefined);
     
     const bun = deleteDuplicate.filter((item) => item?.type === 'bun');
 
     const newOrderIngredients = bun ? bun.concat(deleteDuplicate.filter((item) => item?.type !== 'bun')) : deleteDuplicate.filter((item) => item?.type !== 'bun');
-
-    console.log(deleteDuplicate);
     
     if (newOrderIngredients.length > 6) {
         imageOpacity = true;
@@ -106,7 +103,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
 
                 <div className={orderCardStyle.bottom}>
                     <div className={orderCardStyle.images}> 
-                        {/* {newOrderIngredients.slice(0, 6).map((item: any) => {
+                        {newOrderIngredients.slice(0, 6).map((item: any) => {
                             return (
                                 <img 
                                     className={orderCardStyle.img} 
@@ -116,13 +113,13 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
                                 />
                             )
                         })
-                        } */}
+                        }
                         <p className={imageOpacity ? orderCardStyle.opacity : orderCardStyle.none}> 
                             + {newOrderIngredients.length - 6}
                         </p>
                     </div>
                     <div className={orderCardStyle.prise}>
-                        {/* <p className="text text_type_digits-medium mr-2">{price}</p> */}
+                        <p className="text text_type_digits-medium mr-2">{price}</p>
                         <CurrencyIcon type="primary" />
                     </div>
                 </div>

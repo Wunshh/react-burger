@@ -25,11 +25,13 @@
     margin-left: 20px;
     position: relative;
     min-width: 64px;
+    width: 304px;
 }
 
 .prise {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .img {
