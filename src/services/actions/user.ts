@@ -81,33 +81,31 @@ const catchUserUpdateErr = () => {
     };
 }
 
-const getUserData: AppThunk = () => {
-    return function(dispatch: any) {
-        dispatch({
-            type: GET_USER_DATA_REQUEST
-        });
-        api.getUserData()
-        .then((res) => {
-            const user = res.user;
-            if (res.user) {
-                dispatch({
-                    type: GET_USER_DATA_SUCCESS,
-                    user
-                })
-            }
-        })
-        .catch((res) => {
-            if (res.message === 'jwt expired') {
-                dispatch(updateToken());
-                dispatch(getUserData());
-            } else {
-                dispatch(
-                    catchUserDataErr()
-                );
-                console.log(res);
-            }
-        });
-    }
+const getUserData: AppThunk = () => (dispatch) => {
+    dispatch({
+        type: GET_USER_DATA_REQUEST
+    });
+    api.getUserData()
+    .then((res) => {
+        const user = res.user;
+        if (res.user) {
+            dispatch({
+                type: GET_USER_DATA_SUCCESS,
+                user
+            })
+        }
+    })
+    .catch((res) => {
+        if (res.message === 'jwt expired') {
+            dispatch(updateToken());
+            dispatch(getUserData());
+        } else {
+            dispatch(
+                catchUserDataErr()
+            );
+            console.log(res);
+        }
+    });
 }
 
 const updateToken: AppThunk = (afterRefresh: any) => {

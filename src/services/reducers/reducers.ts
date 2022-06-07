@@ -152,7 +152,7 @@ const ingredient = (state = initialState, action: TReduserAction): TReducersStat
                 orderIngredientModalOpen: false,
                 ingredient: null,
                 ingredientModalOpen: false,
-                orderIngredient: null
+                orderIngredient: null,
             }
         }
         case INGREDIENT_MODAL_OPEN: {

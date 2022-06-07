@@ -1,7 +1,6 @@
 import { useSelector } from '../../utils/hooks';
 
 import odrerModalImg from '../../images/graphics.png';
-import Preloader from '../preloader/preloader';
 
 import orderDetailsStyle from './order-details.module.css';
 
@@ -28,9 +27,7 @@ function OrderDetails() {
             </p>
         </div>
         :
-        <div className={orderDetailsStyle.preloader}>
-            <Preloader/>
-        </div>
+        null
     );
 }
 
