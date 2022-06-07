@@ -24,10 +24,11 @@ const initialState: TRegistrationState = {
     registrationFailed: false
 }
 
-const registrationFormReducer = (state = initialState, action: TRegistrationAction) => {
+const registrationFormReducer = (state = initialState, action: TRegistrationAction): TRegistrationState => {
     switch(action.type) {
         case REGISTER_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value

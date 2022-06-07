@@ -10,13 +10,7 @@ import { TLoginAction } from "../services/actions/login";
 import { TIngredientsAction } from "../services/actions/ingredients";
 import { TForgotFormAction } from "../services/actions/forgotPassword";
 import { TConstructorAction } from "../services/actions/constructor";
-import { TWsState } from "../services/reducers/wsReduser";
-import { TReducersState } from "../services/reducers/reducers";
-import { TRegistrationState } from "../services/reducers/registrationReducer";
-import { TLoginState } from "../services/reducers/loginReducer";
-import { TResetState } from "../services/reducers/resetReduser";
-import { TForgotPasswordState } from "../services/reducers/forgotPasswordReducer";
-import { TUserState } from "../services/reducers/userReduser";
+import { store } from "../services/store/store";
 
 export type TOrder = {
     name: string;   
@@ -81,15 +75,7 @@ export type TApplicationActions =
 | TConstructorAction
 
 export type AppDispatch = Dispatch<TApplicationActions>; 
-export type RootState = {
-    ingredient: TReducersState;
-    registrationFormReducer: TRegistrationState;
-    loginFormReducer: TLoginState;
-    resetFormReducer: TResetState;
-    forgotPasswordFormReducer: TForgotPasswordState;
-    userDataReducer: TUserState;
-    wsReduser: TWsState;
-};
+export type RootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<ReturnType = void> = ActionCreator<
 ThunkAction<ReturnType, Action, RootState, TApplicationActions>

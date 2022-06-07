@@ -25,10 +25,11 @@ const initialState: TLoginState = {
     loginFailed: false
 }
 
-const loginFormReducer = (state = initialState, action: TLoginAction) => {
+const loginFormReducer = (state = initialState, action: TLoginAction): TLoginState => {
     switch(action.type) {
         case LOGIN_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value

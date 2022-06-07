@@ -10,12 +10,12 @@ export interface IOrderModalOpenAction {
 }
 
 export interface IIngredientModalOpenAction {
-    readonly type: typeof INGREDIENT_MODAL_OPEN
+    readonly type: typeof INGREDIENT_MODAL_OPEN;
     readonly item: TIngredients
 }
 
 export interface IOrderIngtedientModalOpenAction {
-    readonly type: typeof ORDER_INGREDIENT_MODAL_OPEN,
+    readonly type: typeof ORDER_INGREDIENT_MODAL_OPEN;
     readonly item: TOrders
 }
 

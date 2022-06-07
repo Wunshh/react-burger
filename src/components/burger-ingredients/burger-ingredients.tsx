@@ -15,12 +15,7 @@ import { TIngredients } from '../../utils/types';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
-type TCardClick = {
-    onCardClick: () => void;
-}; 
-
-
-function BurgerIngredients({ onCardClick }: TCardClick) {
+function BurgerIngredients() {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -104,7 +99,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -120,7 +114,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -136,7 +129,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })

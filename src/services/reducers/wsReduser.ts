@@ -22,7 +22,7 @@ const initialState: TWsState  = {
     totalToday: 0
 }
 
-const wsReduser = (state = initialState, action: TActions) => {
+const wsReduser = (state = initialState, action: TActions): TWsState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS: {
             

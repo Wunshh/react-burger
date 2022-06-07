@@ -13,7 +13,6 @@ const OrderIngreients = () => {
     const dispatch = useDispatch();
     const orderNumber: {orderNumber: string} = useParams(); 
     
-    
     const ingredients = useSelector(store => store.ingredient.allIngredients);
     let order = useSelector(store => store.ingredient.orderIngredient);
     const data = useSelector(store => store.wsReduser.orders);
@@ -33,7 +32,7 @@ const OrderIngreients = () => {
     }) : [];
 
     const newOrderIngredients = orderIngredients.map((item) => {
-       return {...item, num: (orderIngredients.filter(m => m?._id === item?._id)).length} 
+        return {...item, num: (orderIngredients.filter(m => m?._id === item?._id)).length} 
     });
 
     const deleteDuplicate = newOrderIngredients.reduce((prev: Array<TIngredients>, curr: any) => {

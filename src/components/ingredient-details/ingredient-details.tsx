@@ -25,7 +25,7 @@ function IngredientDetail() {
     const item = ingredient || modalItem;
 
     return (
-        item && 
+        item !== null ? 
         <div className={ingredientDetailsStyle.card}>
             <img                 
                 alt="изображение ингридиента"
@@ -56,6 +56,8 @@ function IngredientDetail() {
                 </div>
             </div>
         </div> 
+        :
+        null
     );
 }
 

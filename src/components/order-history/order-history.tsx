@@ -2,21 +2,22 @@ import { FC, useEffect, useState } from 'react';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
+import { useSelector } from '../../utils/hooks';
 
 import orderHistoryStyle from './order-history.module.css';
 
 
-import {ordersTestData} from '../../utils/testData';
-
-
-
 const OrderHistory: FC = () => {
+
+    const data = useSelector(store => store.wsReduser.orders);
+    const total = useSelector(store => store.wsReduser.total);
+    const totalToday = useSelector(store => store.wsReduser.totalToday)
 
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
 
-    const readyOrder = ordersTestData.orders.filter((item: any) => item.status === "done");
-    const createdOrder = ordersTestData.orders.filter((item: any) => item.status === "pending");
+    const readyOrder = data.filter((item: any) => item.status === "done");
+    const createdOrder = data.filter((item: any) => item.status === "pending");
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -61,14 +62,14 @@ const OrderHistory: FC = () => {
                 Выполнено за все время:
             </p>
             <p className="text text_type_digits-large text-shadow mb-15">
-                {ordersTestData.total}
+                {total}
             </p>
 
             <p className='text text_type_main-medium'>
                 Выполнено за сегодня:
             </p>
             <p className="text text_type_digits-large text-shadow">
-                {ordersTestData.totalToday}
+                {totalToday}
             </p>
 
         </section>

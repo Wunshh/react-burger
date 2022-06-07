@@ -10,10 +10,9 @@ import orderCardStyle from './order-list-card.module.css';
 
 interface IOrderListCard {
     item: TOrders;
-    onCardClick: () => void;
 }
 
-const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {   
+const OrderListCard: FC<IOrderListCard> = ({ item }) => {   
 
     const ingredients = useSelector(store => store.ingredient.allIngredients);
     const dispatch = useDispatch();
@@ -66,7 +65,6 @@ const OrderListCard: FC<IOrderListCard> = ({ item, onCardClick}) => {
     const orderNumber = (item['number']).toString();
 
     const hendelClick = () => {
-        onCardClick();
         dispatch({
             type: ORDER_INGREDIENT_MODAL_OPEN,
             item

@@ -1,19 +1,22 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import OrderList from '../order-list/order-list';
+import { useDispatch } from '../../utils/hooks';
+import { getIngredientsData } from '../../services/actions/ingredients'; 
 
 import profileOrdersStyle from './profile-orders.module.css';
 
-interface IProfileOrders {
-    onCardClick: () => void;
-}
+const ProfileOrders: FC = () => {
 
-const ProfileOrders: FC<IProfileOrders> = ({onCardClick}) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
+
     return (
         <section className={profileOrdersStyle.section}>
-            <OrderList 
-                onCardClick={onCardClick}
-            />
+            <OrderList />
         </section>
     );
 }

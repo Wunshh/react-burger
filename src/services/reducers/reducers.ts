@@ -42,7 +42,6 @@ export type TReducersState = {
     ingredientModalOpen: boolean;
     orderModalOpen: boolean;
     orderIngredientModalOpen: boolean;
-    visible: boolean;
     orederRequest: boolean;
     orderFailed: boolean;
 };
@@ -56,12 +55,11 @@ const initialState: TReducersState = {
     ingredientModalOpen: false,
     orderModalOpen: false,
     orderIngredientModalOpen: false,
-    visible: false,
     orederRequest: false,
     orderFailed: false
 };
 
-const ingredient = (state = initialState, action: TReduserAction) => {
+const ingredient = (state = initialState, action: TReduserAction): TReducersState => {
     switch (action.type) {
         case GET_INGREDIENTS_SUCCESS: {
             return {
@@ -133,7 +131,7 @@ const ingredient = (state = initialState, action: TReduserAction) => {
         case SEND_ORDER_FAILED: {
             return {
                 ...state,
-                order: {...initialState.order},
+                order: null,
                 allIngredients: {...initialState.allIngredients},
                 orederRequest: false,
                 orderFailed: true
@@ -142,8 +140,7 @@ const ingredient = (state = initialState, action: TReduserAction) => {
         case ORDER_MODAL_OPEN: {
             return {
                 ...state,
-                orderModalOpen: true,
-                visible: true
+                orderModalOpen: true
             };
         }
         case MODAL_CLOSE: {
@@ -152,14 +149,16 @@ const ingredient = (state = initialState, action: TReduserAction) => {
                 order: null,
                 orederRequest: false,
                 orderFailed: false,
-                orderIngredientModalOpen: false
+                orderIngredientModalOpen: false,
+                ingredient: null,
+                ingredientModalOpen: false,
+                orderIngredient: null
             }
         }
         case INGREDIENT_MODAL_OPEN: {
             return {
                 ...state,
                 ingredientModalOpen: true,
-                visible: true,
                 ingredient: action.item
             };
         }
@@ -167,7 +166,6 @@ const ingredient = (state = initialState, action: TReduserAction) => {
             return {
                 ...state,
                 orderIngredientModalOpen: true,
-                visible: true,
                 orderIngredient: action.item
             };
         }

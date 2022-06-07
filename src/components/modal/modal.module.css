@@ -1,15 +1,3 @@
-.invisible {
-    overflow: hidden;
-    opacity: 0;
-    transition: 0.8s ease;
-}
-
-.visible {
-    overflow: visible;
-    opacity: 1;
-    transition: 0.8s ease;
-}
-
 .modal {
     margin: 0 auto;
     position: fixed;

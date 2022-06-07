@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/user';
-
 import profileFormStyle from './profile-form.module.css';
 
 function ProfileForm() {
@@ -15,6 +14,7 @@ function ProfileForm() {
         name,
         password,
     } = useSelector(state => state.userDataReducer.form);
+    
 
     const dispatch = useDispatch();
 

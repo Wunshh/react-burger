@@ -15,14 +15,15 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    const userName = useSelector(store => store.userDataReducer.form.name);     
+    const userName = useSelector(store => store.userDataReducer.form.name);   
+    const userLogin = useSelector(store => store.loginFormReducer.loginSuccess);
     
     let path;
 
-    if(userName === undefined || userName.length === 0) {
-        path = '/login';
-    } else {
+    if( userLogin || userName) {
         path = '/profile';
+    } else {
+        path = '/login';
     }
 
     const location: TLocation = useLocation();

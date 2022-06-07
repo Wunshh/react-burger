@@ -7,11 +7,7 @@ import { Route } from 'react-router-dom';
 
 import profilePageStyle from './profile.module.css'
 
-interface IProfilePage {
-    onCardClick: () => void;
-}
-
-const ProfilePage: FC<IProfilePage> = ({ onCardClick }) => {
+const ProfilePage: FC = () => {
 
     return (
         <section className={profilePageStyle.container}>
@@ -20,9 +16,7 @@ const ProfilePage: FC<IProfilePage> = ({ onCardClick }) => {
                 <ProfileForm />
             </Route>
             <Route exact path="/profile/orders">
-                <ProfileOrders 
-                    onCardClick={onCardClick}
-                />
+                <ProfileOrders />
             </Route>
         </section>
     );

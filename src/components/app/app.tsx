@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from '../../utils/hooks';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -32,46 +32,25 @@ import appStyles from './app.module.css';
 
 function App() {
 
-  const [isIngredientModalShown, setIsIngredientModalShown] = useState<boolean>(false);
-  const [isOrderModalShown, setIsOrderModalShown] = useState<boolean>(false);
-  const [isOrderIngredientModalShown, setOrderIngredientModalShown] = useState<boolean>(false);
   const dispatch = useDispatch();
-
   const location: TLocation = useLocation();
 
   const history = useHistory();
   const background = location.state && location.state.background;
+  const orderDetails = useSelector((store: any) => store.ingredient.order);
+   
 
-  function handleIngredientClick() {
-    setIsIngredientModalShown(true);
-  }
-
-  function orderIngredientClick() {
-    setOrderIngredientModalShown(true);
-  }
-
-  function handleOrderClick() {
-    setIsOrderModalShown(true);
+  function handleOrderModalClose() {
+    dispatch({
+      type: MODAL_CLOSE
+    });
   }
 
   function handleModalClose() {
-    if (isIngredientModalShown) {
-      setIsIngredientModalShown(false);
-      history.goBack();
-    }
-    if (isOrderIngredientModalShown) {
-      setOrderIngredientModalShown(false);
-      history.goBack();
-    }
-    if (isOrderModalShown) {
-      setIsOrderModalShown(false);
-      dispatch({
-        type: MODAL_CLOSE
-      })
-    }
-    if (location.pathname.indexOf('ingredients') === 1) {
-      history.goBack();
-    }
+    dispatch({
+      type: MODAL_CLOSE
+    });
+    history.goBack();
   }
 
   useEffect(() => {
@@ -90,23 +69,20 @@ function App() {
         <Route exact path='/'>
           <main className={appStyles.main}>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients 
-                onCardClick={handleIngredientClick} 
-              />
+              <BurgerIngredients />
               
-              <BurgerConstructor 
-                onButtonClick={handleOrderClick} 
-              />
+              <BurgerConstructor />
             </DndProvider>
           </main>
               
-          {isOrderModalShown && 
+         {orderDetails && 
             <Modal
-              onClose={handleModalClose}
+              onClose={handleOrderModalClose}
             >
               <OrderDetails />
             </Modal>
           }
+
         </Route>
 
         <Route
@@ -155,22 +131,16 @@ function App() {
           exact
           path="/feed"
         >
-          <FeedPage 
-            onCardClick={orderIngredientClick}
-          />
+          <FeedPage />
         </Route>  
         
         
         <ProtectedRoute path="/profile">
-          <ProfilePage 
-            onCardClick={orderIngredientClick}
-          />
+          <ProfilePage />
         </ProtectedRoute> 
 
         <ProtectedRoute path="/profile/orders">
-          <ProfilePage 
-            onCardClick={orderIngredientClick}
-          />
+          <ProfilePage />
         </ProtectedRoute> 
 
         
@@ -219,7 +189,6 @@ function App() {
           }
         />
       )}
-
     </div> 
   );
 }

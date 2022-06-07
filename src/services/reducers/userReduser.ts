@@ -30,10 +30,11 @@ const initialState: TUserState = {
     userDataFailed: false,
 }
 
-const userDataReducer = (state = initialState, action: TUserAction) => {
+const userDataReducer = (state = initialState, action: TUserAction): TUserState => {
     switch(action.type) {
         case USER_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value

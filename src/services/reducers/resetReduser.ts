@@ -22,10 +22,11 @@ const initialState: TResetState = {
     resetFailed: false
 }
 
-const resetFormReducer = (state = initialState, action: TResetAction) => {
+const resetFormReducer = (state = initialState, action: TResetAction): TResetState => {
     switch(action.type) {
         case RESET_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value

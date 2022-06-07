@@ -11,11 +11,7 @@ import { WS_URL } from '../../utils/data';
 
 import orderListStyle from './order-list.module.css';
 
-interface IOrderList {
-    onCardClick: () => void;
-}
-
-const OrderList: FC<IOrderList> = ({ onCardClick }) => {
+const OrderList: FC = () => {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -42,7 +38,7 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
         );
 
         return () => {
-            (dispatch(wsConnectionClosed));
+            (dispatch(wsConnectionClosed()));
         }
     }, [dispatch, pathCurrent.path, token]);
     
@@ -60,7 +56,6 @@ const OrderList: FC<IOrderList> = ({ onCardClick }) => {
                             <OrderListCard
                                 key={item._id}
                                 item={item}
-                                onCardClick={onCardClick}
                             />
                         );
                     })

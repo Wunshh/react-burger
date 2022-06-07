@@ -24,7 +24,7 @@ function OrderIngreientsPage() {
         );
 
         return () => {
-            (dispatch(wsConnectionClosed));
+            (dispatch(wsConnectionClosed()));
         }
     }, [dispatch, pathCurrent.path, token]);
 

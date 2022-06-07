@@ -23,10 +23,11 @@ const initialState: TForgotPasswordState = {
     forgotFailed: false
 }
 
-const forgotPasswordFormReducer = (state = initialState, action: TForgotFormAction) => {
+const forgotPasswordFormReducer = (state = initialState, action: TForgotFormAction): TForgotPasswordState => {
     switch(action.type) {
-        case FORGOT_FORM_SET_VALUE: {
+        case FORGOT_FORM_SET_VALUE: {           
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value
