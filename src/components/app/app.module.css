@@ -19,6 +19,6 @@
     justify-content: center;
     position: absolute;
     box-sizing: border-box;
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: calc(50% - 100px);
 }
