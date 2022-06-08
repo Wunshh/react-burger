@@ -1,6 +1,5 @@
 import { BASE_URL } from './data';
 import { getCookie } from './cookie';
-import { THeaders } from './types';
 
 const checkResponse = async (res: Response) => {
     if (res.ok) {
@@ -12,16 +11,15 @@ const checkResponse = async (res: Response) => {
     throw err;
 }
 
-const headers: THeaders = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-    'Authorization': getCookie('accessToken'), 
-};
 
 export const register = (email: string, name: string, password: string) => { 
     return fetch(`${BASE_URL}/auth/register`, { 
         method: 'POST', 
-        headers, 
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
         body: JSON.stringify({email, name, password})
     }) 
     .then(checkResponse)
@@ -30,7 +28,11 @@ export const register = (email: string, name: string, password: string) => {
 export const login = (email: string, password: string) => {
     return fetch(`${BASE_URL}/auth/login`, {
         method: 'POST', 
-        headers, 
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        }, 
         body: JSON.stringify({password, email}) 
     })
     .then(checkResponse)
@@ -39,7 +41,11 @@ export const login = (email: string, password: string) => {
 export const forgotPassword = (email: string) => {
     return fetch(`${BASE_URL}/password-reset`, {
         method: 'POST', 
-        headers, 
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        }, 
         body: JSON.stringify({email}) 
     })
     .then(checkResponse)
@@ -48,7 +54,11 @@ export const forgotPassword = (email: string) => {
 export const reset = (password: string, token: string) => {
     return fetch(`${BASE_URL}/password-reset/reset`, {
         method: 'POST', 
-        headers, 
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
         body: JSON.stringify({password, token}) 
     })
     .then(checkResponse)
@@ -57,7 +67,11 @@ export const reset = (password: string, token: string) => {
 export const getUserData = () => {
     return fetch(`${BASE_URL}/auth/user`, {
         method: "GET",
-        headers,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        }
     })
     .then(checkResponse)
 }
@@ -65,7 +79,11 @@ export const getUserData = () => {
 export const updateToken = () => {
     return fetch(`${BASE_URL}/auth/token`, {
         method: 'POST',
-        headers,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken')
         })
@@ -77,7 +95,11 @@ export const updateUserData = (email: string, name: string, password: string) =>
 
     return fetch(`${BASE_URL}/auth/user`, {
         method: 'PATCH',
-        headers,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
         body: password === '*********' ? 
         JSON.stringify({
             email: email || '',
@@ -96,7 +118,11 @@ export const updateUserData = (email: string, name: string, password: string) =>
 export const getIngredientsData = () => {
     return fetch(`${BASE_URL}/ingredients`, {
         method: "GET",
-        headers,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
     })
     .then(checkResponse)
 }
@@ -104,7 +130,11 @@ export const getIngredientsData = () => {
 export const sendOrder = (itemsId: Array<string>) => {
     return fetch(`${BASE_URL}/orders`, {
         method: "POST",
-        headers,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': getCookie('accessToken')
+        },
         body: JSON.stringify({
             ingredients: itemsId
         })

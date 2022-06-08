@@ -108,7 +108,7 @@ const getUserData: AppThunk = () => (dispatch) => {
     });
 }
 
-const updateToken: AppThunk = (afterRefresh: any) => {
+const updateToken: AppThunk = () => {
  
     return function(dispatch: AppDispatch) {
         dispatch({
@@ -118,7 +118,6 @@ const updateToken: AppThunk = (afterRefresh: any) => {
         .then((res) => {
             localStorage.setItem('refreshToken', res.refreshToken); 
             setCookie('accessToken', res.accessToken, {});
-            dispatch(afterRefresh);
         })
     }
 }

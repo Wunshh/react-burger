@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { Route, Link, useLocation } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { ORDER_INGREDIENT_MODAL_OPEN } from '../../services/actions/modal';
@@ -18,16 +20,16 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
     const dispatch = useDispatch();
     let imageOpacity: boolean = false;
 
-    const orderIngredients = item.ingredients.map((item: any) => {
+    const orderIngredients = item.ingredients.map((item) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     }); 
     
     const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
 
     
-    const deleteDuplicate = (orderIngredients.filter((item: any, index: number) => {
+    const deleteDuplicate = (orderIngredients.filter((item, index: number) => {
        return orderIngredients.indexOf(item) === index
-    })).filter((item: any) => item !== undefined);
+    })).filter((item) => item !== undefined);
     
     const bun = deleteDuplicate.filter((item) => item?.type === 'bun');
 
@@ -36,20 +38,6 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
     if (newOrderIngredients.length > 6) {
         imageOpacity = true;
     }    
-
-    const time = item.createdAt.slice(11, 16);
-    const today = new Date().toISOString().split('T')[0];
-
-    let day: string | null = null;
-    const dayOfOrder = item.createdAt.slice(8,10);
-
-    if (today.slice(8) === dayOfOrder) {
-        day = "Сегодня"
-    } else if (Number(today.slice(8)) - 1 === Number(dayOfOrder)) {
-        day = "Вчера"
-    } else {
-        day = (Number(today.slice(8)) - Number(dayOfOrder)).toString() + " дня назад"
-    }
 
     let orderStatus: string | null = null; 
 
@@ -86,7 +74,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
                         #{item.number}
                     </div>
                     <div className="text text_type_main-default text_color_inactive">
-                        {day}, {time} i-GMT+3
+                        {moment(item.createdAt).calendar()} i-GMT+3
                     </div>
                 </div>
                 <p className="text text_type_main-medium mt-6 name">

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 import { TIngredients, TOrders } from '../../utils/types';
 import { useSelector, useDispatch } from '../../utils/hooks';
@@ -56,20 +58,6 @@ const OrderIngreients = () => {
         orderStatus = 'Выполнен'
     }
 
-    const time = order !== null && order.createdAt.slice(11, 16);
-    const today = new Date().toISOString().split('T')[0];
-
-    let day: string | null = null;
-    const dayOfOrder = order !== null && order.createdAt.slice(8,10);
-
-    if (today.slice(8) === dayOfOrder) {
-        day = "Сегодня"
-    } else if (Number(today.slice(8)) - 1 === Number(dayOfOrder)) {
-        day = "Вчера"
-    } else {
-        day = (Number(today.slice(8)) - Number(dayOfOrder)).toString() + ' дня назад'      
-    }
-
     const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
 
     return (
@@ -88,7 +76,7 @@ const OrderIngreients = () => {
                 Состав: 
             </p>
             <div className={orderIngreientsStyle.ingredients}>
-                {correctOrderIngredients.map((item: any) => {
+                {correctOrderIngredients.map((item: TIngredients) => {
                         return (
                             <div className={orderIngreientsStyle.data} key={item._id}>
                                 <img 
@@ -110,7 +98,7 @@ const OrderIngreients = () => {
             </div>
             <div className={orderIngreientsStyle.footer}>
                 <div className="text text_type_main-default text_color_inactive mt-10">
-                    {day}, {time} i-GMT+3
+                    {moment(order.createdAt).calendar()}, i-GMT+3
                 </div>
                 <div className={orderIngreientsStyle.footer__price}>
                     <p className="text text_type_digits-default mr-2">{price}</p>

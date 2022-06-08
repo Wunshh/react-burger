@@ -117,6 +117,7 @@ const ingredient = (state = initialState, action: TReduserAction): TReducersStat
             }
         } 
         case SEND_ORDER_SUCCESS: {
+            
             return {
                 ...state,
                 order: action.order,

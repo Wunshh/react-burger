@@ -7,7 +7,7 @@ import orderDetailsStyle from './order-details.module.css';
 
 function OrderDetails() {
 
-    const orderDetails = useSelector((store: any) => store.ingredient.order);
+    const orderDetails = useSelector((store) => store.ingredient.order);
     
     return (
         orderDetails !== null ?

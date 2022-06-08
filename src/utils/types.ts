@@ -14,7 +14,7 @@ import { store } from "../services/store/store";
 
 export type TOrder = {
     name: string;   
-    order: number;
+    order: TItemOrder;
     success: boolean
 };
 
@@ -95,4 +95,16 @@ export type TListOrders = {
     orders: Array<TOrders>;
     total: number;
     totalToday: number;
+}
+
+export type TItemOrder = {
+    _id: string;
+    createdAt: string;
+    ingredients: object;
+    name: string;
+    number: number;
+    owner: object;
+    price: number;
+    status: string;
+    updatedAt: string;
 }

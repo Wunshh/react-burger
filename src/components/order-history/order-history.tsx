@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import { desctopHeight } from '../../utils/data';
 import { useSelector } from '../../utils/hooks';
+import { TOrders } from '../../utils/types';
 
 import orderHistoryStyle from './order-history.module.css';
 
@@ -16,8 +17,8 @@ const OrderHistory: FC = () => {
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
 
-    const readyOrder = data.filter((item: any) => item.status === "done");
-    const createdOrder = data.filter((item: any) => item.status === "pending");
+    const readyOrder = data.filter((item: TOrders) => item.status === "done");
+    const createdOrder = data.filter((item: TOrders) => item.status === "pending");
 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -32,7 +33,7 @@ const OrderHistory: FC = () => {
             <div className={orderHistoryStyle.order}> 
                 <div className={orderHistoryStyle.numbers}>
                     <p className='text text_type_main-medium mb-6'>Готовы:</p>
-                    {readyOrder.splice(0, 5).map((item: any) => {
+                    {readyOrder.splice(0, 5).map((item: TOrders) => {
                         return (
                             <p 
                                 key={item.number}
@@ -45,7 +46,7 @@ const OrderHistory: FC = () => {
                 </div>
                 <div className={orderHistoryStyle.numbers}>
                     <p className='text text_type_main-medium mb-6'>В работе:</p>
-                    {createdOrder.splice(0, 5).map((item: any) => {
+                    {createdOrder.splice(0, 5).map((item: TOrders) => {
                         return (
                             <p 
                                 key={item.number}

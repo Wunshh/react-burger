@@ -120,7 +120,7 @@ const BurgerConstructor: FC = () => {
                         thumbnail={bun.image_mobile}
                     />}
                     <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
-                        {mainIngredients.map((item: any, index: number) => {
+                        {mainIngredients.map((item: TIngredients, index: number) => {
                             return (
                                 <BurgerConstructorCard 
                                     key={item.uuid}

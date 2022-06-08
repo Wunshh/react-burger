@@ -38,7 +38,7 @@ function App() {
 
   const history = useHistory();
   const background = location.state && location.state.background;
-  const orderDetails = useSelector((store: any) => store.ingredient.order);
+  const orderDetails = useSelector((store) => store.ingredient.order);
    
 
   function handleOrderModalClose() {
