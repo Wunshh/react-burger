@@ -17,8 +17,7 @@ export const register = (email: string, name: string, password: string) => {
         method: 'POST', 
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({email, name, password})
     }) 
@@ -30,8 +29,7 @@ export const login = (email: string, password: string) => {
         method: 'POST', 
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
+            "Content-Type": "application/json"
         }, 
         body: JSON.stringify({password, email}) 
     })
@@ -44,7 +42,6 @@ export const forgotPassword = (email: string) => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
         }, 
         body: JSON.stringify({email}) 
     })
@@ -57,7 +54,6 @@ export const reset = (password: string, token: string) => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
         },
         body: JSON.stringify({password, token}) 
     })
@@ -121,7 +117,6 @@ export const getIngredientsData = () => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
         },
     })
     .then(checkResponse)
