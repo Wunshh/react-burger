@@ -17,10 +17,8 @@ const OrderList: FC = () => {
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
     const pathCurrent = useRouteMatch();
-    const data = useSelector(store => store.wsReduser.orders);
-    const token = `?token=${getCookie('accessToken').replace('Bearer ', '')}`;   
-
-    
+    const data = useSelector(store => store.wsReduser.orders);  
+ 
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
             setDeviceHeihgt(560);
@@ -30,17 +28,18 @@ const OrderList: FC = () => {
     }, [windowHeight]);
 
     useEffect(() => {
+        debugger
         dispatch(
             pathCurrent.path === '/feed' ? 
                 wsConnectionStart(WS_URL + '/all')
             : 
-                wsConnectionStart(WS_URL + token)
+                wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)
         );
 
         return () => {
             (dispatch(wsConnectionClosed()));
         }
-    }, [dispatch, pathCurrent.path, token]);
+    }, [dispatch, pathCurrent.path]);
     
 
     return (

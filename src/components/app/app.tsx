@@ -55,9 +55,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (getCookie('accessToken')) {
-      dispatch(getUserData());
-    }
+    dispatch(getUserData());
   }, [dispatch]);
 
   return (
