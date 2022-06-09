@@ -15,7 +15,6 @@ function OrderIngreientsPage() {
     const pathCurrent = useRouteMatch({ path: "/profile/orders/" });
     
     useEffect(() => {
-        debugger;
         dispatch(
             pathCurrent ? 
                 wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)

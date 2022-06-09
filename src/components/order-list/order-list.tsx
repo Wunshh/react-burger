@@ -17,7 +17,7 @@ const OrderList: FC = () => {
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
-    const pathCurrent = useRouteMatch({ path: "/profile/orders/" });
+    const pathCurrent = useRouteMatch({ path: "/profile/orders" });
     const data = useSelector(store => store.wsReduser.orders); 
  
     useEffect(() => {
@@ -29,7 +29,6 @@ const OrderList: FC = () => {
     }, [windowHeight]);
 
     useEffect(() => {
-        debugger;
         dispatch(
             pathCurrent ? 
                 wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)
@@ -41,9 +40,6 @@ const OrderList: FC = () => {
             (dispatch(wsConnectionClosed()));
         }
     }, []);
-
-    console.log(data);
-    
     
     return (
         <section className={orderListStyle.section}>
