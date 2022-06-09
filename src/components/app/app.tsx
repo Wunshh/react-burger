@@ -55,7 +55,9 @@ function App() {
   }
 
   useEffect(() => {
-    dispatch(getUserData());
+    if (getCookie('accessToken')) {
+      dispatch(getUserData());
+    }
   }, [dispatch]);
 
   return (
@@ -98,11 +100,11 @@ function App() {
           component={OrderIngreientsPage}
         />
 
-        <Route
-          exact
+        <ProtectedRoute
           path='/profile/orders/:orderNumber'
-          component={OrderIngreientsPage}
-        />
+        >
+          <OrderIngreientsPage/>
+        </ProtectedRoute>
 
         <Route
           exact 
@@ -135,15 +137,9 @@ function App() {
           <FeedPage />
         </Route>  
         
-        
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute> 
-
-        <ProtectedRoute path="/profile/orders">
-          <ProfilePage />
-        </ProtectedRoute> 
-
         
         <Route>
           <NotFound404 />

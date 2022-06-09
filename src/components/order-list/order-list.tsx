@@ -16,8 +16,8 @@ const OrderList: FC = () => {
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
-    const pathCurrent = useRouteMatch();
-    const data = useSelector(store => store.wsReduser.orders);  
+    const pathCurrent = useRouteMatch({ path: "/profile/orders/" });
+    const data = useSelector(store => store.wsReduser.orders); 
  
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -28,20 +28,18 @@ const OrderList: FC = () => {
     }, [windowHeight]);
 
     useEffect(() => {
-        debugger
         dispatch(
-            pathCurrent.path === '/feed' ? 
-                wsConnectionStart(WS_URL + '/all')
-            : 
+            pathCurrent ? 
                 wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)
+            : 
+                wsConnectionStart(WS_URL + '/all')
         );
 
         return () => {
             (dispatch(wsConnectionClosed()));
         }
-    }, [dispatch, pathCurrent.path]);
+    }, []);
     
-
     return (
         <section className={orderListStyle.section}>
             <Route exact path="/feed">

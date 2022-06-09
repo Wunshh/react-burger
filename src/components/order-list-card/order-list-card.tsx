@@ -14,19 +14,20 @@ interface IOrderListCard {
     item: TOrders;
 }
 
-const OrderListCard: FC<IOrderListCard> = ({ item }) => {   
-
+const OrderListCard: FC<IOrderListCard> = ({ item }) => {  
+     
     const ingredients = useSelector(store => store.ingredient.allIngredients);
     const dispatch = useDispatch();
     let imageOpacity: boolean = false;
 
-    const orderIngredients = item.ingredients.map((item) => {
+    const orderIngredients = (item.ingredients.map((item) => {
         return ingredients.find((m: TIngredients) => m._id === item)
-    }); 
+    })).filter((item => item !== null && item !== undefined)); 
+    
     
     const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
 
-    
+
     const deleteDuplicate = (orderIngredients.filter((item, index: number) => {
        return orderIngredients.indexOf(item) === index
     })).filter((item) => item !== undefined);

@@ -12,21 +12,21 @@ import orderIngredientPageStyle from './order-ingredient-page.module.css';
 function OrderIngreientsPage() {
 
     const dispatch = useDispatch();
-    const pathCurrent = useRouteMatch();
-    const token = `?token=${getCookie('accessToken').replace('Bearer ', '')}`;  
+    const pathCurrent = useRouteMatch({ path: "/profile/orders/" });
     
     useEffect(() => {
+        debugger;
         dispatch(
-            pathCurrent.path.indexOf('feed') ? 
-                wsConnectionStart(WS_URL + '/all')
+            pathCurrent ? 
+                wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)
             : 
-                wsConnectionStart(WS_URL + token)
+                wsConnectionStart(WS_URL + '/all')
         );
 
         return () => {
             (dispatch(wsConnectionClosed()));
         }
-    }, [dispatch, pathCurrent.path, token]);
+    }, []);
 
     return (
         <div className={orderIngredientPageStyle.page}>

@@ -1,16 +1,17 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../utils/hooks';
 
-import  { deleteCookie } from '../../utils/cookie';
+import { deleteCookie } from '../../utils/cookie';
 import { LOGOUT } from '../../services/actions/login';
-import{ USER_LOGOUT } from  '../../services/actions/user';
-
+import { USER_LOGOUT } from  '../../services/actions/user';
 
 import profileMenuStyle from './profile-menu.module.css';
 
 function ProfileMenu() {
 
     const dispatch = useDispatch();
+
+    const location = useLocation();
 
     const logout = () => {
         localStorage.removeItem('refreshToken');
@@ -49,9 +50,17 @@ function ProfileMenu() {
             </NavLink>
             <p  
                 className={`${profileMenuStyle.text} text text_type_main-small text_color_inactive`}
-            >
-                В этом разделе вы можете <br/>
-                изменить свои персональные данные
+            > {location.pathname === '/profile' ? 
+                    <>
+                        'В этом разделе вы можете' <br/>
+                        'изменить свои персональные данные'
+                    </>
+                : 
+                    <>
+                        'В этом разделе вы можете' <br/>
+                        'просмотреть свою историю заказов'
+                    </>
+                }
             </p>
         </section>
     );
