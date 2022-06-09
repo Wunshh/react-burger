@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { wsConnectionStart, wsConnectionClosed}  from '../../services/actions/wsActions';
 import { getCookie } from '../../utils/cookie';
 import { WS_URL } from '../../utils/data';
+import { TOrders } from '../../utils/types';
 
 import orderListStyle from './order-list.module.css';
 
@@ -40,6 +41,9 @@ const OrderList: FC = () => {
             (dispatch(wsConnectionClosed()));
         }
     }, []);
+
+    console.log(data);
+    
     
     return (
         <section className={orderListStyle.section}>
@@ -49,7 +53,7 @@ const OrderList: FC = () => {
                 </h1>
             </Route>
             <div className={orderListStyle.orders} style={{maxHeight: deviceHeihgt}}> 
-                {data.map((item: any) => {
+                {data.map((item: TOrders) => {
                         return (
                             <OrderListCard
                                 key={item._id}

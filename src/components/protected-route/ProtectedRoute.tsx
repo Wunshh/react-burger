@@ -1,22 +1,22 @@
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 import { useSelector } from '../../utils/hooks';
-import { Redirect } from 'react-router-dom';
+import { Route, Redirect, RouteProps  } from 'react-router-dom';
 
-interface IProtected {
-  location?: string;
-  path: string;
-  children: ReactElement;
-};
-
-const ProtectedRoute: FC<IProtected> = ({ children, ...props }) => {
+const ProtectedRoute: FC<RouteProps> = ({ children, ...props }) => {
   const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
   const loginSuccess = useSelector((store) => store.loginFormReducer.loginSuccess);
 
-  if (isLoggin || loginSuccess) {
-    return children
-  } else {
-    return <Redirect to={{ pathname: "/login", state: { from: props.location}}} />
-  }
+  return (
+    <Route
+        {...props}
+        render={({ location }) => (
+          isLoggin || loginSuccess ? 
+            children
+          : 
+            <Redirect to={{ pathname: '/login', state: { from: location } }} />
+        )}
+    />
+);
 };
 
 export default ProtectedRoute;
