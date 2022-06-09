@@ -28,6 +28,7 @@ const OrderList: FC = () => {
     }, [windowHeight]);
 
     useEffect(() => {
+        debugger;
         dispatch(
             pathCurrent ? 
                 wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)

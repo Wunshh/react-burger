@@ -15,7 +15,7 @@ const ProfilePage: FC = () => {
         <section className={profilePageStyle.container}>
             <ProfileMenu />
             <Switch>
-                <Route exact path={path}>
+                <Route exact path={`${path}`}>
                     <ProfileForm />
                 </Route>
                 <Route path={`${path}/orders`}>
