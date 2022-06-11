@@ -6,6 +6,7 @@ import { desctopHeight } from '../../utils/data';
 import OrderListCard from '../order-list-card/order-list-card';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { wsConnectionStart, wsConnectionClosed}  from '../../services/actions/wsActions';
+import { getIngredientsData } from '../../services/actions/ingredients';
 import { getCookie } from '../../utils/cookie';
 import { WS_URL } from '../../utils/data';
 import { TOrders } from '../../utils/types';
@@ -19,6 +20,10 @@ const OrderList: FC = () => {
     const [deviceHeihgt, setDeviceHeihgt] = useState(740);
     const pathCurrent = useRouteMatch({ path: "/profile/orders" });
     const data = useSelector(store => store.wsReduser.orders); 
+
+    useEffect(() => {
+        dispatch(getIngredientsData());
+    }, [dispatch]);
  
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -39,8 +44,8 @@ const OrderList: FC = () => {
         return () => {
             (dispatch(wsConnectionClosed()));
         }
-    }, []);
-    
+    }, []);    
+
     return (
         <section className={orderListStyle.section}>
             <Route exact path="/feed">

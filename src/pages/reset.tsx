@@ -4,7 +4,7 @@ import ResetForm from '../components/reset-form/reset-form';
 
 function ResetPage() {
 
-    const userName = useSelector(store => store.userDataReducer.form.name); 
+    const userName = useSelector(store => store.loginFormReducer.form.name); 
 
     return (
         userName === undefined || userName.length === 0 ?

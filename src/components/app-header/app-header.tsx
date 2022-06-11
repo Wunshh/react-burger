@@ -15,7 +15,7 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    const userName = useSelector(store => store.userDataReducer.form.name);   
+    const userName = useSelector(store => store.loginFormReducer.form.name);   
     const userLogin = useSelector(store => store.loginFormReducer.loginSuccess);
     
     let path;

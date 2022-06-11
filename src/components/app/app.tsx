@@ -23,8 +23,7 @@ import ProtectedRoute from '../protected-route/ProtectedRoute';
 import OrderIngreients from '../order-ingreients/order-ingreients';
 import OrderIngreientsPage from '../../pages/order-ingredient-page';
 import { MODAL_CLOSE } from '../../services/actions/modal';
-import { getUserData } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
+import { getUserData } from '../../services/actions/login';
 import { TLocation } from '../../utils/types';
 
 
@@ -55,9 +54,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (getCookie('accessToken')) {
-      dispatch(getUserData());
-    }
+    dispatch(getUserData());
   }, [dispatch]);
 
   return (

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useLocation, useRouteMatch } from 'react-router-dom';
 
 import ProfileForm from '../components/profile-form/profile-form';
 import ProfileMenu from '../components/profile-menu/profile-menu';
@@ -10,11 +10,12 @@ import profilePageStyle from './profile.module.css'
 const ProfilePage: FC = () => {
 
     const { path } = useRouteMatch();
+    const location = useLocation();
 
     return (
         <section className={profilePageStyle.container}>
             <ProfileMenu />
-            <Switch>
+            <Switch location={location}>
                 <Route exact path={`${path}`}>
                     <ProfileForm />
                 </Route>

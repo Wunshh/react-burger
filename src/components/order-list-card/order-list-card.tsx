@@ -24,9 +24,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     })).filter((item => item !== null && item !== undefined)); 
     
-    
     const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
-
 
     const deleteDuplicate = (orderIngredients.filter((item, index: number) => {
        return orderIngredients.indexOf(item) === index
@@ -51,7 +49,7 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
     }
 
     const location = useLocation();
-    const orderNumber = (item['number']).toString();
+    const orderNumber = (item['_id']).toString();
 
     const hendelClick = () => {
         dispatch({
@@ -63,7 +61,6 @@ const OrderListCard: FC<IOrderListCard> = ({ item }) => {
     return (
         <Link 
             className={orderCardStyle.link}
-            key={orderNumber}
             to={{
                 pathname: `${location.pathname}/${orderNumber}`,
                 state: { background: location }

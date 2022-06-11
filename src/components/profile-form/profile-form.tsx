@@ -1,8 +1,8 @@
-import { useState, SyntheticEvent, ChangeEvent, useEffect } from 'react';
+import { useState, SyntheticEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/user';
+import { setUserFormValue, getUserData, updateUserData } from '../../services/actions/login';
 import profileFormStyle from './profile-form.module.css';
 
 function ProfileForm() {
@@ -13,8 +13,12 @@ function ProfileForm() {
         email,
         name,
         password,
-    } = useSelector(state => state.userDataReducer.form);
+    } = useSelector(state => state.loginFormReducer.form);
     
+
+    if(email === null || email === undefined) {
+        
+    }
 
     const dispatch = useDispatch();
 
@@ -36,10 +40,6 @@ function ProfileForm() {
         setIsFormChange(false);
         setInputDisabled(true)
     }
-
-    useEffect(() => {
-        dispatch(getUserData());
-    }, [dispatch]);
 
     const getBackUserData = () => {
         dispatch(getUserData());

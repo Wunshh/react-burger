@@ -7,7 +7,7 @@ import LoginForm from '../components/login-form/login-form';
 
 function LoginPage() {
 
-    const isLoggin = useSelector(store => store.userDataReducer.userIsLoggin);
+    const isLoggin = useSelector(store => store.loginFormReducer.userIsLoggin);
     const loginSuccess = useSelector(store => store.loginFormReducer.loginSuccess);
     const location: TLocation = useLocation();
     const path = location.state === null || location.state === undefined ? '/' : location.state.from.pathname;

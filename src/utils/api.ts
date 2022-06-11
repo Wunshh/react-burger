@@ -77,8 +77,7 @@ export const updateToken = () => {
         method: 'POST',
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json",
-            'Authorization': getCookie('accessToken')
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken')

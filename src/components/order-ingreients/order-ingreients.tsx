@@ -21,7 +21,8 @@ const OrderIngreients = () => {
     let newOrder;
 
     if (order === null || order === undefined) {
-        newOrder = data.find((item: TOrders) => (item.number).toString() === orderNumber.orderNumber);
+        debugger;
+        newOrder = data.find((item: TOrders) => item._id === orderNumber.orderNumber);
         order = newOrder ? newOrder : null
     }
 

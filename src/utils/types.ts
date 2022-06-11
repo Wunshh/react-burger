@@ -1,7 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Action, ActionCreator , Dispatch} from 'redux';
 import { TActions } from '../services/actions/wsActions';
-import { TUserAction } from '../services/actions/user';
 import { TResetAction } from '../services/actions/reset';
 import { TRegistrationAction } from '../services/actions/registration';
 import { TOrderAction } from '../services/actions/order';
@@ -52,8 +51,8 @@ export type TForm = {
 };
 
 export type TUser = {
-    name?: string;
-    email?: string;
+    name: string;
+    email: string;
 }
 
 export type THeaders = {
@@ -64,7 +63,6 @@ export type THeaders = {
 
 export type TApplicationActions = 
 | TActions
-| TUserAction
 | TResetAction
 | TRegistrationAction
 | TOrderAction

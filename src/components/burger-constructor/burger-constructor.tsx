@@ -39,7 +39,7 @@ const BurgerConstructor: FC = () => {
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const userName = useSelector(store => store.userDataReducer.form.name);
+    const userName = useSelector(store => store.loginFormReducer.form.name);
     const userLogin = useSelector(store => store.loginFormReducer.loginSuccess);
     
     useEffect(() => {

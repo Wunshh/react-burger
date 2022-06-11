@@ -2,8 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../utils/hooks';
 
 import { deleteCookie } from '../../utils/cookie';
-import { LOGOUT } from '../../services/actions/login';
-import { USER_LOGOUT } from  '../../services/actions/user';
+import { USER_LOGOUT } from  '../../services/actions/login';
 
 import profileMenuStyle from './profile-menu.module.css';
 
@@ -14,11 +13,9 @@ function ProfileMenu() {
     const location = useLocation();
 
     const logout = () => {
-        localStorage.removeItem('refreshToken');
+        debugger
         deleteCookie('accessToken');
-        dispatch({
-            type: LOGOUT
-        });
+        localStorage.removeItem('refreshToken');
         dispatch({
             type: USER_LOGOUT
         });
