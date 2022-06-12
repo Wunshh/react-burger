@@ -63,7 +63,8 @@ const loginFormReducer = (state = initialState, action: TLoginAction): TLoginSta
                 ...state,
                 form: {
                     name: action.user.name,
-                    email: action.user.email
+                    email: action.user.email,
+                    password: '*********'
                 },
                 loginRequest: false,
                 loginSuccess: true

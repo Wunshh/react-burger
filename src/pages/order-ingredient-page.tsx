@@ -13,13 +13,11 @@ function OrderIngreientsPage() {
 
     const dispatch = useDispatch();
     const pathCurrent = useRouteMatch({ path: "/profile/orders/" });
-    const token = pathCurrent ? `?token=${getCookie('accessToken').replace('Bearer ', '')}` : '';
     
     useEffect(() => {
-        debugger;
         dispatch(
             pathCurrent ? 
-                wsConnectionStart(WS_URL + token)
+                wsConnectionStart(WS_URL + `?token=${getCookie('accessToken').replace('Bearer ', '')}`)
             : 
                 wsConnectionStart(WS_URL + '/all')
         );

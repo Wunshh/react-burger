@@ -16,21 +16,14 @@ const OrderIngreients = () => {
     const orderNumber: {orderNumber: string} = useParams(); 
     
     const ingredients = useSelector(store => store.ingredient.allIngredients);
-    let order = useSelector(store => store.ingredient.orderIngredient);
     const data = useSelector(store => store.wsReduser.orders);
-    let newOrder;
-
-    if (order === null || order === undefined) {
-        debugger;
-        newOrder = data.find((item: TOrders) => item._id === orderNumber.orderNumber);
-        order = newOrder ? newOrder : null
-    }
-
+    const order = data && data.find((item: TOrders) => item._id === orderNumber.orderNumber);
+    
     useEffect(() => {
         dispatch(getIngredientsData());
     }, [dispatch]);
 
-    const orderIngredients = order !== null ? order.ingredients.map((item: string) => {
+    const orderIngredients = order !== undefined ? order.ingredients.map((item: string) => {
         return ingredients.find((m: TIngredients) => m._id === item)
     }) : [];
 
@@ -51,18 +44,18 @@ const OrderIngreients = () => {
     
     let orderStatus: string | null = null;
 
-    if (order !== null && order.status === 'created') {
+    if (order !== undefined && order.status === 'created') {
         orderStatus = 'Создан'
-    } else if (order !== null && order.status === 'pending') {
+    } else if (order !== undefined && order.status === 'pending') {
         orderStatus = 'Готовится'
-    } else if (order !== null && order.status === 'done') {
+    } else if (order !== undefined && order.status === 'done') {
         orderStatus = 'Выполнен'
     }
 
     const price = orderIngredients !== null && orderIngredients.reduce((sum, current: any): number => sum + current.price, 0);
 
     return (
-        order !== null ? 
+        order !== undefined ? 
        <div className={orderIngreientsStyle.card}>
             <p className="text text_type_digits-default mb-10" style={{alignSelf: 'center'}}> 
                 #{order.number}

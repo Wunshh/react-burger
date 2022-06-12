@@ -20,7 +20,6 @@ import IngredientPage from '../../pages/ingredient-page';
 import NotFound404 from '../../pages/not-found';
 import FeedPage from '../../pages/feed';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
-import OrderIngreients from '../order-ingreients/order-ingreients';
 import OrderIngreientsPage from '../../pages/order-ingredient-page';
 import { MODAL_CLOSE } from '../../services/actions/modal';
 import { getUserData } from '../../services/actions/login';
@@ -38,7 +37,6 @@ function App() {
   const history = useHistory();
   const background = location.state && location.state.background;
   const orderDetails = useSelector((store) => store.ingredient.order);
-   
 
   function handleOrderModalClose() {
     dispatch({
@@ -68,7 +66,6 @@ function App() {
           <main className={appStyles.main}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
-              
               <BurgerConstructor />
             </DndProvider>
           </main>
@@ -130,9 +127,8 @@ function App() {
         <Route
           exact
           path="/feed"
-        >
-          <FeedPage />
-        </Route>  
+          component={FeedPage}
+        />
         
         <ProtectedRoute path="/profile">
           <ProfilePage />
@@ -162,26 +158,19 @@ function App() {
         <Route
           path='/feed/:orderNumber'
           children={
-            <Modal 
-              onClose={handleModalClose}
-            >
-              <OrderIngreients />
+            <Modal onClose={handleModalClose}>
+              <OrderIngreientsPage />
             </Modal>
           }
         />
       )}
 
       {background && (
-        <Route
-          path='/profile/orders/:orderNumber'
-          children={
-            <Modal 
-              onClose={handleModalClose}
-            >
-              <OrderIngreients />
-            </Modal>
-          }
-        />
+        <ProtectedRoute path='/profile/orders/:orderNumber'>
+          <Modal onClose={handleModalClose}>
+            <OrderIngreientsPage />
+          </Modal>
+        </ProtectedRoute> 
       )}
     </div> 
   );

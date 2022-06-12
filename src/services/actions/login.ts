@@ -167,7 +167,6 @@ const getUserData: AppThunk = () => (dispatch) => {
         }
     })
     .catch((res) => {
-        debugger
         if (res.message === 'jwt expired') {
             dispatch(updateToken());
             dispatch(getUserData());

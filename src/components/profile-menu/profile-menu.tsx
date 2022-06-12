@@ -13,7 +13,6 @@ function ProfileMenu() {
     const location = useLocation();
 
     const logout = () => {
-        debugger
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
         dispatch({
