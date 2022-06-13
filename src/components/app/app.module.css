@@ -12,3 +12,13 @@
     margin: 0 auto;
     column-gap: 40px;
 }
+
+.preloader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    box-sizing: border-box;
+    top: 30%;
+    left: calc(50% - 100px);
+}

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from '../../utils/hooks';
 import { 
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
 import useWindowHeight from '../../utils/hooks/useWindowHeight';
 import {
@@ -16,12 +15,7 @@ import { TIngredients } from '../../utils/types';
 
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 
-type TCardClick = {
-    onCardClick: () => void;
-}; 
-
-
-function BurgerIngredients({ onCardClick }: TCardClick) {
+function BurgerIngredients() {
 
     const dispatch = useDispatch();
     const windowHeight = useWindowHeight();
@@ -105,7 +99,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -121,7 +114,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -137,7 +129,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
                                 <BurgerIngredientsCard 
                                     key={item._id}  
                                     item={item} 
-                                    onCardClick={onCardClick}
                                 />
                             )
                         })
@@ -147,10 +138,6 @@ function BurgerIngredients({ onCardClick }: TCardClick) {
             </div>
         </section>
     );
-}
-
-BurgerIngredients.propTypes = {
-    onCardClick: PropTypes.func
 }
 
 export default memo(BurgerIngredients);

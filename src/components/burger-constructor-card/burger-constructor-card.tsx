@@ -19,7 +19,7 @@ interface IBurgerProps {
 
 
 const BurgerConstructorCard: FC<IBurgerProps> = ({ingridient, index, moveCard}) => {
-
+    
     const dispatch = useDispatch();
     const id = ingridient._id;
     const ref = useRef<HTMLDivElement>(null);   

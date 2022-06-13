@@ -24,17 +24,13 @@ import { TIngredients } from '../../utils/types';
 
 import burgerConstructorStyle from './burger-constructor.module.css';
 
-type TButtonClick = {
-    onButtonClick: () => void;
-};  
-
 type TMoveCallback = (
     dragIndex: number,
     hoverIndex: number
 ) => void;
 
 
-const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) => {
+const BurgerConstructor: FC = () => {
 
     const ingredients = useSelector(store => store.ingredient.constructorIngredients);
     const dispatch = useDispatch();
@@ -43,7 +39,8 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
     const windowHeight = useWindowHeight();
     const [deviceHeihgt, setDeviceHeihgt] = useState(440);
     const [selectedDeviceHeight, setSelectedDeviceHeight] = useState(620);
-    const userName = useSelector(store => store.userDataReducer.form.name);
+    const userName = useSelector(store => store.loginFormReducer.form.name);
+    const userLogin = useSelector(store => store.loginFormReducer.loginSuccess);
     
     useEffect(() => {
         if (windowHeight <= desctopHeight) {
@@ -77,16 +74,16 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
         
     
     function hendelClick() {
-        if( userName === undefined || userName.length === 0 ) {
-            history.push('/login');
-        } else {
-            onButtonClick();
+
+        if(userName || userLogin) {
             dispatch({
                 type: ORDER_MODAL_OPEN
             });
             if (order) {
                 dispatch(sendOrder(order.map((item: TIngredients) => item._id)));
-            }
+            } 
+        } else {
+            history.push('/login');
         }
     }
 
@@ -123,7 +120,7 @@ const BurgerConstructor: FC<TButtonClick> = ({ onButtonClick } : TButtonClick) =
                         thumbnail={bun.image_mobile}
                     />}
                     <div className={burgerConstructorStyle.main} style={{maxHeight: deviceHeihgt}}>
-                        {mainIngredients.map((item: any, index: number) => {
+                        {mainIngredients.map((item: TIngredients, index: number) => {
                             return (
                                 <BurgerConstructorCard 
                                     key={item.uuid}

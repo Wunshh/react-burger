@@ -8,7 +8,7 @@ function IngredientPage() {
                 Детали ингридиента
             </h2>
             <IngredientDetail />
-      </div>
+       </div>
     )
 }
 

@@ -3,7 +3,8 @@ import {
     FORGOT_FORM_SET_VALUE,
     POST_FORGOT_FORM_SUBMIT,
     POST_FORGOT_FORM_SUCCESS,
-    POST_FORGOT_FORM_FAILED
+    POST_FORGOT_FORM_FAILED,
+    TForgotFormAction
 } from '../actions/forgotPassword';
 
 export type TForgotPasswordState = {
@@ -22,10 +23,11 @@ const initialState: TForgotPasswordState = {
     forgotFailed: false
 }
 
-const forgotPasswordFormReducer = (state = initialState, action: any) => {
+const forgotPasswordFormReducer = (state = initialState, action: TForgotFormAction): TForgotPasswordState => {
     switch(action.type) {
-        case FORGOT_FORM_SET_VALUE: {
+        case FORGOT_FORM_SET_VALUE: {           
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value
@@ -40,13 +42,14 @@ const forgotPasswordFormReducer = (state = initialState, action: any) => {
             }
         }
         case POST_FORGOT_FORM_SUCCESS: {
+            
             return {
                 ...state,
                 form: {
                     ...initialState.form
                 },
                 forgorRequest: false,
-                forgotSuccess: action.res.success
+                forgotSuccess: action.res
             }
         }
         case POST_FORGOT_FORM_FAILED: {

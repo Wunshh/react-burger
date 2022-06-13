@@ -1,21 +1,28 @@
+import { FC } from 'react';
+import { Route, Switch, useLocation, useRouteMatch } from 'react-router-dom';
+
 import ProfileForm from '../components/profile-form/profile-form';
 import ProfileMenu from '../components/profile-menu/profile-menu';
-import ProfileOrders from '../components/profile-orders/profile-orders';
-import { Route } from 'react-router-dom';
+import OrderList from '../components/order-list/order-list';
 
 import profilePageStyle from './profile.module.css'
 
-function ProfilePage() {
+const ProfilePage: FC = () => {
+
+    const { path } = useRouteMatch();
+    const location = useLocation();
 
     return (
         <section className={profilePageStyle.container}>
             <ProfileMenu />
-            <Route exact path="/profile">
-                <ProfileForm />
-            </Route>
-            <Route exact path="/profile/orders">
-                <ProfileOrders />
-            </Route>
+            <Switch location={location}>
+                <Route exact path={`${path}`}>
+                    <ProfileForm />
+                </Route>
+                <Route path={`${path}/orders`}>
+                    <OrderList />
+                </Route>
+            </Switch>
         </section>
     );
 }

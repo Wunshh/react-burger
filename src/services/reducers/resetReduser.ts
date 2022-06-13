@@ -3,7 +3,8 @@ import {
     RESET_FORM_SET_VALUE,
     POST_RESET_FORM_SUBMIT,
     POST_RESET_FORM_SUCCESS,
-    POST_RESET_FORM_FAILED
+    POST_RESET_FORM_FAILED,
+    TResetAction
 } from '../actions/reset';
 
 export type TResetState ={
@@ -21,10 +22,11 @@ const initialState: TResetState = {
     resetFailed: false
 }
 
-const resetFormReducer = (state = initialState, action: any) => {
+const resetFormReducer = (state = initialState, action: TResetAction): TResetState => {
     switch(action.type) {
         case RESET_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value
