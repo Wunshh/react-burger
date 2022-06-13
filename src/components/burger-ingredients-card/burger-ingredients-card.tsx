@@ -14,11 +14,10 @@ import { TIngredients } from '../../utils/types';
 
 interface IBurgerIngredients {
     item: TIngredients;
-    onCardClick: () => void;
 }
 
 
-const BurgerIngredientsCard: FC<IBurgerIngredients> = ({item, onCardClick}) => {
+const BurgerIngredientsCard: FC<IBurgerIngredients> = ({item}) => {
 
     const [{opacity}, dragRef] = useDrag({
         type: "items",
@@ -36,7 +35,6 @@ const BurgerIngredientsCard: FC<IBurgerIngredients> = ({item, onCardClick}) => {
     const count = item.__v === baseCountNumber ? false : true;
 
     const hendelClick = () => {
-        onCardClick();
         dispatch({
             type: INGREDIENT_MODAL_OPEN,
             item

@@ -15,9 +15,16 @@ import appHeaderStyles from './app-header.module.css';
 
 function AppHeader() {
 
-    const userName = useSelector(store => store.userDataReducer.form.name); 
+    const userName = useSelector(store => store.loginFormReducer.form.name);   
+    const userLogin = useSelector(store => store.loginFormReducer.loginSuccess);
+    
+    let path;
 
-    let path: string = userName === undefined || userName.length === 0 ? '/login' : '/profile';
+    if( userLogin || userName) {
+        path = '/profile';
+    } else {
+        path = '/login';
+    }
 
     const location: TLocation = useLocation();
 
@@ -41,7 +48,7 @@ function AppHeader() {
 
                 <ListIcon type={celectType('/list')}/>
                 <NavLink 
-                    to="/list" 
+                    to="/feed" 
                     className="link text text_type_main-default text_color_inactive ml-2 cursor" 
                     activeClassName={appHeaderStyles.active}
                 >

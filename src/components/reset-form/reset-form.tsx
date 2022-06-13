@@ -11,7 +11,7 @@ import resetFormStyle from './reset-form.module.css';
 function ResetForm() {
 
     const { password, token } = useSelector(state => state.resetFormReducer.form);
-    const forgotSuccess = useSelector((state: any) => state.forgotPasswordFormReducer.forgotSuccess);
+    const forgotSuccess = useSelector((state) => state.forgotPasswordFormReducer.forgotSuccess);
     const history = useHistory();
 
     const dispatch = useDispatch();

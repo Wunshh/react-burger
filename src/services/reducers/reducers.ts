@@ -1,35 +1,47 @@
-import { TIngredients, TOrder } from '../../utils/types';
+import { TIngredients, TOrder, TOrders } from '../../utils/types';
 
 import {
     ORDER_MODAL_OPEN,
     INGREDIENT_MODAL_OPEN,
-    MODAL_CLOSE
+    ORDER_INGREDIENT_MODAL_OPEN,
+    MODAL_CLOSE,
+    TModalAction
 } from '../actions/modal';
 
 import {
-    GET_INGREDIENTS_SUCCESS
+    GET_INGREDIENTS_SUCCESS,
+    TIngredientsAction
 } from '../actions/ingredients';
 
 import {
     SEND_ORDER_SUCCESS,
     SEND_ORDER_REQUEST,
-    SEND_ORDER_FAILED
+    SEND_ORDER_FAILED,
+    TOrderAction
 } from '../actions/order';
 
 import {
     ADD_ITEM,
     DELETE_ITEM,
-    MOVE_ITEM
+    MOVE_ITEM,
+    TConstructorAction
 } from '../actions/constructor';
+
+export type TReduserAction = 
+| TOrderAction 
+| TConstructorAction 
+| TIngredientsAction
+| TModalAction
 
 export type TReducersState = {
     allIngredients: Array<TIngredients>;
     constructorIngredients: Array<TIngredients>;
     ingredient: null | TIngredients;
+    orderIngredient: null | TOrders;
     order: null | TOrder;
     ingredientModalOpen: boolean;
     orderModalOpen: boolean;
-    visible: boolean;
+    orderIngredientModalOpen: boolean;
     orederRequest: boolean;
     orderFailed: boolean;
 };
@@ -38,15 +50,16 @@ const initialState: TReducersState = {
     allIngredients: [],
     constructorIngredients: [],
     ingredient: null,
+    orderIngredient: null,
     order: null,
     ingredientModalOpen: false,
     orderModalOpen: false,
-    visible: false,
+    orderIngredientModalOpen: false,
     orederRequest: false,
     orderFailed: false
 };
 
-const ingredient = (state = initialState, action: any) => {
+const ingredient = (state = initialState, action: TReduserAction): TReducersState => {
     switch (action.type) {
         case GET_INGREDIENTS_SUCCESS: {
             return {
@@ -54,7 +67,7 @@ const ingredient = (state = initialState, action: any) => {
                 allIngredients: action.allIngredients,
             };
         }
-        case ADD_ITEM: {
+        case ADD_ITEM: {            
             const uuid = action.uuid;
             return {
                 ...state,
@@ -104,6 +117,7 @@ const ingredient = (state = initialState, action: any) => {
             }
         } 
         case SEND_ORDER_SUCCESS: {
+            
             return {
                 ...state,
                 order: action.order,
@@ -116,10 +130,9 @@ const ingredient = (state = initialState, action: any) => {
             };
         }
         case SEND_ORDER_FAILED: {
-            
             return {
                 ...state,
-                order: {...initialState.order},
+                order: null,
                 allIngredients: {...initialState.allIngredients},
                 orederRequest: false,
                 orderFailed: true
@@ -128,8 +141,7 @@ const ingredient = (state = initialState, action: any) => {
         case ORDER_MODAL_OPEN: {
             return {
                 ...state,
-                orderModalOpen: true,
-                visible: true
+                orderModalOpen: true
             };
         }
         case MODAL_CLOSE: {
@@ -137,15 +149,25 @@ const ingredient = (state = initialState, action: any) => {
                 ...state,
                 order: null,
                 orederRequest: false,
-                orderFailed: false
+                orderFailed: false,
+                orderIngredientModalOpen: false,
+                ingredient: null,
+                ingredientModalOpen: false,
+                orderIngredient: null,
             }
         }
         case INGREDIENT_MODAL_OPEN: {
             return {
                 ...state,
                 ingredientModalOpen: true,
-                visible: true,
                 ingredient: action.item
+            };
+        }
+        case ORDER_INGREDIENT_MODAL_OPEN: {
+            return {
+                ...state,
+                orderIngredientModalOpen: true,
+                orderIngredient: action.item
             };
         }
         default: {

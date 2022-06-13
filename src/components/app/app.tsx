@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from '../../utils/hooks';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
 import AppHeader from '../app-header/app-header';
+import Preloader from '../preloader/preloader';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import IngredientDetail from '../ingredient-details/ingredient-details';
@@ -17,55 +18,42 @@ import ResetPage from '../../pages/reset';
 import ProfilePage from '../../pages/profile';
 import IngredientPage from '../../pages/ingredient-page';
 import NotFound404 from '../../pages/not-found';
+import FeedPage from '../../pages/feed';
 import ProtectedRoute from '../protected-route/ProtectedRoute';
+import OrderIngreientsPage from '../../pages/order-ingredient-page';
 import { MODAL_CLOSE } from '../../services/actions/modal';
-import { getUserData } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
+import { getUserData } from '../../services/actions/login';
 import { TLocation } from '../../utils/types';
+
 
 import appStyles from './app.module.css';
 
 
 function App() {
 
-  const [isIngredientModalShown, setIsIngredientModalShown] = useState<boolean>(false);
-  const [isOrderModalShown, setIsOrderModalShown] = useState<boolean>(false);
   const dispatch = useDispatch();
-
   const location: TLocation = useLocation();
-  
+
   const history = useHistory();
   const background = location.state && location.state.background;
+  const orderDetails = useSelector((store) => store.ingredient.order);
 
-  function handleIngredientClick() {
-    setIsIngredientModalShown(true);
+  function handleOrderModalClose() {
+    dispatch({
+      type: MODAL_CLOSE
+    });
   }
 
   function handleModalClose() {
-    if (isIngredientModalShown) {
-      setIsIngredientModalShown(false);
-      history.goBack();
-    }
-    if (isOrderModalShown) {
-      setIsOrderModalShown(false);
-      dispatch({
-        type: MODAL_CLOSE
-      })
-    }
-    if (location.pathname.indexOf('ingredients') === 1) {
-      history.goBack();
-    }
-  }
-
-  function handleOrderClick() {
-    setIsOrderModalShown(true);
+    dispatch({
+      type: MODAL_CLOSE
+    });
+    history.goBack();
   }
 
   useEffect(() => {
-    if (getCookie('accessToken')) {
-      dispatch(getUserData());
-    }
-  }, [dispatch, location]);
+    dispatch(getUserData());
+  }, [dispatch]);
 
   return (
     <div className={appStyles.app}>
@@ -77,23 +65,21 @@ function App() {
         <Route exact path='/'>
           <main className={appStyles.main}>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients 
-                onCardClick={handleIngredientClick} 
-              />
-              
-              <BurgerConstructor 
-                onButtonClick={handleOrderClick} 
-              />
+              <BurgerIngredients />
+              <BurgerConstructor />
             </DndProvider>
           </main>
               
-          {isOrderModalShown && 
+          {orderDetails && 
             <Modal
-              onClose={handleModalClose}
+              onClose={handleOrderModalClose}
             >
               <OrderDetails />
             </Modal>
-          }
+          } 
+          <div className={appStyles.preloader}>
+            <Preloader/>
+          </div>
         </Route>
 
         <Route
@@ -101,6 +87,18 @@ function App() {
           path='/ingredients/:ingredientId'
           component={IngredientPage}
         />
+
+        <Route
+          exact
+          path='/feed/:orderNumber'
+          component={OrderIngreientsPage}
+        />
+
+        <ProtectedRoute
+          path='/profile/orders/:orderNumber'
+        >
+          <OrderIngreientsPage/>
+        </ProtectedRoute>
 
         <Route
           exact 
@@ -125,16 +123,17 @@ function App() {
           path="/reset-password"
           component={ResetPage}
         />
-        
-        <ProtectedRoute
-          path="/profile"
-          component={ProfilePage}
-        />
 
-        <ProtectedRoute
-          path="/profile/orders"
-          component={ProfilePage}
+        <Route
+          exact
+          path="/feed"
+          component={FeedPage}
         />
+        
+        <ProtectedRoute path="/profile">
+          <ProfilePage />
+        </ProtectedRoute> 
+        
         <Route>
           <NotFound404 />
         </Route>
@@ -142,19 +141,37 @@ function App() {
       </Switch>
 
       {background && (
-          <Route
-            path='/ingredients/:ingredientId'
-            children={
-              <Modal 
-                header="Детали ингридиента"
-                onClose={handleModalClose}
-              >
-                <IngredientDetail />
-              </Modal>
-            }
-          />
+        <Route
+          path='/ingredients/:ingredientId'
+          children={
+            <Modal 
+              header="Детали ингридиента"
+              onClose={handleModalClose}
+            >
+              <IngredientDetail />
+            </Modal>
+          }
+        />
       )}
 
+      {background && (
+        <Route
+          path='/feed/:orderNumber'
+          children={
+            <Modal onClose={handleModalClose}>
+              <OrderIngreientsPage />
+            </Modal>
+          }
+        />
+      )}
+
+      {background && (
+        <ProtectedRoute path='/profile/orders/:orderNumber'>
+          <Modal onClose={handleModalClose}>
+            <OrderIngreientsPage />
+          </Modal>
+        </ProtectedRoute> 
+      )}
     </div> 
   );
 }

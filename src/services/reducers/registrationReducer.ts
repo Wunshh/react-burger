@@ -3,7 +3,8 @@ import {
     REGISTER_FORM_SET_VALUE,
     POST_REGISTER_FORM_SUBMIT,
     POST_REGISTER_FORM_SUCCESS,
-    POST_REGISTER_FORM_FAILED
+    POST_REGISTER_FORM_FAILED,
+    TRegistrationAction
 } from '../actions/registration';
 
 export type TRegistrationState = {
@@ -23,10 +24,11 @@ const initialState: TRegistrationState = {
     registrationFailed: false
 }
 
-const registrationFormReducer = (state = initialState, action: any) => {
+const registrationFormReducer = (state = initialState, action: TRegistrationAction): TRegistrationState => {
     switch(action.type) {
         case REGISTER_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value

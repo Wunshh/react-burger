@@ -1,14 +1,13 @@
 import { useSelector } from '../../utils/hooks';
 
 import odrerModalImg from '../../images/graphics.png';
-import Preloader from '../preloader/preloader';
 
 import orderDetailsStyle from './order-details.module.css';
 
 
 function OrderDetails() {
 
-    const orderDetails = useSelector((store: any) => store.ingredient.order);
+    const orderDetails = useSelector((store) => store.ingredient.order);
     
     return (
         orderDetails !== null ?
@@ -28,9 +27,7 @@ function OrderDetails() {
             </p>
         </div>
         :
-        <div className={orderDetailsStyle.preloader}>
-            <Preloader/>
-        </div>
+        null
     );
 }
 

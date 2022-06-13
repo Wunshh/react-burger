@@ -4,7 +4,7 @@ import { useSelector } from '../utils/hooks';
 import RegistrationForm from '../components/registration-form/registration-form';
 
 function RegistrationPage() {
-    const userName = useSelector(store => store.userDataReducer.form.name); 
+    const userName = useSelector(store => store.loginFormReducer.form.name); 
 
     return (
         userName === undefined || userName.length === 0 ?
