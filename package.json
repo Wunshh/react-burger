@@ -36,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -61,8 +62,10 @@
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/node": "^17.0.32",
     "@types/react-router-dom": "^5.3.3",
+    "cypress": "^10.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "eslint-plugin-cypress": "^2.12.1",
     "fetch-mock": "^9.11.0",
     "gh-pages": "^4.0.0",
     "jest": "^28.1.1",
