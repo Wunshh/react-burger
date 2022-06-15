@@ -6,27 +6,23 @@ import {
     ORDER_MODAL_OPEN,
     INGREDIENT_MODAL_OPEN,
     ORDER_INGREDIENT_MODAL_OPEN,
-    MODAL_CLOSE,
-    TModalAction
+    MODAL_CLOSE
 } from '../actions/modal';
 
 import {
     GET_INGREDIENTS_SUCCESS,
-    TIngredientsAction
 } from '../actions/ingredients';
 
 import {
     SEND_ORDER_SUCCESS,
     SEND_ORDER_REQUEST,
-    SEND_ORDER_FAILED,
-    TOrderAction
+    SEND_ORDER_FAILED
 } from '../actions/order';
 
 import {
     ADD_ITEM,
     DELETE_ITEM,
-    MOVE_ITEM,
-    TConstructorAction
+    MOVE_ITEM
 } from '../actions/constructor';
 
 describe('Тест forgotPasswordFormReducer', () => {
@@ -93,6 +89,35 @@ describe('Тест forgotPasswordFormReducer', () => {
         }
     ];
 
+    const order = {
+        name: "Space флюоресцентный бургер",
+        order: {        
+            createdAt: "2022-06-15T19:50:41.755Z",
+            ingredients: [allIngredients[0]],
+            name: "Space флюоресцентный бургер",
+            number: 17726,
+            owner: {name: 'Валентинa', email: 'test@test.ru', createdAt: '2022-04-30T10:57:49.108Z', updatedAt: '2022-06-12T11:34:52.275Z'},
+            price: 1068,
+            status: "done",
+            updatedAt: "2022-06-15T19:50:42.099Z",
+            _id: "62aa3811fa747e001bd527ea"
+        },
+        success: true
+    };
+
+    const orderIngredient = {
+        _id: "62aa3aa9fa747e001bd527fd",
+        ingredients: [
+            "60d3b41abdacab0026a733cc"
+        ],
+        status: "done",
+        name: "Астероидный био-марсианский краторный spicy экзо-плантаго бургер",
+        createdAt: "2022-06-15T20:01:45.147Z",
+        updatedAt: "2022-06-15T20:01:45.442Z",
+        number: 17735
+    };
+
+
     it('Вернуть initialState', () => {
         expect(ingredient(undefined, {} as AnyAction)).toEqual(initialState);
     });
@@ -109,19 +134,126 @@ describe('Тест forgotPasswordFormReducer', () => {
         })
     });
 
-    // it('Проверить ADD_ITEM', () => {
-    //     expect(ingredient({
-    //         ...initialState,
-    //         constructorIngredients: []
-    //     }, {
-    //         type: ADD_ITEM,
-    //         item: [allIngredients[2]],
-    //         uuid: [allIngredients[2].uuid]
-    //     })).toEqual({
-    //         ...initialState,
-    //         constructorIngredients: [...item, uuid]
-    //     })
-    // });
+    it('Проверить ADD_ITEM', () => {
+        expect(ingredient({
+            ...initialState,
+            constructorIngredients: []
+        }, {
+            type: ADD_ITEM,
+            item: allIngredients[1],
+            uuid: "5197fe46-8d39-4a4d-a727-4a011b68d314"
+        })).toEqual({
+            ...initialState,
+            constructorIngredients: [
+                ...initialState.constructorIngredients, 
+                allIngredients[1]
+            ]
+        })
+    });
 
+    it('Проверить DELETE_ITEM', () => {
+        expect(ingredient({
+            ...initialState,
+            constructorIngredients: [allIngredients[0], allIngredients[3]],
+        }, {
+            type: DELETE_ITEM,
+            id: allIngredients[0]._id
+        })).toEqual({
+            ...initialState,
+            constructorIngredients: [allIngredients[3]]
+        })
+    });
 
-})
+    it('Проверить MOVE_ITEM', () => {
+        expect(ingredient({
+            ...initialState,
+            constructorIngredients: [allIngredients[1], allIngredients[2], allIngredients[3]],
+        }, {
+            type: MOVE_ITEM,
+            newCards: [allIngredients[3], allIngredients[2]]
+        })).toEqual({
+            ...initialState,
+            constructorIngredients: [allIngredients[1], allIngredients[3], allIngredients[2]]
+        })
+    });
+
+    it('Проверить SEND_ORDER_REQUEST', () => {
+        expect(ingredient(initialState, {
+            type: SEND_ORDER_REQUEST
+        })).toEqual({
+            ...initialState,
+            orederRequest: true,
+            orderFailed: false
+        })
+    });
+
+    it('Проверить SEND_ORDER_SUCCESS', () => {
+        expect(ingredient({
+            ...initialState
+        }, {
+            type: SEND_ORDER_SUCCESS,
+            order
+        })).toEqual({
+            ...initialState, 
+            order,
+            orederRequest: false,
+            orderFailed: false
+        })
+    });
+
+    it('Проверить SEND_ORDER_FAILED', () => {
+        expect(ingredient(initialState, {
+            type: SEND_ORDER_FAILED,
+        })).toEqual({
+            ...initialState,
+            orederRequest: false,
+            orderFailed: true
+        })
+    });
+
+    it('Проверить ORDER_MODAL_OPEN', () => {
+        expect(ingredient(initialState, {
+            type: ORDER_MODAL_OPEN,
+        })).toEqual({
+            ...initialState,
+            orderModalOpen: true
+        })
+    });
+
+    it('Проверить MODAL_CLOSE', () => {
+        expect(ingredient(initialState, {
+            type: MODAL_CLOSE,
+        })).toEqual({
+            ...initialState,
+            order: null,
+            orederRequest: false,
+            orderFailed: false,
+            orderIngredientModalOpen: false,
+            ingredient: null,
+            ingredientModalOpen: false,
+            orderIngredient: null,
+        })
+    });
+
+    it('Проверить INGREDIENT_MODAL_OPEN', () => {
+        expect(ingredient(initialState, {
+            type: INGREDIENT_MODAL_OPEN,
+            item: allIngredients[3]
+        })).toEqual({
+            ...initialState,
+            ingredientModalOpen: true,
+            ingredient: allIngredients[3]
+        });
+    });
+
+    it('Проверить ORDER_INGREDIENT_MODAL_OPEN', () => {
+        expect(ingredient(initialState, {
+            type: ORDER_INGREDIENT_MODAL_OPEN,
+            item: orderIngredient
+        })).toEqual({
+            ...initialState,
+            orderIngredientModalOpen: true,
+            orderIngredient: orderIngredient
+        })
+    });
+});

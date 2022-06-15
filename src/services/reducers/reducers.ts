@@ -133,7 +133,7 @@ const ingredient = (state = initialState, action: TReduserAction): TReducersStat
             return {
                 ...state,
                 order: null,
-                allIngredients: {...initialState.allIngredients},
+                allIngredients: [...initialState.allIngredients],
                 orederRequest: false,
                 orderFailed: true
             }

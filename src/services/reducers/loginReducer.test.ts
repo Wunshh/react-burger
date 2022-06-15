@@ -14,8 +14,7 @@ import {
     UPDATE_USER_DATA_SUCCESS,
     UPDATE_USER_DATA_FAILED,
     RESET_USER_DATA_FAILED,
-    USER_LOGOUT,
-    TLoginAction
+    USER_LOGOUT
 } from '../actions/login';
 
 
