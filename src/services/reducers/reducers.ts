@@ -46,7 +46,7 @@ export type TReducersState = {
     orderFailed: boolean;
 };
 
-const initialState: TReducersState = {
+export const initialState: TReducersState = {
     allIngredients: [],
     constructorIngredients: [],
     ingredient: null,
@@ -133,7 +133,7 @@ const ingredient = (state = initialState, action: TReduserAction): TReducersStat
             return {
                 ...state,
                 order: null,
-                allIngredients: {...initialState.allIngredients},
+                allIngredients: [...initialState.allIngredients],
                 orederRequest: false,
                 orderFailed: true
             }

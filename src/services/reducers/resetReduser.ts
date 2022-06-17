@@ -13,7 +13,7 @@ export type TResetState ={
     resetFailed: boolean;
 };
 
-const initialState: TResetState = {
+export const initialState: TResetState = {
     form: {
         password: '',
         token: ''

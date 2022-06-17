@@ -15,7 +15,7 @@ export type TWsState = {
     totalToday: number;
 }
 
-const initialState: TWsState  = {
+export const initialState: TWsState  = {
     wsConnect: false,
     orders: [],
     total: 0,
@@ -25,14 +25,12 @@ const initialState: TWsState  = {
 const wsReduser = (state = initialState, action: TActions): TWsState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS: {
-            
             return {
                 ...state,
                 wsConnect: true
             }
         }
         case WS_CONNECTION_ERROR: {
-            
             return {
                 ...state,
                 wsConnect: false
